@@ -1,11 +1,10 @@
 import { Filters, MAX_RATING } from '../../const/const';
 import { useAppSelector } from '../../hooks';
 import Pagination from '../pagination/pagination';
-import { getCameras, getCamerasTotalCount } from '../../store/cameras-data/selectors';
+import { getCameras } from '../../store/cameras-data/selectors';
 
 export default function Catalog(): JSX.Element {
   const cameras = useAppSelector(getCameras);
-  const camerasTotalCount = useAppSelector(getCamerasTotalCount);
 
   return (
     <section className="catalog">
@@ -162,7 +161,7 @@ export default function Catalog(): JSX.Element {
                 );
               })}
             </div>
-            <Pagination camerasTotalCount={camerasTotalCount} />
+            <Pagination />
           </div>
         </div>
       </div>

@@ -2,14 +2,12 @@ import cn from 'classnames';
 import { useState } from 'react';
 import { generatePath, Link } from 'react-router-dom';
 import { AppRoute, DEFAULT_PAGE, LIMIT_CARD_PER_PAGE } from '../../const/const';
-import { useAppDispatch } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import { fetchCamerasAction } from '../../store/api-actions';
+import { getCamerasTotalCount } from '../../store/cameras-data/selectors';
 
-type PaginationPropsType = {
-  camerasTotalCount: number;
-}
-
-export default function Pagination({camerasTotalCount}: PaginationPropsType) {
+export default function Pagination() {
+  const camerasTotalCount = useAppSelector(getCamerasTotalCount);
   const dispatch = useAppDispatch();
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -22,6 +20,7 @@ export default function Pagination({camerasTotalCount}: PaginationPropsType) {
 
     dispatch(fetchCamerasAction(String(page)));
     setCurrentPage(page);
+    window.scrollTo(0,0);
   };
 
   const nextPageClassName = cn('pagination__item', {

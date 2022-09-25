@@ -31,7 +31,6 @@ export const MAX_RATING = 5;
 
 export const APIRoute = {
   Cameras: '/cameras?_limit=9&_page=:page',
-  CamerasTotalCount: '/cameras?_X-total-count',
   Camera: '/cameras/:id',
   Reviews: '/cameras/:id/reviews',
   SimilarCameras: '/cameras/:id/similar',
