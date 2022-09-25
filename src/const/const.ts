@@ -1,5 +1,6 @@
 export const enum AppRoute {
-  Main = '/',
+  Catalog = '/',
+  CatalogPage = '/?_page=:page'
 }
 
 type FiltersType = {
@@ -27,3 +28,32 @@ export const Filters: FiltersType = {
 };
 
 export const MAX_RATING = 5;
+
+export const APIRoute = {
+  Cameras: '/cameras?_limit=9&_page=:page',
+  CamerasTotalCount: '/cameras?_X-total-count',
+  Camera: '/cameras/:id',
+  Reviews: '/cameras/:id/reviews',
+  SimilarCameras: '/cameras/:id/similar',
+  Promo: '/promo',
+} as const;
+
+export const NameSpace = {
+  App: 'APP',
+  Cameras: 'CAMERAS',
+  CamerasTotalCount: 'CAMERAS_TOTAL_COUNT',
+  Camera: 'CAMERA',
+  Reviews: 'REVIEWS',
+  Promo: 'PROMO'
+} as const;
+
+export const enum LoadingStatus {
+  Idle = 'IDLE',
+  Pending = 'PENDING',
+  Fulfilled = 'FULFILLED',
+  Rejected = 'REJECTED',
+}
+
+export const DEFAULT_PAGE = 1;
+
+export const LIMIT_CARD_PER_PAGE = 9;

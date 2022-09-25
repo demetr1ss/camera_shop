@@ -1,7 +1,12 @@
 import { Filters, MAX_RATING } from '../../const/const';
-import { mockCameras } from '../../mock-data/mock-cameras';
+import { useAppSelector } from '../../hooks';
+import Pagination from '../pagination/pagination';
+import { getCameras, getCamerasTotalCount } from '../../store/cameras-data/selectors';
 
 export default function Catalog(): JSX.Element {
+  const cameras = useAppSelector(getCameras);
+  const camerasTotalCount = useAppSelector(getCamerasTotalCount);
+
   return (
     <section className="catalog">
       <div className="container">
@@ -102,7 +107,7 @@ export default function Catalog(): JSX.Element {
               </form>
             </div>
             <div className="cards catalog__cards">
-              {mockCameras.map((camera) => {
+              {cameras.map((camera) => {
                 const {
                   id,
                   previewImgWebp,
@@ -124,13 +129,13 @@ export default function Catalog(): JSX.Element {
                     </div>
                     <div className="product-card__info">
                       <div className="rate product-card__rate">
-                        {Array.from({length: MAX_RATING}, (_, index) => (
+                        {Array.from({ length: MAX_RATING }, (_, index) => (
                           <svg width="17" height="16" aria-hidden="true" key={index}>
                             <use xlinkHref={`#icon${index < rating ? '-full' : ''}-star`} />
                           </svg>
                         ))}
                         <p className="visually-hidden">
-                        Рейтинг: {rating}
+                          Рейтинг: {rating}
                         </p>
                         <p className="rate__count">
                           <span className="visually-hidden">Всего оценок:</span>
@@ -147,40 +152,17 @@ export default function Catalog(): JSX.Element {
                     </div>
                     <div className="product-card__buttons">
                       <button className="btn btn--purple product-card__btn" type="button">
-                    Купить
+                        Купить
                       </button>
                       <a className="btn btn--transparent" href="/#">
-                    Подробнее
+                        Подробнее
                       </a>
                     </div>
                   </div>
                 );
               })}
             </div>
-            <div className="pagination">
-              <ul className="pagination__list">
-                <li className="pagination__item">
-                  <a className="pagination__link pagination__link--active" href="1">
-                    1
-                  </a>
-                </li>
-                <li className="pagination__item">
-                  <a className="pagination__link" href="2">
-                    2
-                  </a>
-                </li>
-                <li className="pagination__item">
-                  <a className="pagination__link" href="3">
-                    3
-                  </a>
-                </li>
-                <li className="pagination__item">
-                  <a className="pagination__link pagination__link--text" href="2">
-                    Далее
-                  </a>
-                </li>
-              </ul>
-            </div>
+            <Pagination camerasTotalCount={camerasTotalCount} />
           </div>
         </div>
       </div>

@@ -11,7 +11,7 @@ export default function App(): JSX.Element {
       <ScrollToTop />
       <Routes>
         <Route
-          path={AppRoute.Main}
+          path={AppRoute.Catalog}
           element={<MainScreen />}
         />
       </Routes>
