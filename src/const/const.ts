@@ -1,6 +1,6 @@
 export const enum AppRoute {
-  Catalog = '/',
-  CatalogPage = '/?_page=:page'
+  Main = '/',
+  CatalogPage = '/catalog'
 }
 
 type FiltersType = {
@@ -40,7 +40,6 @@ export const APIRoute = {
 export const NameSpace = {
   App: 'APP',
   Cameras: 'CAMERAS',
-  CamerasTotalCount: 'CAMERAS_TOTAL_COUNT',
   Camera: 'CAMERA',
   Reviews: 'REVIEWS',
   Promo: 'PROMO'
@@ -54,5 +53,5 @@ export const enum LoadingStatus {
 }
 
 export const DEFAULT_PAGE = 1;
-
 export const LIMIT_CARD_PER_PAGE = 9;
+export const PAGE_STEP = 1;

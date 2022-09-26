@@ -1,15 +1,16 @@
 import cn from 'classnames';
-import { useState } from 'react';
 import { generatePath, Link } from 'react-router-dom';
-import { AppRoute, DEFAULT_PAGE, LIMIT_CARD_PER_PAGE } from '../../const/const';
+import { AppRoute, DEFAULT_PAGE, LIMIT_CARD_PER_PAGE, PAGE_STEP } from '../../const/const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { fetchCamerasAction } from '../../store/api-actions';
+import { changePage } from '../../store/app-process/app-process';
+import { getCurrentPage } from '../../store/app-process/selectors';
 import { getCamerasTotalCount } from '../../store/cameras-data/selectors';
 
 export default function Pagination() {
   const camerasTotalCount = useAppSelector(getCamerasTotalCount);
   const dispatch = useAppDispatch();
-  const [currentPage, setCurrentPage] = useState(1);
+  const currentPage = useAppSelector(getCurrentPage);
 
   const pageCount = Math.ceil(camerasTotalCount / LIMIT_CARD_PER_PAGE);
 
@@ -19,8 +20,7 @@ export default function Pagination() {
     }
 
     dispatch(fetchCamerasAction(String(page)));
-    setCurrentPage(page);
-    window.scrollTo(0,0);
+    dispatch(changePage(page));
   };
 
   const nextPageClassName = cn('pagination__item', {
@@ -34,30 +34,30 @@ export default function Pagination() {
   return (
     <div className="pagination">
       <ul className="pagination__list">
-        <li className={previousPageClassName} onClick={() => handlePageButtonClick(currentPage - 1)}>
-          <Link className="pagination__link pagination__link--text" to="/">
+        <li className={previousPageClassName} onClick={() => handlePageButtonClick(currentPage - PAGE_STEP)}>
+          <Link className="pagination__link pagination__link--text" to={generatePath(AppRoute.CatalogPage, { page: String(currentPage - PAGE_STEP)})}>
             Назад
           </Link>
         </li>
 
         {Array.from({ length: pageCount }, (_, page) => {
           const currentPageClassName = cn('pagination__link', {
-            'pagination__link--active': currentPage === page + 1
+            'pagination__link--active': currentPage === page + PAGE_STEP
           });
 
           return (
-            <li className="pagination__item" key={page + 1} onClick={() => handlePageButtonClick(page + 1)}>
+            <li className="pagination__item" key={page + PAGE_STEP} onClick={() => handlePageButtonClick(page + PAGE_STEP)}>
               <Link
                 className={currentPageClassName}
-                to={generatePath(AppRoute.CatalogPage, { page: String(page + 1) })}
+                to={generatePath(AppRoute.CatalogPage, { page: String(page + PAGE_STEP) })}
               >
                 {page + 1}
               </Link>
             </li>
           );
         })}
-        <li className={nextPageClassName} onClick={() => handlePageButtonClick(currentPage + 1)}>
-          <Link className="pagination__link pagination__link--text" to="/">
+        <li className={nextPageClassName} onClick={() => handlePageButtonClick(currentPage + PAGE_STEP)}>
+          <Link className="pagination__link pagination__link--text" to={generatePath(AppRoute.CatalogPage, { page: String(currentPage + PAGE_STEP)})}>
             Далее
           </Link>
         </li>

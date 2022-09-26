@@ -4,7 +4,7 @@ import Catalog from '../../components/catalog/catalog';
 import Footer from '../../components/footer/footer';
 import Header from '../../components/header/header';
 
-export default function MainScreen(): JSX.Element {
+export default function CatalogScreen(): JSX.Element {
   return (
     <div className="wrapper">
       <Header />

@@ -5,5 +5,8 @@ import { CameraType } from '../../types/types';
 export const getCameras = (state: StateType): CameraType[] =>
   state[NameSpace.Cameras].cameras;
 
+export const getCamerasLoadingStatus = (state: StateType): string =>
+  state[NameSpace.Cameras].camerasLoadingStatus;
+
 export const getCamerasTotalCount = (state: StateType): number =>
-  state[NameSpace.CamerasTotalCount].camerasTotalCount;
+  state[NameSpace.Cameras].camerasTotalCount;
