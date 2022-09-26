@@ -1,9 +1,9 @@
+import Pagination from '../pagination/pagination';
+import browserHistory from '../../browser-history';
 import { Filters, MAX_RATING } from '../../const/const';
 import { useAppSelector } from '../../hooks';
-import Pagination from '../pagination/pagination';
 import { getCameras } from '../../store/cameras-data/selectors';
 import { getCurrentPage } from '../../store/app-process/selectors';
-import browserHistory from '../../browser-history';
 import { useEffect } from 'react';
 
 export default function Catalog(): JSX.Element {
