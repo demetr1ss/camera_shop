@@ -6,7 +6,7 @@ import { AppDispatchType, StateType } from '../types/state-type';
 import { CameraType, PromoType } from '../types/types';
 import { showNotify } from '../utils';
 
-export const fetchCamerasAction = createAsyncThunk<{data: CameraType[], camerasTotalCount: number}, string, {
+export const fetchCamerasAction = createAsyncThunk<{data: CameraType[], camerasTotalCount: number}, number, {
   dispatch: AppDispatchType,
   state: StateType,
   extra: AxiosInstance
@@ -14,7 +14,9 @@ export const fetchCamerasAction = createAsyncThunk<{data: CameraType[], camerasT
   'data/fetchCameras',
   async (page, {extra: api}) => {
     try {
-      const {data, headers} = await api.get<CameraType[]>(generatePath(APIRoute.Cameras, {page}));
+      const {data, headers} = await api.get<CameraType[]>(generatePath(APIRoute.Cameras, {
+        page: String(page)
+      }));
 
       return {
         data,

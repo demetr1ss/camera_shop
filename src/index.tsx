@@ -8,7 +8,7 @@ import { fetchCamerasAction, fetchPromoAction } from './store/api-actions';
 import { DEFAULT_PAGE } from './const/const';
 import 'react-toastify/dist/ReactToastify.css';
 
-store.dispatch(fetchCamerasAction(String(DEFAULT_PAGE)));
+store.dispatch(fetchCamerasAction(DEFAULT_PAGE));
 store.dispatch(fetchPromoAction());
 
 const root = ReactDOM.createRoot(

@@ -13,10 +13,10 @@ export const appProcess = createSlice({
   name: NameSpace.App,
   initialState,
   reducers: {
-    changePage: (state, action) => {
+    changeCurrentPage: (state, action) => {
       state.currentPage = action.payload;
     },
   },
 });
 
-export const {changePage} = appProcess.actions;
+export const {changeCurrentPage} = appProcess.actions;

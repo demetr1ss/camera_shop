@@ -34,3 +34,5 @@ export const showNotify = (options: showNotifyPropsType): void => {
     default:
       throw new Error(`toast type "${options.type}" not exist`);
   }};
+
+export const getArrayWithFixLength = (length: number) => Array.from({length}, (_, i) => i + 1);
