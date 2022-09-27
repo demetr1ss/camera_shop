@@ -7,6 +7,7 @@ import { AppRoute, LoadingStatus } from '../../const/const';
 import { useAppSelector } from '../../hooks';
 import { getCamerasLoadingStatus } from '../../store/cameras-data/selectors';
 import LoadingScreen from '../../pages/loading-screen/loading-screen';
+import ProductScreen from '../../pages/product-screen/product-screen';
 
 
 export default function App(): JSX.Element {
@@ -27,6 +28,10 @@ export default function App(): JSX.Element {
         <Route
           path={AppRoute.CatalogPage}
           element={<CatalogScreen />}
+        />
+        <Route
+          path={AppRoute.ProductPage}
+          element={<ProductScreen />}
         />
       </Routes>
     </HistoryRouter >

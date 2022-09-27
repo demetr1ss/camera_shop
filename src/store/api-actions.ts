@@ -52,3 +52,49 @@ export const fetchPromoAction = createAsyncThunk<PromoType, undefined, {
     }
   }
 );
+
+export const fetchCameraAction = createAsyncThunk<CameraType, string, {
+  dispatch: AppDispatchType,
+  state: StateType,
+  extra: AxiosInstance
+}>(
+  'data/fetchCamera',
+  async (id, {extra: api}) => {
+    try {
+      const {data} = await api.get<CameraType>(generatePath(APIRoute.Camera, {
+        id
+      }));
+
+      return data;
+
+    }
+    catch(e) {
+      showNotify({
+        type: 'error',
+        message: 'Failed to load camera',
+      });
+      throw e;
+    }});
+
+export const fetchSimilarCamerasAction = createAsyncThunk<CameraType[], string, {
+  dispatch: AppDispatchType,
+  state: StateType,
+  extra: AxiosInstance
+}>(
+  'data/fetchSimilarCameras',
+  async (id, {extra: api}) => {
+    try {
+      const {data} = await api.get<CameraType[]>(generatePath(APIRoute.SimilarCameras, {
+        id
+      }));
+
+      return data;
+
+    }
+    catch(e) {
+      showNotify({
+        type: 'error',
+        message: 'Failed to load camera',
+      });
+      throw e;
+    }});

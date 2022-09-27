@@ -1,10 +1,11 @@
 import Pagination from '../pagination/pagination';
 import browserHistory from '../../browser-history';
-import { Filters, MAX_RATING } from '../../const/const';
+import { AppRoute, Filters, MAX_RATING } from '../../const/const';
 import { useAppSelector } from '../../hooks';
 import { getCameras } from '../../store/cameras-data/selectors';
 import { getCurrentPage } from '../../store/app-process/selectors';
 import { useEffect } from 'react';
+import { generatePath, Link } from 'react-router-dom';
 
 export default function Catalog(): JSX.Element {
   const cameras = useAppSelector(getCameras);
@@ -154,16 +155,16 @@ export default function Catalog(): JSX.Element {
                       </p>
                       <p className="product-card__price">
                         <span className="visually-hidden">Цена:</span>
-                        {price}
+                        {price} ₽
                       </p>
                     </div>
                     <div className="product-card__buttons">
                       <button className="btn btn--purple product-card__btn" type="button">
                         Купить
                       </button>
-                      <a className="btn btn--transparent" href="/#">
+                      <Link className="btn btn--transparent" to={generatePath(AppRoute.ProductPage, {id: String(id)})}>
                         Подробнее
-                      </a>
+                      </Link>
                     </div>
                   </div>
                 );

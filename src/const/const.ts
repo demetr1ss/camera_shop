@@ -1,6 +1,7 @@
 export const enum AppRoute {
   Main = '/',
-  CatalogPage = '/catalog'
+  CatalogPage = '/catalog',
+  ProductPage = '/product/:id'
 }
 
 type FiltersType = {

@@ -1,18 +1,24 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { LoadingStatus, NameSpace } from '../../const/const';
-import { fetchCamerasAction } from '../api-actions';
+import { fetchCameraAction, fetchCamerasAction, fetchSimilarCamerasAction } from '../api-actions';
 import { CameraType } from '../../types/types';
 
 export type CamerasDataType = {
+  camera: CameraType;
   cameras: CameraType[];
+  similarCameras: CameraType[];
   camerasTotalCount: number;
   camerasLoadingStatus: LoadingStatus;
+  cameraLoadingStatus: LoadingStatus;
 };
 
 const initialState: CamerasDataType = {
-  camerasTotalCount: 0,
+  camera: {} as CameraType,
   cameras: [],
+  similarCameras: [],
+  camerasTotalCount: 0,
   camerasLoadingStatus: LoadingStatus.Idle,
+  cameraLoadingStatus: LoadingStatus.Idle,
 };
 
 export const camerasData = createSlice({
@@ -32,5 +38,18 @@ export const camerasData = createSlice({
       .addCase(fetchCamerasAction.rejected, (state) => {
         state.cameras = [];
         state.camerasLoadingStatus = LoadingStatus.Rejected;
+      })
+      .addCase(fetchCameraAction.pending, (state) => {
+        state.cameraLoadingStatus = LoadingStatus.Pending;
+      })
+      .addCase(fetchCameraAction.fulfilled, (state, action) => {
+        state.camera = action.payload;
+        state.cameraLoadingStatus = LoadingStatus.Fulfilled;
+      })
+      .addCase(fetchCameraAction.rejected, (state) => {
+        state.cameraLoadingStatus = LoadingStatus.Rejected;
+      })
+      .addCase(fetchSimilarCamerasAction.fulfilled, (state, action) => {
+        state.similarCameras = action.payload;
       });
   }});
