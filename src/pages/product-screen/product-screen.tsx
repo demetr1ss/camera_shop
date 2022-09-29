@@ -42,7 +42,7 @@ export default function ProductScreen(): JSX.Element {
       <main>
 
         <div className="page-content">
-          <Breadcrumbs />
+          <Breadcrumbs productName={camera.name}/>
           <Product camera={camera} />
           {similarCameras.length > 0 && <ProductSimilar similarCameras={similarCameras}/>}
           <Review camera={camera} />
