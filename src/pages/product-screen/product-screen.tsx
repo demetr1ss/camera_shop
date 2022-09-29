@@ -5,7 +5,7 @@ import Footer from '../../components/footer/footer';
 import Header from '../../components/header/header';
 import ProductSimilar from '../../components/product-components/product-similar/product-similar';
 import Product from '../../components/product-components/product/product';
-import Review from '../../components/product-components/review/review';
+import Reviews from '../../components/product-components/reviews/reviews';
 import { LoadingStatus } from '../../const/const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { fetchCameraAction, fetchSimilarCamerasAction } from '../../store/api-actions';
@@ -42,10 +42,10 @@ export default function ProductScreen(): JSX.Element {
       <main>
 
         <div className="page-content">
-          <Breadcrumbs productName={camera.name}/>
+          <Breadcrumbs productName={camera.name} />
           <Product camera={camera} />
-          {similarCameras.length > 0 && <ProductSimilar similarCameras={similarCameras}/>}
-          <Review camera={camera} />
+          {similarCameras.length > 0 && <ProductSimilar similarCameras={similarCameras} />}
+          <Reviews />
         </div >
       </main >
       <a className="up-btn" href="#header">

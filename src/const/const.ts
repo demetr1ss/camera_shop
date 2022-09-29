@@ -43,7 +43,7 @@ export const NameSpace = {
   Cameras: 'CAMERAS',
   Camera: 'CAMERA',
   Reviews: 'REVIEWS',
-  Promo: 'PROMO'
+  Promo: 'PROMO',
 } as const;
 
 export const enum LoadingStatus {

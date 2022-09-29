@@ -3,7 +3,7 @@ import { AxiosInstance } from 'axios';
 import { generatePath } from 'react-router-dom';
 import { APIRoute } from '../const/const';
 import { AppDispatchType, StateType } from '../types/state-type';
-import { CameraType, PromoType } from '../types/types';
+import { CameraType, PromoType, reviewPostType, ReviewType } from '../types/types';
 import { showNotify } from '../utils';
 
 export const fetchCamerasAction = createAsyncThunk<{data: CameraType[], camerasTotalCount: number}, number, {
@@ -59,11 +59,12 @@ export const fetchCameraAction = createAsyncThunk<CameraType, string, {
   extra: AxiosInstance
 }>(
   'data/fetchCamera',
-  async (id, {extra: api}) => {
+  async (id, {dispatch, extra: api}) => {
     try {
       const {data} = await api.get<CameraType>(generatePath(APIRoute.Camera, {
         id
       }));
+      dispatch(fetchReviewsAction(id));
 
       return data;
 
@@ -95,6 +96,59 @@ export const fetchSimilarCamerasAction = createAsyncThunk<CameraType[], string, 
       showNotify({
         type: 'error',
         message: 'Failed to load camera',
+      });
+      throw e;
+    }});
+
+export const fetchReviewsAction = createAsyncThunk<ReviewType[], string, {
+  dispatch: AppDispatchType,
+  state: StateType,
+  extra: AxiosInstance
+}>(
+  'data/fetchReviews',
+  async (id, {extra: api}) => {
+    try {
+      const {data} = await api.get<ReviewType[]>(generatePath(APIRoute.Reviews, {id}));
+
+      return data;
+    }
+    catch(e) {
+      showNotify({
+        type: 'warn',
+        message: 'Failed to load reviews'
+      });
+      throw e;
+    }});
+
+export const sendReviewAction = createAsyncThunk<ReviewType[], reviewPostType, {
+  dispatch: AppDispatchType,
+  state: StateType,
+  extra: AxiosInstance
+}>(
+  'data/sendReview',
+  async ({
+    cameraId,
+    userName,
+    advantage,
+    disadvantage,
+    review,
+    rating
+  }, {extra: api}) => {
+    try {
+      const {data} = await api.post<ReviewType[]>(generatePath(APIRoute.Reviews, {id: String(cameraId)}), {
+        userName,
+        advantage,
+        disadvantage,
+        review,
+        rating
+      });
+
+      return data;
+    }
+    catch(e) {
+      showNotify({
+        type: 'warn',
+        message: 'Failed to send a review'
       });
       throw e;
     }});
