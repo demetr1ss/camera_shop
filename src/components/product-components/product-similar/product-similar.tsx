@@ -83,7 +83,7 @@ export default function ProductSimilar({ similarCameras }: ProductSimilarPropsTy
               type="button"
               aria-label="Следующий слайд"
               onClick={() => setCurrentSlide(currentSlide + SLIDE_STEP)}
-              disabled={currentSlide === slidesCount}
+              disabled={currentSlide === slidesCount - SLIDE_STEP}
             >
               <svg width="7" height="12" aria-hidden="true">
                 <use xlinkHref="#icon-arrow"></use>
