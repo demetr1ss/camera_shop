@@ -3624,7 +3624,6 @@ button,
   .slider-controls:active {
     color: #7575e2;
     background-color: #a2a2ff;
-    pointer-events: none;
   }
 
   .link:hover,
@@ -3651,12 +3650,8 @@ button,
   }
 
   .tabs__control:hover,
-  .tabs__control:focus {
-    background-color: #f4f4fc;
-  }
-
+  .tabs__control:focus,
   .tabs__control:active {
     background-color: #f4f4fc;
-    pointer-events: none;
   }
 }

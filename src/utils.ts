@@ -23,7 +23,7 @@ export const showNotify = (options: showNotifyPropsType): void => {
       });
       break;
     case ToastType.Warn:
-      toast.success(options.message, {
+      toast.warn(options.message, {
         toastId: 2,
         position: toast.POSITION.TOP_CENTER,
         autoClose: 2500,

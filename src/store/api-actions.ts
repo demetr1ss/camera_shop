@@ -1,10 +1,11 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AxiosInstance } from 'axios';
 import { generatePath } from 'react-router-dom';
-import { APIRoute } from '../const/const';
+import { APIRoute, AppRoute } from '../const/const';
 import { AppDispatchType, StateType } from '../types/state-type';
 import { CameraType, PromoType, reviewPostType, ReviewType } from '../types/types';
 import { showNotify } from '../utils';
+import { redirectToRoute } from './action';
 
 export const fetchCamerasAction = createAsyncThunk<{data: CameraType[], camerasTotalCount: number}, number, {
   dispatch: AppDispatchType,
@@ -72,8 +73,9 @@ export const fetchCameraAction = createAsyncThunk<CameraType, string, {
     catch(e) {
       showNotify({
         type: 'error',
-        message: 'Failed to load camera',
+        message: `Camera ${id} dosn't exist`,
       });
+      dispatch(redirectToRoute(AppRoute.NotFound));
       throw e;
     }});
 
@@ -94,8 +96,8 @@ export const fetchSimilarCamerasAction = createAsyncThunk<CameraType[], string, 
     }
     catch(e) {
       showNotify({
-        type: 'error',
-        message: 'Failed to load camera',
+        type: 'warn',
+        message: 'Failed to load similar camera',
       });
       throw e;
     }});
@@ -135,7 +137,8 @@ export const sendReviewAction = createAsyncThunk<ReviewType[], reviewPostType, {
     rating
   }, {extra: api}) => {
     try {
-      const {data} = await api.post<ReviewType[]>(generatePath(APIRoute.Reviews, {id: String(cameraId)}), {
+      const {data} = await api.post<ReviewType[]>(APIRoute.PostReview, {
+        cameraId,
         userName,
         advantage,
         disadvantage,

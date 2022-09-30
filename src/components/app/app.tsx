@@ -8,6 +8,7 @@ import { useAppSelector } from '../../hooks';
 import { getCamerasLoadingStatus } from '../../store/cameras-data/selectors';
 import LoadingScreen from '../../pages/loading-screen/loading-screen';
 import ProductScreen from '../../pages/product-screen/product-screen';
+import NotFoundScreen from '../../pages/not-found-screen/not-found-screen';
 
 
 export default function App(): JSX.Element {
@@ -32,6 +33,10 @@ export default function App(): JSX.Element {
         <Route
           path={AppRoute.ProductPage}
           element={<ProductScreen />}
+        />
+        <Route
+          path="*"
+          element={<NotFoundScreen />}
         />
       </Routes>
     </HistoryRouter >
