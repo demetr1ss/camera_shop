@@ -36,3 +36,5 @@ export const showNotify = (options: showNotifyPropsType): void => {
   }};
 
 export const getArrayWithFixLength = (length: number) => Array.from({length}, (_, i) => i + 1);
+
+export const scrollToTop = () => window.scrollTo(0, 0);

@@ -8,8 +8,9 @@ import Product from '../../components/product-components/product/product';
 import Reviews from '../../components/product-components/reviews/reviews';
 import { LoadingStatus } from '../../const/const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { fetchCameraAction, fetchSimilarCamerasAction } from '../../store/api-actions';
+import { fetchCameraAction, fetchReviewsAction, fetchSimilarCamerasAction } from '../../store/api-actions';
 import { getCamera, getCameraLoadingStatus, getSimilarCameras } from '../../store/cameras-data/selectors';
+import { scrollToTop } from '../../utils';
 import LoadingScreen from '../loading-screen/loading-screen';
 
 export default function ProductScreen(): JSX.Element {
@@ -19,6 +20,7 @@ export default function ProductScreen(): JSX.Element {
   useEffect(() => {
     dispatch(fetchCameraAction(`${params.id}`));
     dispatch(fetchSimilarCamerasAction(`${params.id}`));
+    dispatch(fetchReviewsAction(`${params.id}`));
   }, [dispatch, params.id]);
 
   const camera = useAppSelector(getCamera);
@@ -48,11 +50,11 @@ export default function ProductScreen(): JSX.Element {
           <Reviews />
         </div >
       </main >
-      <a className="up-btn" href="#header">
+      <button type="button" className="up-btn" onClick={() => scrollToTop()}>
         <svg width="12" height="18" aria-hidden="true">
           <use xlinkHref="#icon-arrow2" />
         </svg>
-      </a>
+      </button>
       <Footer />
     </div>
   );

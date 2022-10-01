@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import browserHistory from '../../browser-history';
 import { DEFAULT_PAGE, NameSpace } from '../../const/const';
 
 export type AppProcessType = {
@@ -6,7 +7,7 @@ export type AppProcessType = {
 }
 
 const initialState: AppProcessType = {
-  currentPage: DEFAULT_PAGE
+  currentPage: Number(browserHistory.location?.search.at(-1) || DEFAULT_PAGE)
 };
 
 export const appProcess = createSlice({

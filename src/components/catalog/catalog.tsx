@@ -1,19 +1,11 @@
 import Pagination from '../pagination/pagination';
-import browserHistory from '../../browser-history';
 import { AppRoute, Filters, MAX_RATING } from '../../const/const';
 import { useAppSelector } from '../../hooks';
 import { getCameras } from '../../store/cameras-data/selectors';
-import { getCurrentPage } from '../../store/app-process/selectors';
-import { useEffect } from 'react';
 import { generatePath, Link } from 'react-router-dom';
 
 export default function Catalog(): JSX.Element {
   const cameras = useAppSelector(getCameras);
-  const currentPage = useAppSelector(getCurrentPage);
-
-  useEffect(() => {
-    browserHistory.push(`?_page=${currentPage}`);
-  }, [currentPage]);
 
   return (
     <section className="catalog">

@@ -1,5 +1,7 @@
 import cn from 'classnames';
+import { useEffect } from 'react';
 import { generatePath, Link } from 'react-router-dom';
+import browserHistory from '../../browser-history';
 import { AppRoute, DEFAULT_PAGE, LIMIT_CARD_PER_PAGE, PAGE_STEP } from '../../const/const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { fetchCamerasAction } from '../../store/api-actions';
@@ -9,18 +11,19 @@ import { getCamerasTotalCount } from '../../store/cameras-data/selectors';
 import { getArrayWithFixLength } from '../../utils';
 
 export default function Pagination() {
-  const camerasTotalCount = useAppSelector(getCamerasTotalCount);
   const dispatch = useAppDispatch();
-  const currentPage = useAppSelector(getCurrentPage);
+  const camerasTotalCount = useAppSelector(getCamerasTotalCount);
   const pageCount = Math.ceil(camerasTotalCount / LIMIT_CARD_PER_PAGE);
+  const currentPage = useAppSelector(getCurrentPage);
 
-  const handlePageButtonClick = (page: number) => {
-    if (page === currentPage) {
-      return;
-    }
+  useEffect(() => {
+    browserHistory.push(browserHistory.location?.search || `?_page=${currentPage}`);
+  }, [currentPage]);
 
+
+  const handlerPageClick = (page: number) => {
+    dispatch(fetchCamerasAction(page));
     dispatch(changeCurrentPage(page));
-    dispatch(fetchCamerasAction((page)));
   };
 
   return (
@@ -29,7 +32,7 @@ export default function Pagination() {
         {currentPage !== DEFAULT_PAGE &&
           <li
             className="pagination__item"
-            onClick={() => handlePageButtonClick(currentPage - PAGE_STEP)}
+            onClick={() => handlerPageClick(currentPage - PAGE_STEP)}
           >
             <Link
               className="pagination__link pagination__link--text"
@@ -45,7 +48,7 @@ export default function Pagination() {
           });
 
           return (
-            <li className="pagination__item" key={page} onClick={() => handlePageButtonClick(page)}>
+            <li className="pagination__item" key={page} onClick={() => handlerPageClick(page)}>
               <Link
                 className={currentPageClassName}
                 to={generatePath(AppRoute.CatalogPage, { page: String(page) })}
@@ -57,7 +60,7 @@ export default function Pagination() {
         })}
 
         {currentPage !== pageCount &&
-          <li className="pagination__item" onClick={() => handlePageButtonClick(currentPage + PAGE_STEP)}>
+          <li className="pagination__item" onClick={() => handlerPageClick(currentPage + PAGE_STEP)}>
             <Link
               className="pagination__link pagination__link--text"
               to={generatePath(AppRoute.CatalogPage, { page: String(currentPage + PAGE_STEP) })}

@@ -7,8 +7,9 @@ import { Provider } from 'react-redux';
 import { fetchCamerasAction, fetchPromoAction } from './store/api-actions';
 import { DEFAULT_PAGE } from './const/const';
 import 'react-toastify/dist/ReactToastify.css';
+import browserHistory from './browser-history';
 
-store.dispatch(fetchCamerasAction(DEFAULT_PAGE));
+store.dispatch(fetchCamerasAction(Number(browserHistory.location?.search.at(-1)) || DEFAULT_PAGE));
 store.dispatch(fetchPromoAction());
 
 const root = ReactDOM.createRoot(
