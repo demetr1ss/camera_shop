@@ -1,9 +1,15 @@
-import { MAX_RATING } from '../../../const/const';
+import { useState } from 'react';
+import { MAX_RATING, REVIEWS_PER_PAGE } from '../../../const/const';
 import { useAppSelector } from '../../../hooks';
 import { getReviews } from '../../../store/reviews-data/selectors';
 
 export default function Reviews(): JSX.Element {
   const reviews = useAppSelector(getReviews);
+  const [next, setNext] = useState(0);
+
+  const visibleReviews = reviews.slice(
+    0, next + REVIEWS_PER_PAGE
+  );
 
   return (
     <div className="page-content__section">
@@ -14,7 +20,7 @@ export default function Reviews(): JSX.Element {
             <button className="btn" type="button">Оставить свой отзыв</button>
           </div>
           <ul className="review-block__list">
-            {reviews.map((reviewItem) => {
+            {visibleReviews.map((reviewItem) => {
               const {
                 id,
                 userName,
@@ -52,10 +58,16 @@ export default function Reviews(): JSX.Element {
                 </li>);
             })}
           </ul>
+          {visibleReviews.length !== reviews.length &&
           <div className="review-block__buttons">
-            <button className="btn btn--purple" type="button">Показать больше отзывов
+            <button
+              className="btn btn--purple"
+              type="button"
+              onClick={() => setNext(next + REVIEWS_PER_PAGE)}
+            >
+              Показать больше отзывов
             </button>
-          </div>
+          </div>}
         </div>
       </section>
     </div>
