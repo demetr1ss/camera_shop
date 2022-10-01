@@ -2,14 +2,17 @@ import { useState } from 'react';
 import { MAX_RATING, REVIEWS_PER_PAGE } from '../../../const/const';
 import { useAppSelector } from '../../../hooks';
 import { getReviews } from '../../../store/reviews-data/selectors';
+import { dateTime, humanDate, sortReviewFromNewToOld } from '../../../utils';
 
 export default function Reviews(): JSX.Element {
   const reviews = useAppSelector(getReviews);
+  const sortedReviews = sortReviewFromNewToOld([...reviews]);
   const [next, setNext] = useState(0);
 
-  const visibleReviews = reviews.slice(
+  const visibleReviews = sortedReviews.slice(
     0, next + REVIEWS_PER_PAGE
   );
+
 
   return (
     <div className="page-content__section">
@@ -34,7 +37,7 @@ export default function Reviews(): JSX.Element {
                 <li className="review-card" key={id}>
                   <div className="review-card__head">
                     <p className="title title--h4">{userName}</p>
-                    <time className="review-card__data" dateTime="2022-04-13">{createAt}</time>
+                    <time className="review-card__data" dateTime={dateTime(createAt)}>{humanDate(createAt)}</time>
                   </div>
                   <div className="rate review-card__rate">
                     {Array.from({ length: MAX_RATING }, (_, index) => (
@@ -58,7 +61,7 @@ export default function Reviews(): JSX.Element {
                 </li>);
             })}
           </ul>
-          {visibleReviews.length !== reviews.length &&
+          {visibleReviews.length !== sortedReviews.length &&
           <div className="review-block__buttons">
             <button
               className="btn btn--purple"
