@@ -1,9 +1,9 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AxiosInstance } from 'axios';
 import { generatePath } from 'react-router-dom';
-import { APIRoute, AppRoute, REVIEWS_PER_PAGE } from '../const/const';
+import { APIRoute, AppRoute } from '../const/const';
 import { AppDispatchType, StateType } from '../types/state-type';
-import { CameraType, fetchReviewType, PromoType, reviewPostType, ReviewType } from '../types/types';
+import { CameraType, FetchReviewType, PromoType, ReviewPostType, ReviewType } from '../types/types';
 import { showNotify } from '../utils';
 import { redirectToRoute } from './action';
 
@@ -66,10 +66,6 @@ export const fetchCameraAction = createAsyncThunk<CameraType, string, {
         id
       }));
       dispatch(fetchSimilarCamerasAction(String(id)));
-      dispatch(fetchReviewsAction({
-        id,
-        count: String(REVIEWS_PER_PAGE)
-      }));
 
       return data;
 
@@ -106,7 +102,7 @@ export const fetchSimilarCamerasAction = createAsyncThunk<CameraType[], string, 
       throw e;
     }});
 
-export const fetchReviewsAction = createAsyncThunk<{data: ReviewType[], reviewsTotalCount: number}, fetchReviewType, {
+export const fetchReviewsAction = createAsyncThunk<{data: ReviewType[], reviewsTotalCount: number}, FetchReviewType, {
   dispatch: AppDispatchType,
   state: StateType,
   extra: AxiosInstance
@@ -129,29 +125,15 @@ export const fetchReviewsAction = createAsyncThunk<{data: ReviewType[], reviewsT
       throw e;
     }});
 
-export const sendReviewAction = createAsyncThunk<ReviewType[], reviewPostType, {
+export const sendReviewAction = createAsyncThunk<ReviewType, ReviewPostType, {
   dispatch: AppDispatchType,
   state: StateType,
   extra: AxiosInstance
 }>(
   'data/sendReview',
-  async ({
-    cameraId,
-    userName,
-    advantage,
-    disadvantage,
-    review,
-    rating
-  }, {extra: api}) => {
+  async (review, {extra: api}) => {
     try {
-      const {data} = await api.post<ReviewType[]>(APIRoute.PostReview, {
-        cameraId,
-        userName,
-        advantage,
-        disadvantage,
-        review,
-        rating
-      });
+      const {data} = await api.post<ReviewType>(APIRoute.PostReview, review);
 
       return data;
     }

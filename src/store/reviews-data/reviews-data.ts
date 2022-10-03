@@ -1,18 +1,18 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { LoadingStatus, NameSpace, REVIEWS_PER_PAGE } from '../../const/const';
-import { fetchReviewsAction, sendReviewAction } from '../api-actions';
 import { ReviewType } from '../../types/types';
+import { fetchReviewsAction, sendReviewAction } from '../api-actions';
 
 export type ReviewsDataType = {
   reviews: ReviewType[];
-  isReviewsLoading: boolean
+  reviewLoadingStatus: LoadingStatus
   reviewSendingStatus: LoadingStatus;
   reviewsTotalCount: number;
 };
 
 const initialState: ReviewsDataType = {
   reviews: [],
-  isReviewsLoading: false,
+  reviewLoadingStatus: LoadingStatus.Idle,
   reviewSendingStatus: LoadingStatus.Idle,
   reviewsTotalCount: REVIEWS_PER_PAGE,
 };
@@ -26,20 +26,21 @@ export const reviewsData = createSlice({
       .addCase(fetchReviewsAction.fulfilled, (state, action) => {
         state.reviews = action.payload.data;
         state.reviewsTotalCount = action.payload.reviewsTotalCount;
-        state.isReviewsLoading = false;
+        state.reviewLoadingStatus = LoadingStatus.Fulfilled;
       })
       .addCase(fetchReviewsAction.rejected, (state) => {
         state.reviews = [];
-        state.isReviewsLoading = false;
+        state.reviewLoadingStatus = LoadingStatus.Rejected;
       })
       .addCase(fetchReviewsAction.pending, (state) => {
-        state.isReviewsLoading = true;
+        state.reviewLoadingStatus = LoadingStatus.Pending;
       })
       .addCase(sendReviewAction.pending, (state) => {
         state.reviewSendingStatus = LoadingStatus.Pending;
       })
       .addCase(sendReviewAction.fulfilled, (state, action) => {
-        state.reviews = action.payload;
+        state.reviews.pop();
+        state.reviews.unshift(action.payload);
         state.reviewSendingStatus = LoadingStatus.Fulfilled;
       })
       .addCase(sendReviewAction.rejected, (state) => {

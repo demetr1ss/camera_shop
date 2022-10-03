@@ -5,7 +5,9 @@ import ProductSimilar from '../../components/product-components/product-similar/
 import Product from '../../components/product-components/product/product';
 import Reviews from '../../components/product-components/reviews/reviews';
 import LoadingScreen from '../loading-screen/loading-screen';
-import { useEffect } from 'react';
+import ReviewForm from '../../components/product-components/review-modal/review-form';
+import { RemoveScroll } from 'react-remove-scroll';
+import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { LoadingStatus } from '../../const/const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
@@ -23,6 +25,7 @@ export default function ProductScreen(): JSX.Element {
 
   const camera = useAppSelector(getCamera);
   const similarCameras = useAppSelector(getSimilarCameras);
+  const [isReviewModalOpened, setIsReviewModalOpened] = useState(false);
 
   const cameraLoadingStatus = useAppSelector(getCameraLoadingStatus);
 
@@ -40,19 +43,22 @@ export default function ProductScreen(): JSX.Element {
     <div className="wrapper">
       <Header />
       <main>
-
         <div className="page-content">
           <Breadcrumbs productName={camera.name} />
           <Product camera={camera} />
           {similarCameras.length > 0 && <ProductSimilar similarCameras={similarCameras} />}
-          <Reviews cameraId={String(id)} />
+          <Reviews cameraId={String(id)} setIsReviewModalOpened={setIsReviewModalOpened} />
         </div >
+        <button type="button" className="up-btn" onClick={() => scrollToTop()}>
+          <svg width="12" height="18" aria-hidden="true">
+            <use xlinkHref="#icon-arrow2" />
+          </svg>
+        </button>
+        {isReviewModalOpened &&
+          <RemoveScroll enabled={isReviewModalOpened}>
+            <ReviewForm isReviewModalOpened={isReviewModalOpened} setIsReviewModalOpened={setIsReviewModalOpened} />
+          </RemoveScroll>}
       </main >
-      <button type="button" className="up-btn" onClick={() => scrollToTop()}>
-        <svg width="12" height="18" aria-hidden="true">
-          <use xlinkHref="#icon-arrow2" />
-        </svg>
-      </button>
       <Footer />
     </div>
   );

@@ -35,7 +35,7 @@ export type ReviewType = {
   cameraId: number,
 }
 
-export type reviewPostType = {
+export type ReviewPostType = {
   cameraId: number,
   userName: string,
   advantage: string,
@@ -44,7 +44,9 @@ export type reviewPostType = {
   rating: number,
 }
 
-export type fetchReviewType = {
+export type FetchReviewType = {
   id: string;
   count: string;
 }
+
+export type ReviewPostKeysType = keyof ReviewPostType;

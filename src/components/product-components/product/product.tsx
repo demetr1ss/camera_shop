@@ -3,7 +3,7 @@ import { MAX_RATING } from '../../../const/const';
 import { CameraType } from '../../../types/types';
 
 type ProductPropsType = {
-  camera: CameraType
+  camera: CameraType;
 }
 
 export default function Product({ camera }: ProductPropsType): JSX.Element {
@@ -51,7 +51,7 @@ export default function Product({ camera }: ProductPropsType): JSX.Element {
                 <use xlinkHref="#icon-add-basket" />
               </svg>Добавить в корзину
             </button>
-            <ProductTabs camera={camera}/>
+            <ProductTabs camera={camera} />
           </div>
         </div>
       </section>

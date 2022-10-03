@@ -1,4 +1,5 @@
 export const MAX_RATING = 5;
+export const MIN_REVIEW_LENGTH = 5;
 export const DEFAULT_PAGE = 1;
 export const LIMIT_CARD_PER_PAGE = 9;
 export const PAGE_STEP = 1;
@@ -65,3 +66,17 @@ export const ProductTabsHash = {
   Specifications: '#specifications',
   Description: '#description'
 } as const;
+
+type RatingTitlesType = {
+  [key: number]: string
+}
+
+export const RatingTitle: RatingTitlesType = {
+  1: 'Ужасно',
+  2: 'Плохо',
+  3: 'Нормально',
+  4: 'Хорошо',
+  5: 'Отлично'
+} as const;
+
+export const rating = Object.keys(RatingTitle).reverse().map(Number);

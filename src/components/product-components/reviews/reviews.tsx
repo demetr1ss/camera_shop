@@ -1,6 +1,5 @@
-/* eslint-disable no-console */
 import { useEffect, useState } from 'react';
-import { MAX_RATING, REVIEWS_PER_PAGE } from '../../../const/const';
+import { LoadingStatus, MAX_RATING, REVIEWS_PER_PAGE } from '../../../const/const';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { fetchReviewsAction } from '../../../store/api-actions';
 import { gerReviewsTotalCount, getReviews, getReviewsLoadingStatus } from '../../../store/reviews-data/selectors';
@@ -8,12 +7,13 @@ import { dateTime, humanDate } from '../../../utils';
 
 type ReviewsPropsType = {
   cameraId: string;
+  setIsReviewModalOpened: (status: boolean) => void;
 }
 
-export default function Reviews({ cameraId }: ReviewsPropsType): JSX.Element {
+export default function Reviews({ cameraId, setIsReviewModalOpened }: ReviewsPropsType): JSX.Element {
   const dispatch = useAppDispatch();
   const reviews = useAppSelector(getReviews);
-  const isReviewsLoading = useAppSelector(getReviewsLoadingStatus);
+  const reviewLoadingStatus = useAppSelector(getReviewsLoadingStatus);
   const reviewsTotalCount = useAppSelector(gerReviewsTotalCount);
   const [reviewsCount, setReviewsCount] = useState(REVIEWS_PER_PAGE);
 
@@ -22,7 +22,7 @@ export default function Reviews({ cameraId }: ReviewsPropsType): JSX.Element {
       id: cameraId,
       count: String(reviewsCount)
     }));
-  }, [cameraId, dispatch, reviewsCount]);
+  }, [cameraId, dispatch, reviewsCount, reviewsTotalCount]);
 
   return (
     <div className="page-content__section">
@@ -30,10 +30,10 @@ export default function Reviews({ cameraId }: ReviewsPropsType): JSX.Element {
         <div className="container">
           <div className="page-content__headed">
             <h2 className="title title--h3">Отзывы</h2>
-            <button className="btn" type="button">Оставить свой отзыв</button>
+            <button className="btn" type="button" onClick={() => setIsReviewModalOpened(true)}>Оставить свой отзыв</button>
           </div>
           <ul className="review-block__list">
-            {reviews.map((reviewItem) => {
+            {reviews?.map((reviewItem) => {
               const {
                 id,
                 userName,
@@ -77,9 +77,9 @@ export default function Reviews({ cameraId }: ReviewsPropsType): JSX.Element {
                 className="btn btn--purple"
                 type="button"
                 onClick={() => setReviewsCount(reviewsCount + REVIEWS_PER_PAGE)}
-                disabled={isReviewsLoading}
+                disabled={reviewLoadingStatus === LoadingStatus.Pending}
               >
-                {isReviewsLoading ? 'Загружаем больше отзывов...' : 'Показать больше отзывов'}
+                {reviewLoadingStatus === LoadingStatus.Pending ? 'Загружаем больше отзывов...' : 'Показать больше отзывов'}
               </button>
             </div>}
         </div>
