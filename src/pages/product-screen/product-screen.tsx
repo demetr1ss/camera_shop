@@ -1,27 +1,25 @@
-import { useEffect } from 'react';
-import { useParams } from 'react-router-dom';
 import Breadcrumbs from '../../components/breadcrumbs/breadcrumbs';
 import Footer from '../../components/footer/footer';
 import Header from '../../components/header/header';
 import ProductSimilar from '../../components/product-components/product-similar/product-similar';
 import Product from '../../components/product-components/product/product';
 import Reviews from '../../components/product-components/reviews/reviews';
+import LoadingScreen from '../loading-screen/loading-screen';
+import { useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import { LoadingStatus } from '../../const/const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { fetchCameraAction, fetchReviewsAction, fetchSimilarCamerasAction } from '../../store/api-actions';
+import { fetchCameraAction } from '../../store/api-actions';
 import { getCamera, getCameraLoadingStatus, getSimilarCameras } from '../../store/cameras-data/selectors';
 import { scrollToTop } from '../../utils';
-import LoadingScreen from '../loading-screen/loading-screen';
 
 export default function ProductScreen(): JSX.Element {
-  const params = useParams();
+  const { id } = useParams();
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(fetchCameraAction(`${params.id}`));
-    dispatch(fetchSimilarCamerasAction(`${params.id}`));
-    dispatch(fetchReviewsAction(`${params.id}`));
-  }, [dispatch, params.id]);
+    dispatch(fetchCameraAction(String(id)));
+  }, [dispatch, id]);
 
   const camera = useAppSelector(getCamera);
   const similarCameras = useAppSelector(getSimilarCameras);
@@ -47,7 +45,7 @@ export default function ProductScreen(): JSX.Element {
           <Breadcrumbs productName={camera.name} />
           <Product camera={camera} />
           {similarCameras.length > 0 && <ProductSimilar similarCameras={similarCameras} />}
-          <Reviews />
+          <Reviews cameraId={String(id)} />
         </div >
       </main >
       <button type="button" className="up-btn" onClick={() => scrollToTop()}>

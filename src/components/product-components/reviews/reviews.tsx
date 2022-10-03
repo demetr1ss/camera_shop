@@ -1,18 +1,28 @@
-import { useState } from 'react';
+/* eslint-disable no-console */
+import { useEffect, useState } from 'react';
 import { MAX_RATING, REVIEWS_PER_PAGE } from '../../../const/const';
-import { useAppSelector } from '../../../hooks';
-import { getReviews } from '../../../store/reviews-data/selectors';
-import { dateTime, humanDate, sortReviewFromNewToOld } from '../../../utils';
+import { useAppDispatch, useAppSelector } from '../../../hooks';
+import { fetchReviewsAction } from '../../../store/api-actions';
+import { gerReviewsTotalCount, getReviews, getReviewsLoadingStatus } from '../../../store/reviews-data/selectors';
+import { dateTime, humanDate } from '../../../utils';
 
-export default function Reviews(): JSX.Element {
+type ReviewsPropsType = {
+  cameraId: string;
+}
+
+export default function Reviews({ cameraId }: ReviewsPropsType): JSX.Element {
+  const dispatch = useAppDispatch();
   const reviews = useAppSelector(getReviews);
-  const sortedReviews = sortReviewFromNewToOld([...reviews]);
-  const [next, setNext] = useState(0);
+  const isReviewsLoading = useAppSelector(getReviewsLoadingStatus);
+  const reviewsTotalCount = useAppSelector(gerReviewsTotalCount);
+  const [reviewsCount, setReviewsCount] = useState(REVIEWS_PER_PAGE);
 
-  const visibleReviews = sortedReviews.slice(
-    0, next + REVIEWS_PER_PAGE
-  );
-
+  useEffect(() => {
+    dispatch(fetchReviewsAction({
+      id: cameraId,
+      count: String(reviewsCount)
+    }));
+  }, [cameraId, dispatch, reviewsCount]);
 
   return (
     <div className="page-content__section">
@@ -23,7 +33,7 @@ export default function Reviews(): JSX.Element {
             <button className="btn" type="button">Оставить свой отзыв</button>
           </div>
           <ul className="review-block__list">
-            {visibleReviews.map((reviewItem) => {
+            {reviews.map((reviewItem) => {
               const {
                 id,
                 userName,
@@ -61,16 +71,17 @@ export default function Reviews(): JSX.Element {
                 </li>);
             })}
           </ul>
-          {visibleReviews.length !== sortedReviews.length &&
-          <div className="review-block__buttons">
-            <button
-              className="btn btn--purple"
-              type="button"
-              onClick={() => setNext(next + REVIEWS_PER_PAGE)}
-            >
-              Показать больше отзывов
-            </button>
-          </div>}
+          {reviewsCount < reviewsTotalCount &&
+            <div className="review-block__buttons">
+              <button
+                className="btn btn--purple"
+                type="button"
+                onClick={() => setReviewsCount(reviewsCount + REVIEWS_PER_PAGE)}
+                disabled={isReviewsLoading}
+              >
+                {isReviewsLoading ? 'Загружаем больше отзывов...' : 'Показать больше отзывов'}
+              </button>
+            </div>}
         </div>
       </section>
     </div>

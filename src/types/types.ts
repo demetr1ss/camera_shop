@@ -43,3 +43,8 @@ export type reviewPostType = {
   review: string,
   rating: number,
 }
+
+export type fetchReviewType = {
+  id: string;
+  count: string;
+}

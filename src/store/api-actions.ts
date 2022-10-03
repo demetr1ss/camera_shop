@@ -1,9 +1,9 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AxiosInstance } from 'axios';
 import { generatePath } from 'react-router-dom';
-import { APIRoute, AppRoute } from '../const/const';
+import { APIRoute, AppRoute, REVIEWS_PER_PAGE } from '../const/const';
 import { AppDispatchType, StateType } from '../types/state-type';
-import { CameraType, PromoType, reviewPostType, ReviewType } from '../types/types';
+import { CameraType, fetchReviewType, PromoType, reviewPostType, ReviewType } from '../types/types';
 import { showNotify } from '../utils';
 import { redirectToRoute } from './action';
 
@@ -65,7 +65,11 @@ export const fetchCameraAction = createAsyncThunk<CameraType, string, {
       const {data} = await api.get<CameraType>(generatePath(APIRoute.Camera, {
         id
       }));
-      dispatch(fetchReviewsAction(id));
+      dispatch(fetchSimilarCamerasAction(String(id)));
+      dispatch(fetchReviewsAction({
+        id,
+        count: String(REVIEWS_PER_PAGE)
+      }));
 
       return data;
 
@@ -102,17 +106,20 @@ export const fetchSimilarCamerasAction = createAsyncThunk<CameraType[], string, 
       throw e;
     }});
 
-export const fetchReviewsAction = createAsyncThunk<ReviewType[], string, {
+export const fetchReviewsAction = createAsyncThunk<{data: ReviewType[], reviewsTotalCount: number}, fetchReviewType, {
   dispatch: AppDispatchType,
   state: StateType,
   extra: AxiosInstance
 }>(
   'data/fetchReviews',
-  async (id, {extra: api}) => {
+  async ({id, count}, {extra: api}) => {
     try {
-      const {data} = await api.get<ReviewType[]>(generatePath(APIRoute.Reviews, {id}));
+      const {data, headers} = await api.get<ReviewType[]>(generatePath(APIRoute.Reviews, {id, count}));
 
-      return data;
+      return {
+        data,
+        reviewsTotalCount: headers['x-total-count']
+      };
     }
     catch(e) {
       showNotify({

@@ -1,5 +1,4 @@
 import { toast, Zoom } from 'react-toastify';
-import { ReviewType } from './types/types';
 
 type showNotifyPropsType = {
   type: string;
@@ -39,11 +38,6 @@ export const showNotify = (options: showNotifyPropsType): void => {
 export const getArrayWithFixLength = (length: number) => Array.from({length}, (_, i) => i + 1);
 
 export const scrollToTop = () => window.scrollTo(0, 0);
-
-export const sortReviewFromNewToOld = (reviews: ReviewType[]) =>
-  reviews.sort((a: ReviewType, b: ReviewType) =>
-    Date.parse(b.createAt) - Date.parse(a.createAt)
-  );
 
 export const humanDate = (date: string) => new Date(date).toLocaleDateString('ru-GB', {
   day: 'numeric',

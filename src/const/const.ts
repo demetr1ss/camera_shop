@@ -1,3 +1,11 @@
+export const MAX_RATING = 5;
+export const DEFAULT_PAGE = 1;
+export const LIMIT_CARD_PER_PAGE = 9;
+export const PAGE_STEP = 1;
+export const MAX_SIMILAR_CAMERAS = 3;
+export const SLIDE_STEP = 1;
+export const REVIEWS_PER_PAGE = 3;
+
 export const enum AppRoute {
   Main = '/',
   CatalogPage = '/catalog',
@@ -32,7 +40,7 @@ export const Filters: FiltersType = {
 export const APIRoute = {
   Cameras: '/cameras?_limit=9&_page=:page',
   Camera: '/cameras/:id',
-  Reviews: '/cameras/:id/reviews',
+  Reviews: '/cameras/:id/reviews?_sort=createAt&_order=desc&_end=:count',
   PostReview: '/reviews',
   SimilarCameras: '/cameras/:id/similar',
   Promo: '/promo',
@@ -57,11 +65,3 @@ export const ProductTabsHash = {
   Specifications: '#specifications',
   Description: '#description'
 } as const;
-
-export const MAX_RATING = 5;
-export const DEFAULT_PAGE = 1;
-export const LIMIT_CARD_PER_PAGE = 9;
-export const PAGE_STEP = 1;
-export const MAX_SIMILAR_CAMERAS = 3;
-export const SLIDE_STEP = 1;
-export const REVIEWS_PER_PAGE = 3;
