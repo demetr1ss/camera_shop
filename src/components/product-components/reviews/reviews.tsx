@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react';
 import { LoadingStatus, MAX_RATING, REVIEWS_PER_PAGE } from '../../../const/const';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { fetchReviewsAction } from '../../../store/api-actions';
-import { gerReviewsTotalCount, getReviews, getReviewsLoadingStatus } from '../../../store/reviews-data/selectors';
-import { dateTime, humanDate } from '../../../utils';
+import { getReviews, getReviewsLoadingStatus, getReviewsTotalCount } from '../../../store/reviews-data/selectors';
+import { dateTime, humanDate } from '../../../utils/utils';
 
 type ReviewsPropsType = {
   cameraId: string;
@@ -14,7 +14,7 @@ export default function Reviews({ cameraId, setIsReviewModalOpened }: ReviewsPro
   const dispatch = useAppDispatch();
   const reviews = useAppSelector(getReviews);
   const reviewLoadingStatus = useAppSelector(getReviewsLoadingStatus);
-  const reviewsTotalCount = useAppSelector(gerReviewsTotalCount);
+  const reviewsTotalCount = useAppSelector(getReviewsTotalCount);
   const [reviewsCount, setReviewsCount] = useState(REVIEWS_PER_PAGE);
 
   useEffect(() => {
@@ -22,7 +22,7 @@ export default function Reviews({ cameraId, setIsReviewModalOpened }: ReviewsPro
       id: cameraId,
       count: String(reviewsCount)
     }));
-  }, [cameraId, dispatch, reviewsCount, reviewsTotalCount]);
+  }, [cameraId, dispatch, reviewsCount]);
 
   return (
     <div className="page-content__section">

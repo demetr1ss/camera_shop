@@ -2,10 +2,10 @@ import cn from 'classnames';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useParams } from 'react-router-dom';
-import { LoadingStatus, MIN_REVIEW_LENGTH } from '../../../../const/const';
+import { LoadingStatus, MIN_REVIEW_LENGTH, REVIEWS_PER_PAGE } from '../../../../const/const';
 import { useAppDispatch, useAppSelector } from '../../../../hooks';
 import useKeydown from '../../../../hooks/use-keydown';
-import { sendReviewAction } from '../../../../store/api-actions';
+import { fetchReviewsAction, sendReviewAction } from '../../../../store/api-actions';
 import { changeReviewSendingStatus } from '../../../../store/reviews-data/reviews-data';
 import { getReviewSendingStatus } from '../../../../store/reviews-data/selectors';
 import { ReviewPostKeysType, ReviewPostType } from '../../../../types/types';
@@ -33,6 +33,10 @@ export default function ReviewForm({ isReviewModalOpened, setIsReviewModalOpened
         setIsReviewModalOpened(false);
         setIsReviewSuccessModalOpened(true);
         dispatch(changeReviewSendingStatus(LoadingStatus.Idle));
+        dispatch(fetchReviewsAction({
+          id: String(id),
+          count: String(REVIEWS_PER_PAGE)
+        }));
         break;
       case LoadingStatus.Pending:
         setFormDisabled(true);
@@ -46,7 +50,7 @@ export default function ReviewForm({ isReviewModalOpened, setIsReviewModalOpened
       default:
         throw new Error(`sendingStatus-${sendingStatus} dosn't exist`);
     }
-  }, [dispatch, sendingStatus, setIsReviewModalOpened, setIsReviewSuccessModalOpened]);
+  }, [dispatch, id, sendingStatus, setIsReviewModalOpened, setIsReviewSuccessModalOpened]);
 
   const {
     register,

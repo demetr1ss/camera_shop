@@ -1,12 +1,15 @@
-import ProductTabs from '../product-tabs/product-tabs';
 import { MAX_RATING } from '../../../const/const';
+import { useAppSelector } from '../../../hooks';
+import { getReviewsTotalCount } from '../../../store/reviews-data/selectors';
 import { CameraType } from '../../../types/types';
+import ProductTabs from '../product-tabs/product-tabs';
 
 type ProductPropsType = {
   camera: CameraType;
 }
 
 export default function Product({ camera }: ProductPropsType): JSX.Element {
+  const reviewsCount = useAppSelector(getReviewsTotalCount);
   const {
     previewImgWebp,
     previewImgWebp2x,
@@ -14,7 +17,6 @@ export default function Product({ camera }: ProductPropsType): JSX.Element {
     previewImg2x,
     name,
     rating,
-    reviewCount,
     price,
   } = camera;
 
@@ -40,7 +42,7 @@ export default function Product({ camera }: ProductPropsType): JSX.Element {
                 Рейтинг: {rating}
               </p>
               <p className="rate__count"><span className="visually-hidden">Всего оценок:</span>
-                {reviewCount}
+                {reviewsCount}
               </p>
             </div>
             <p className="product__price">

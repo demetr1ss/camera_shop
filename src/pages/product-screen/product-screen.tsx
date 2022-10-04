@@ -15,7 +15,7 @@ import { LoadingStatus } from '../../const/const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { fetchCameraAction } from '../../store/api-actions';
 import { getCamera, getCameraLoadingStatus, getSimilarCameras } from '../../store/cameras-data/selectors';
-import { scrollToTop } from '../../utils';
+import { scrollToTop } from '../../utils/utils';
 
 export default function ProductScreen(): JSX.Element {
   const { id } = useParams();
@@ -69,7 +69,7 @@ export default function ProductScreen(): JSX.Element {
           </FocusLock>}
         {isReviewSuccessModalOpened &&
           <FocusLock>
-            <RemoveScroll enabled={isReviewModalOpened}>
+            <RemoveScroll enabled={isReviewSuccessModalOpened}>
               <ReviewSuccessModal setIsReviewSuccessModalOpened={setIsReviewSuccessModalOpened} />
             </RemoveScroll>
           </FocusLock>}

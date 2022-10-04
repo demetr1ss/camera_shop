@@ -4,7 +4,7 @@ import { generatePath } from 'react-router-dom';
 import { APIRoute, AppRoute } from '../const/const';
 import { AppDispatchType, StateType } from '../types/state-type';
 import { CameraType, FetchReviewType, PromoType, ReviewPostType, ReviewType } from '../types/types';
-import { showNotify } from '../utils';
+import { showNotify } from '../utils/utils';
 import { redirectToRoute } from './action';
 
 export const fetchCamerasAction = createAsyncThunk<{data: CameraType[], camerasTotalCount: number}, number, {
@@ -125,7 +125,7 @@ export const fetchReviewsAction = createAsyncThunk<{data: ReviewType[], reviewsT
       throw e;
     }});
 
-export const sendReviewAction = createAsyncThunk<ReviewType, ReviewPostType, {
+export const sendReviewAction = createAsyncThunk<void, ReviewPostType, {
   dispatch: AppDispatchType,
   state: StateType,
   extra: AxiosInstance
@@ -133,9 +133,7 @@ export const sendReviewAction = createAsyncThunk<ReviewType, ReviewPostType, {
   'data/sendReview',
   async (review, {extra: api}) => {
     try {
-      const {data} = await api.post<ReviewType>(APIRoute.PostReview, review);
-
-      return data;
+      await api.post<ReviewType>(APIRoute.PostReview, review);
     }
     catch(e) {
       showNotify({

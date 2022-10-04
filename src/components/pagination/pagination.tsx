@@ -8,7 +8,7 @@ import { fetchCamerasAction } from '../../store/api-actions';
 import { changeCurrentPage } from '../../store/app-process/app-process';
 import { getCurrentPage } from '../../store/app-process/selectors';
 import { getCamerasTotalCount } from '../../store/cameras-data/selectors';
-import { getArrayWithFixLength } from '../../utils';
+import { getArrayWithFixLength } from '../../utils/utils';
 
 export default function Pagination() {
   const dispatch = useAppDispatch();

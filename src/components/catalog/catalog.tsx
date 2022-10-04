@@ -154,7 +154,7 @@ export default function Catalog(): JSX.Element {
                       <button className="btn btn--purple product-card__btn" type="button">
                         Купить
                       </button>
-                      <Link className="btn btn--transparent" to={generatePath(AppRoute.ProductPage, {id: String(id)})}>
+                      <Link className="btn btn--transparent" to={generatePath(AppRoute.ProductPage, { id: String(id) })}>
                         Подробнее
                       </Link>
                     </div>

@@ -11,5 +11,5 @@ export const getReviewSendingStatus = (state: StateType): LoadingStatus =>
 export const getReviewsLoadingStatus = (state: StateType): LoadingStatus =>
   state[NameSpace.Reviews].reviewLoadingStatus;
 
-export const gerReviewsTotalCount = (state: StateType): number =>
+export const getReviewsTotalCount = (state: StateType): number =>
   state[NameSpace.Reviews].reviewsTotalCount;

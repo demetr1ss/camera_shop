@@ -43,8 +43,6 @@ export const reviewsData = createSlice({
         state.reviewSendingStatus = LoadingStatus.Pending;
       })
       .addCase(sendReviewAction.fulfilled, (state, action) => {
-        state.reviews.pop();
-        state.reviews.unshift(action.payload);
         state.reviewSendingStatus = LoadingStatus.Fulfilled;
       })
       .addCase(sendReviewAction.rejected, (state) => {
