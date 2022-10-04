@@ -20,7 +20,11 @@ const initialState: ReviewsDataType = {
 export const reviewsData = createSlice({
   name: NameSpace.Reviews,
   initialState,
-  reducers: {},
+  reducers: {
+    changeReviewSendingStatus: (state, action) => {
+      state.reviewSendingStatus = action.payload;
+    },
+  },
   extraReducers(builder) {
     builder
       .addCase(fetchReviewsAction.fulfilled, (state, action) => {
@@ -47,3 +51,5 @@ export const reviewsData = createSlice({
         state.reviewSendingStatus = LoadingStatus.Rejected;
       });
   }});
+
+export const {changeReviewSendingStatus} = reviewsData.actions;

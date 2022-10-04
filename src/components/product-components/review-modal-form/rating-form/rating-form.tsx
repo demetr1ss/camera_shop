@@ -1,7 +1,7 @@
 import { Fragment, useState } from 'react';
 import { UseFormRegisterReturn } from 'react-hook-form';
-import { rating, RatingTitle } from '../../../const/const';
-import { ReviewPostKeysType } from '../../../types/types';
+import { rating, RatingTitle } from '../../../../const/const';
+import { ReviewPostKeysType } from '../../../../types/types';
 
 type RatingFormPropsType = {
   getInputClassName: (inputName: ReviewPostKeysType, additionalClassName?: string) => string;

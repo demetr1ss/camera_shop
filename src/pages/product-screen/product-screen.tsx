@@ -5,7 +5,9 @@ import ProductSimilar from '../../components/product-components/product-similar/
 import Product from '../../components/product-components/product/product';
 import Reviews from '../../components/product-components/reviews/reviews';
 import LoadingScreen from '../loading-screen/loading-screen';
-import ReviewForm from '../../components/product-components/review-modal/review-form';
+import ReviewForm from '../../components/product-components/review-modal-form/review-form/review-form';
+import ReviewSuccessModal from '../../components/product-components/review-success-modal/review-succeess-modal';
+import FocusLock from 'react-focus-lock';
 import { RemoveScroll } from 'react-remove-scroll';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
@@ -26,6 +28,7 @@ export default function ProductScreen(): JSX.Element {
   const camera = useAppSelector(getCamera);
   const similarCameras = useAppSelector(getSimilarCameras);
   const [isReviewModalOpened, setIsReviewModalOpened] = useState(false);
+  const [isReviewSuccessModalOpened, setIsReviewSuccessModalOpened] = useState(false);
 
   const cameraLoadingStatus = useAppSelector(getCameraLoadingStatus);
 
@@ -55,9 +58,21 @@ export default function ProductScreen(): JSX.Element {
           </svg>
         </button>
         {isReviewModalOpened &&
-          <RemoveScroll enabled={isReviewModalOpened}>
-            <ReviewForm isReviewModalOpened={isReviewModalOpened} setIsReviewModalOpened={setIsReviewModalOpened} />
-          </RemoveScroll>}
+          <FocusLock>
+            <RemoveScroll enabled={isReviewModalOpened}>
+              <ReviewForm
+                isReviewModalOpened={isReviewModalOpened}
+                setIsReviewModalOpened={setIsReviewModalOpened}
+                setIsReviewSuccessModalOpened={setIsReviewSuccessModalOpened}
+              />
+            </RemoveScroll>
+          </FocusLock>}
+        {isReviewSuccessModalOpened &&
+          <FocusLock>
+            <RemoveScroll enabled={isReviewModalOpened}>
+              <ReviewSuccessModal setIsReviewSuccessModalOpened={setIsReviewSuccessModalOpened} />
+            </RemoveScroll>
+          </FocusLock>}
       </main >
       <Footer />
     </div>
