@@ -4,6 +4,7 @@ import { createRandomCamera } from '../../utils/mocks';
 import { fetchCameraAction, fetchCamerasAction, fetchSimilarCamerasAction } from '../api-actions';
 import { camerasData, CamerasDataType } from './cameras-data';
 
+const MOCK_CAMERAS_TOTAL_COUNT = 20;
 const mockCameras = [createRandomCamera(), createRandomCamera(), createRandomCamera()];
 const mockCamera = createRandomCamera();
 
@@ -28,11 +29,11 @@ describe('Reducer: cameras-data', () => {
 
   describe('fetchCamerasAction test', () => {
     it('should update cameras, camerasTotalCount and camerasLoadingStatus by load cameras', () => {
-      expect(camerasData.reducer(state, {type: fetchCamerasAction.fulfilled.type, payload: {data: mockCameras, camerasTotalCount: 20}}))
+      expect(camerasData.reducer(state, {type: fetchCamerasAction.fulfilled.type, payload: {data: mockCameras, camerasTotalCount: MOCK_CAMERAS_TOTAL_COUNT}}))
         .toEqual({
           cameras: mockCameras,
           camerasLoadingStatus: LoadingStatus.Fulfilled,
-          camerasTotalCount: 20,
+          camerasTotalCount: MOCK_CAMERAS_TOTAL_COUNT,
           camera: {} as CameraType,
           cameraLoadingStatus: LoadingStatus.Idle,
           similarCameras: [],
