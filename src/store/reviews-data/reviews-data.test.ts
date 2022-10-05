@@ -1,11 +1,10 @@
 import { LoadingStatus, REVIEWS_PER_PAGE } from '../../const/const';
 import { ReviewType } from '../../types/types';
-import { createMockReview } from '../../utils/mocks';
+import { createRandomReviews, MOCK_REVIEWS_TOTAL_COUNT } from '../../utils/mocks';
 import { fetchReviewsAction, sendReviewAction } from '../api-actions';
 import { reviewsData, ReviewsDataType } from './reviews-data';
 
-const MOCK_REVIEWS_TOTAL_COUNT = 10;
-const mockReviews = [createMockReview(), createMockReview(), createMockReview()];
+const mockReviews = createRandomReviews();
 
 describe('Reducer: reviews-data', () => {
   let state: ReviewsDataType;

@@ -45,8 +45,8 @@ export type ReviewPostType = {
 }
 
 export type FetchReviewType = {
-  id: string;
-  count: string;
+  id: number;
+  count: number;
 }
 
 export type ReviewPostKeysType = keyof ReviewPostType;

@@ -34,8 +34,8 @@ export default function ReviewForm({ isReviewModalOpened, setIsReviewModalOpened
         setIsReviewSuccessModalOpened(true);
         dispatch(changeReviewSendingStatus(LoadingStatus.Idle));
         dispatch(fetchReviewsAction({
-          id: String(id),
-          count: String(REVIEWS_PER_PAGE)
+          id: Number(id),
+          count: REVIEWS_PER_PAGE
         }));
         break;
       case LoadingStatus.Pending:

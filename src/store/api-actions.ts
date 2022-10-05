@@ -68,7 +68,6 @@ export const fetchCameraAction = createAsyncThunk<CameraType, string, {
       dispatch(fetchSimilarCamerasAction(String(id)));
 
       return data;
-
     }
     catch(e) {
       showNotify({
@@ -92,7 +91,6 @@ export const fetchSimilarCamerasAction = createAsyncThunk<CameraType[], string, 
       }));
 
       return data;
-
     }
     catch(e) {
       showNotify({
@@ -110,7 +108,7 @@ export const fetchReviewsAction = createAsyncThunk<{data: ReviewType[], reviewsT
   'data/fetchReviews',
   async ({id, count}, {extra: api}) => {
     try {
-      const {data, headers} = await api.get<ReviewType[]>(generatePath(APIRoute.Reviews, {id, count}));
+      const {data, headers} = await api.get<ReviewType[]>(generatePath(APIRoute.Reviews, {id: String(id), count: String(count)}));
 
       return {
         data,

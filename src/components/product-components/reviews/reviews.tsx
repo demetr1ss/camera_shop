@@ -19,8 +19,8 @@ export default function Reviews({ cameraId, setIsReviewModalOpened }: ReviewsPro
 
   useEffect(() => {
     dispatch(fetchReviewsAction({
-      id: cameraId,
-      count: String(reviewsCount)
+      id: Number(cameraId),
+      count: reviewsCount
     }));
   }, [cameraId, dispatch, reviewsCount]);
 
