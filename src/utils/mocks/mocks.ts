@@ -1,5 +1,5 @@
 import { commerce, datatype, image, internet } from 'faker';
-import { CameraType, PromoType, ReviewPostType, ReviewType } from '../types/types';
+import { CameraType, PromoType, ReviewPostType, ReviewType } from '../../types/types';
 
 export const MOCK_REVIEWS_TOTAL_COUNT = 10;
 export const MOCK_CAMERAS_TOTAL_COUNT = 20;

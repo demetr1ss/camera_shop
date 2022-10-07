@@ -1,5 +1,5 @@
 import { PromoType } from '../../types/types';
-import { createRandomPromo } from '../../utils/mocks';
+import { createRandomPromo } from '../../utils/mocks/mocks';
 import { fetchPromoAction } from '../api-actions';
 import { promoData, PromoDataType } from './promo-data';
 

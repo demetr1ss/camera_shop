@@ -1,6 +1,6 @@
 import { LoadingStatus } from '../../const/const';
 import { CameraType } from '../../types/types';
-import { createRandomCamera, MOCK_CAMERAS_TOTAL_COUNT } from '../../utils/mocks';
+import { createRandomCamera, MOCK_CAMERAS_TOTAL_COUNT } from '../../utils/mocks/mocks';
 import { fetchCameraAction, fetchCamerasAction, fetchSimilarCamerasAction } from '../api-actions';
 import { camerasData, CamerasDataType } from './cameras-data';
 

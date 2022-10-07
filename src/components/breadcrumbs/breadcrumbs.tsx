@@ -13,7 +13,7 @@ export default function Breadcrumbs({ productName }: BreadcrumbsPropsType): JSX.
   const currentPage = useAppSelector(getCurrentPage);
 
   return (
-    <div className="breadcrumbs">
+    <div className="breadcrumbs" data-testid="breadcrumbs">
       <div className="container">
         <ul className="breadcrumbs__list">
           <li className="breadcrumbs__item">
@@ -34,6 +34,7 @@ export default function Breadcrumbs({ productName }: BreadcrumbsPropsType): JSX.
                 className="breadcrumbs__link"
                 to={AppRoute.CatalogPage}
                 onClick={() => dispatch(fetchCamerasAction(currentPage))}
+                data-testid="bread-link"
               >
                 Каталог
                 <svg width="5" height="8" aria-hidden="true">

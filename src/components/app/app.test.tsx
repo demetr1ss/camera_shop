@@ -1,48 +1,20 @@
-import thunk from 'redux-thunk';
-import { configureMockStore } from '@jedmao/redux-mock-store';
+import App from './app';
+import HistoryRouter from '../history-route/history-route';
 import { render, screen } from '@testing-library/react';
 import { createMemoryHistory } from 'history';
 import { Provider } from 'react-redux';
 import { generatePath } from 'react-router-dom';
-import { AppRoute, DEFAULT_PAGE, LoadingStatus } from '../../const/const';
-import { createRandomCamera, createRandomPromo, createRandomReviews, MOCK_CAMERAS_TOTAL_COUNT, MOCK_REVIEWS_TOTAL_COUNT } from '../../utils/mocks';
-import HistoryRouter from '../history-route/history-route';
-import App from './app';
+import { AppRoute } from '../../const/const';
+import { mockStore } from '../../utils/mocks/mock-store';
+import { createRandomCamera } from '../../utils/mocks/mocks';
 
-const mockStore = configureMockStore([thunk]);
-const mockCamera = createRandomCamera();
-const mockCameras = [createRandomCamera(), mockCamera];
-const mockSimilarCameras = [createRandomCamera(), mockCamera];
-const mockReviews = createRandomReviews();
 global.scrollTo = jest.fn();
 
-const store = mockStore({
-  APP: {
-    currentPage: DEFAULT_PAGE
-  },
-  CAMERAS: {
-    camera: mockCamera,
-    cameras: mockCameras,
-    similarCameras: mockSimilarCameras,
-    camerasTotalCount: MOCK_CAMERAS_TOTAL_COUNT,
-    camerasLoadingStatus: LoadingStatus.Fulfilled,
-    cameraLoadingStatus: LoadingStatus.Fulfilled,
-  },
-  PROMO: {
-    promo: createRandomPromo(),
-  },
-  REVIEWS: {
-    reviews: mockReviews,
-    reviewLoadingStatus: LoadingStatus.Fulfilled,
-    reviewSendingStatus: LoadingStatus.Idle,
-    reviewsTotalCount: MOCK_REVIEWS_TOTAL_COUNT
-  }
-});
-
+const mockCamera = createRandomCamera();
 const history = createMemoryHistory();
 
 const fakeApp = (
-  <Provider store={store}>
+  <Provider store={mockStore}>
     <HistoryRouter history={history}>
       <App />
     </HistoryRouter>
@@ -67,7 +39,7 @@ describe('Application Routing', () => {
   });
 });
 
-it('should render "ProductScreen" when user navigate to "/product:id"', async () => {
+it('should render "ProductScreen" when user navigate to "/product/:id"', async () => {
   history.push(generatePath(AppRoute.ProductPage, { id: String(mockCamera.id) }));
 
   render(fakeApp);

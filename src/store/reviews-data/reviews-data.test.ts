@@ -1,6 +1,6 @@
 import { LoadingStatus, REVIEWS_PER_PAGE } from '../../const/const';
 import { ReviewType } from '../../types/types';
-import { createRandomReviews, MOCK_REVIEWS_TOTAL_COUNT } from '../../utils/mocks';
+import { createRandomReviews, MOCK_REVIEWS_TOTAL_COUNT } from '../../utils/mocks/mocks';
 import { fetchReviewsAction, sendReviewAction } from '../api-actions';
 import { reviewsData, ReviewsDataType } from './reviews-data';
 

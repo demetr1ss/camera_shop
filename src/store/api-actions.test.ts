@@ -7,7 +7,7 @@ import { APIRoute, DEFAULT_PAGE, REVIEWS_PER_PAGE } from '../const/const';
 import { createAPI } from '../services/api';
 import { StateType } from '../types/state-type';
 import { CameraType } from '../types/types';
-import { createRandomCamera, createRandomPostReview, createRandomPromo, createRandomReviews, MOCK_CAMERAS_TOTAL_COUNT, MOCK_REVIEWS_TOTAL_COUNT } from '../utils/mocks';
+import { createRandomCamera, createRandomPostReview, createRandomPromo, createRandomReviews, MOCK_CAMERAS_TOTAL_COUNT, MOCK_REVIEWS_TOTAL_COUNT } from '../utils/mocks/mocks';
 import { fetchCameraAction, fetchCamerasAction, fetchPromoAction, fetchReviewsAction, fetchSimilarCamerasAction, sendReviewAction } from './api-actions';
 
 describe('Async actions', () => {

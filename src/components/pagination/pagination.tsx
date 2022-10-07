@@ -27,7 +27,7 @@ export default function Pagination() {
   };
 
   return (
-    <div className="pagination">
+    <div className="pagination" data-testid='pagination'>
       <ul className="pagination__list">
         {currentPage !== DEFAULT_PAGE &&
           <li
