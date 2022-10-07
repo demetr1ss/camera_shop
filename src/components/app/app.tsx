@@ -1,6 +1,4 @@
-import browserHistory from '../../browser-history';
 import CatalogScreen from '../../pages/catalog-screen/catalog-screen';
-import HistoryRouter from '../history-route/history-route';
 import ScrollToTop from '../scroll-to-top/scroll-to-top';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import { AppRoute, LoadingStatus } from '../../const/const';
@@ -19,7 +17,7 @@ export default function App(): JSX.Element {
   }
 
   return (
-    <HistoryRouter history={browserHistory}>
+    <>
       <ScrollToTop />
       <Routes>
         <Route
@@ -39,6 +37,6 @@ export default function App(): JSX.Element {
           element={<NotFoundScreen />}
         />
       </Routes>
-    </HistoryRouter >
+    </>
   );
 }

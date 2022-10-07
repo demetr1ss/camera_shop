@@ -24,7 +24,7 @@ describe('Async actions', () => {
   it('should dispatch fetchCamerasAction when GET /cameras?_limit=9&_page=:page when "page" - is a page-number', async () => {
     mockAPI
       .onGet(generatePath(APIRoute.Cameras, {page: String(DEFAULT_PAGE)}))
-      .reply(200, {data: [] as CameraType[], camerasTotalCount: MOCK_CAMERAS_TOTAL_COUNT});
+      .reply(200, {data: [] as CameraType[], camerasTotalCount: MOCK_CAMERAS_TOTAL_COUNT}, {'x-total-count': MOCK_CAMERAS_TOTAL_COUNT});
 
     const store = mockStore();
 
@@ -34,7 +34,7 @@ describe('Async actions', () => {
 
     expect(actions).toEqual([
       fetchCamerasAction.pending.type,
-      fetchCamerasAction.rejected.type,
+      fetchCamerasAction.fulfilled.type,
     ]);
   });
 
@@ -84,7 +84,7 @@ describe('Async actions', () => {
 
     mockAPI
       .onGet(generatePath(APIRoute.Reviews, {id: String(mockCamera.id), count: String(REVIEWS_PER_PAGE)}))
-      .reply(200, {data: mockReviews, reviewsTotalCount: MOCK_REVIEWS_TOTAL_COUNT});
+      .reply(200, {data: mockReviews, reviewsTotalCount: MOCK_REVIEWS_TOTAL_COUNT}, {'x-total-count': MOCK_REVIEWS_TOTAL_COUNT});
 
     const store = mockStore();
 
@@ -94,7 +94,7 @@ describe('Async actions', () => {
 
     expect(actions).toEqual([
       fetchReviewsAction.pending.type,
-      fetchReviewsAction.rejected.type,
+      fetchReviewsAction.fulfilled.type,
     ]);
   });
 
@@ -103,7 +103,7 @@ describe('Async actions', () => {
 
     mockAPI
       .onPost(APIRoute.PostReview)
-      .reply(200);
+      .reply(200, []);
 
     const store = mockStore();
 

@@ -5,7 +5,7 @@ export const MOCK_REVIEWS_TOTAL_COUNT = 10;
 export const MOCK_CAMERAS_TOTAL_COUNT = 20;
 
 export const createRandomCamera = (): CameraType => ({
-  id: datatype.number(),
+  id: datatype.number({min: 0, max: 20}),
   name: commerce.product(),
   vendorCode: datatype.string(),
   type: datatype.string(),
