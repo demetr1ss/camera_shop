@@ -1,7 +1,6 @@
 import cn from 'classnames';
 import { useEffect } from 'react';
-import { generatePath, Link } from 'react-router-dom';
-import browserHistory from '../../browser-history';
+import { generatePath, Link, useLocation, useNavigate } from 'react-router-dom';
 import { AppRoute, DEFAULT_PAGE, LIMIT_CARD_PER_PAGE, PAGE_STEP } from '../../const/const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { fetchCamerasAction } from '../../store/api-actions';
@@ -12,13 +11,15 @@ import { getArrayWithFixLength } from '../../utils/utils';
 
 export default function Pagination() {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  const location = useLocation();
   const camerasTotalCount = useAppSelector(getCamerasTotalCount);
   const pageCount = Math.ceil(camerasTotalCount / LIMIT_CARD_PER_PAGE);
   const currentPage = useAppSelector(getCurrentPage);
 
   useEffect(() => {
-    browserHistory.push(browserHistory.location?.search || `?_page=${currentPage}`);
-  }, [currentPage]);
+    navigate(location?.search || `?_page=${currentPage}`);
+  }, [currentPage, location?.search, navigate]);
 
 
   const handlerPageClick = (page: number) => {

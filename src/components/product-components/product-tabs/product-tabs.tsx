@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import browserHistory from '../../../browser-history';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { ProductTabsHash } from '../../../const/const';
 import { CameraType } from '../../../types/types';
 
@@ -8,6 +8,8 @@ type ProductTabsType = {
 }
 
 export default function ProductTabs({ camera }: ProductTabsType) {
+  const location = useLocation();
+  const navigate = useNavigate();
   const {
     vendorCode,
     type,
@@ -17,13 +19,13 @@ export default function ProductTabs({ camera }: ProductTabsType) {
   } = camera;
 
   const [activeTab, setActiveTab] = useState<string>(
-    browserHistory.location.hash ||
+    location.hash ||
     ProductTabsHash.Description
   );
 
   useEffect(() => {
-    browserHistory.push(activeTab);
-  }, [activeTab]);
+    navigate(activeTab);
+  }, [activeTab, navigate]);
 
 
   return (
