@@ -1,11 +1,12 @@
 import cn from 'classnames';
-import { ChangeEvent, useState } from 'react';
+import React, { ChangeEvent, useState } from 'react';
 import ClickAwayListener from 'react-click-away-listener';
 import { generatePath, useNavigate } from 'react-router-dom';
 import { AppRoute } from '../../const/const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { fetchCamerasBySearchAction } from '../../store/api-actions';
 import { getCamerasBySearch } from '../../store/cameras-data/selectors';
+import { SearchCameraType } from '../../types/types';
 
 export default function SearchForm() {
   const dispatch = useAppDispatch();
@@ -19,6 +20,16 @@ export default function SearchForm() {
 
     if (value.length) {
       dispatch(fetchCamerasBySearchAction(value));
+    }
+  };
+
+  const handleItemClick = (camera: SearchCameraType) => {
+    navigate(generatePath(AppRoute.ProductPage, { id: String(camera.id) }));
+  };
+
+  const handleEnterDownClick = (evt: React.KeyboardEvent<HTMLLIElement>, camera: SearchCameraType) => {
+    if (evt.key === 'Enter') {
+      handleItemClick(camera);
     }
   };
 
@@ -48,7 +59,8 @@ export default function SearchForm() {
                 key={camera.id}
                 className="form-search__select-item"
                 tabIndex={0}
-                onClick={() => navigate(generatePath(AppRoute.ProductPage, { id: String(camera.id) }))}
+                onClick={() => handleItemClick(camera)}
+                onKeyDown={(evt) => handleEnterDownClick(evt, camera)}
               >
                 {camera.name}
               </li>
