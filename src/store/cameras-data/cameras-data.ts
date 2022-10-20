@@ -1,11 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { LoadingStatus, NameSpace } from '../../const/const';
-import { fetchCameraAction, fetchCamerasAction, fetchSimilarCamerasAction } from '../api-actions';
-import { CameraType } from '../../types/types';
+import { CameraType, SearchCameraType } from '../../types/types';
+import { fetchCameraAction, fetchCamerasAction, fetchCamerasBySearchAction, fetchSimilarCamerasAction } from '../api-actions';
 
 export type CamerasDataType = {
   camera: CameraType;
   cameras: CameraType[];
+  searchCameras: SearchCameraType[];
   similarCameras: CameraType[];
   camerasTotalCount: number;
   camerasLoadingStatus: LoadingStatus;
@@ -15,6 +16,7 @@ export type CamerasDataType = {
 const initialState: CamerasDataType = {
   camera: {} as CameraType,
   cameras: [],
+  searchCameras: [],
   similarCameras: [],
   camerasTotalCount: 0,
   camerasLoadingStatus: LoadingStatus.Idle,
@@ -51,5 +53,9 @@ export const camerasData = createSlice({
       })
       .addCase(fetchSimilarCamerasAction.fulfilled, (state, action) => {
         state.similarCameras = action.payload;
+      })
+      .addCase(fetchCamerasBySearchAction.fulfilled, (state, action) => {
+        state.searchCameras = action.payload;
       });
-  }});
+  }
+});

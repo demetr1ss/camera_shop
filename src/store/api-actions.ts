@@ -1,9 +1,9 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AxiosInstance } from 'axios';
 import { generatePath } from 'react-router-dom';
-import { APIRoute, AppRoute } from '../const/const';
+import { APIRoute, AppRoute, LIMIT_CARD_PER_PAGE, QueryParameter } from '../const/const';
 import { AppDispatchType, StateType } from '../types/state-type';
-import { CameraType, FetchReviewType, PromoType, ReviewPostType, ReviewType } from '../types/types';
+import { CameraType, FetchReviewType, PromoType, ReviewPostType, ReviewType, SearchCameraType } from '../types/types';
 import { showNotify } from '../utils/utils';
 import { redirectToRoute } from './action';
 
@@ -15,9 +15,12 @@ export const fetchCamerasAction = createAsyncThunk<{data: CameraType[], camerasT
   'data/fetchCameras',
   async (page, {extra: api}) => {
     try {
-      const {data, headers} = await api.get<CameraType[]>(generatePath(APIRoute.Cameras, {
-        page: String(page)
-      }));
+      const {data, headers} = await api.get<CameraType[]>(APIRoute.Cameras, {
+        params: {
+          [QueryParameter.Limit]: LIMIT_CARD_PER_PAGE,
+          [QueryParameter.Page]: String(page)
+        }
+      });
 
       return {
         data,
@@ -31,6 +34,30 @@ export const fetchCamerasAction = createAsyncThunk<{data: CameraType[], camerasT
       });
       throw e;
     }});
+
+export const fetchCamerasBySearchAction = createAsyncThunk<SearchCameraType[], string, {
+  dispatch: AppDispatchType,
+  state: StateType,
+  extra: AxiosInstance
+}>(
+  'data/fetchCamerasBySearchAction',
+  async (value, {extra: api}) => {
+    try {
+      const {data} = await api.get<CameraType[]>(APIRoute.Cameras, {
+        params: {
+          [QueryParameter.NameLike]: value,
+        }});
+
+      return data.map(({name, id}) => ({name, id}));
+    }
+    catch(e) {
+      showNotify({
+        type: 'error',
+        message: 'Failed to search cameras',
+      });
+      throw e;
+    }});
+
 
 export const fetchPromoAction = createAsyncThunk<PromoType, undefined, {
   dispatch: AppDispatchType,

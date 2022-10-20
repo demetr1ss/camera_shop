@@ -1,14 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import { Provider } from 'react-redux';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import browserHistory from './browser-history';
 import App from './components/app/app';
 import HistoryRouter from './components/history-route/history-route';
-import browserHistory from './browser-history';
-import { ToastContainer } from 'react-toastify';
-import { store } from './store';
-import { Provider } from 'react-redux';
-import { fetchCamerasAction, fetchPromoAction } from './store/api-actions';
 import { DEFAULT_PAGE } from './const/const';
-import 'react-toastify/dist/ReactToastify.css';
+import { store } from './store';
+import { fetchCamerasAction, fetchPromoAction } from './store/api-actions';
 
 store.dispatch(fetchCamerasAction(Number(browserHistory.location?.search.at(-1)) || DEFAULT_PAGE));
 store.dispatch(fetchPromoAction());

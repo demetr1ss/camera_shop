@@ -16,21 +16,21 @@ describe('Async actions', () => {
   const middlewares = [thunk.withExtraArgument(api)];
 
   const mockStore = configureMockStore<
-      StateType,
-      Action,
-      ThunkDispatch<StateType, typeof api, Action>
-    >(middlewares);
+    StateType,
+    Action,
+    ThunkDispatch<StateType, typeof api, Action>
+  >(middlewares);
 
   it('should dispatch fetchCamerasAction when GET /cameras?_limit=9&_page=:page when "page" - is a page-number', async () => {
     mockAPI
-      .onGet(generatePath(APIRoute.Cameras, {page: String(DEFAULT_PAGE)}))
-      .reply(200, {data: [] as CameraType[], camerasTotalCount: MOCK_CAMERAS_TOTAL_COUNT}, {'x-total-count': MOCK_CAMERAS_TOTAL_COUNT});
+      .onGet(generatePath(APIRoute.Cameras, { page: String(DEFAULT_PAGE) }))
+      .reply(200, { data: [] as CameraType[], camerasTotalCount: MOCK_CAMERAS_TOTAL_COUNT }, { 'x-total-count': MOCK_CAMERAS_TOTAL_COUNT });
 
     const store = mockStore();
 
     await store.dispatch(fetchCamerasAction(DEFAULT_PAGE));
 
-    const actions = store.getActions().map(({type}) => type);
+    const actions = store.getActions().map(({ type }) => type);
 
     expect(actions).toEqual([
       fetchCamerasAction.pending.type,
@@ -42,14 +42,14 @@ describe('Async actions', () => {
     const mockCamera = createRandomCamera();
 
     mockAPI
-      .onGet(generatePath(APIRoute.Camera, {id: String(mockCamera.id)}))
+      .onGet(generatePath(APIRoute.Camera, { id: String(mockCamera.id) }))
       .reply(200, mockCamera);
 
     const store = mockStore();
 
     await store.dispatch(fetchCameraAction(String(mockCamera.id)));
 
-    const actions = store.getActions().map(({type}) => type);
+    const actions = store.getActions().map(({ type }) => type);
 
     expect(actions).toEqual([
       fetchCameraAction.pending.type,
@@ -63,14 +63,14 @@ describe('Async actions', () => {
     const mockSimilarCameras = [createRandomCamera(), createRandomCamera(), createRandomCamera()];
 
     mockAPI
-      .onGet(generatePath(APIRoute.SimilarCameras, {id: String(mockCamera.id)}))
+      .onGet(generatePath(APIRoute.SimilarCameras, { id: String(mockCamera.id) }))
       .reply(200, mockSimilarCameras);
 
     const store = mockStore();
 
     await store.dispatch(fetchSimilarCamerasAction(String(mockCamera.id)));
 
-    const actions = store.getActions().map(({type}) => type);
+    const actions = store.getActions().map(({ type }) => type);
 
     expect(actions).toEqual([
       fetchSimilarCamerasAction.pending.type,
@@ -83,14 +83,14 @@ describe('Async actions', () => {
     const mockReviews = createRandomReviews();
 
     mockAPI
-      .onGet(generatePath(APIRoute.Reviews, {id: String(mockCamera.id), count: String(REVIEWS_PER_PAGE)}))
-      .reply(200, {data: mockReviews, reviewsTotalCount: MOCK_REVIEWS_TOTAL_COUNT}, {'x-total-count': MOCK_REVIEWS_TOTAL_COUNT});
+      .onGet(generatePath(APIRoute.Reviews, { id: String(mockCamera.id), count: String(REVIEWS_PER_PAGE) }))
+      .reply(200, { data: mockReviews, reviewsTotalCount: MOCK_REVIEWS_TOTAL_COUNT }, { 'x-total-count': MOCK_REVIEWS_TOTAL_COUNT });
 
     const store = mockStore();
 
-    await store.dispatch(fetchReviewsAction({id: mockCamera.id, count: REVIEWS_PER_PAGE}));
+    await store.dispatch(fetchReviewsAction({ id: mockCamera.id, count: REVIEWS_PER_PAGE }));
 
-    const actions = store.getActions().map(({type}) => type);
+    const actions = store.getActions().map(({ type }) => type);
 
     expect(actions).toEqual([
       fetchReviewsAction.pending.type,
@@ -109,7 +109,7 @@ describe('Async actions', () => {
 
     await store.dispatch(sendReviewAction(mockReview));
 
-    const actions = store.getActions().map(({type}) => type);
+    const actions = store.getActions().map(({ type }) => type);
 
     expect(actions).toEqual([
       sendReviewAction.pending.type,
@@ -128,7 +128,7 @@ describe('Async actions', () => {
 
     await store.dispatch(fetchPromoAction());
 
-    const actions = store.getActions().map(({type}) => type);
+    const actions = store.getActions().map(({ type }) => type);
 
     expect(actions).toEqual([
       fetchPromoAction.pending.type,

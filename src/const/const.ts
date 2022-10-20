@@ -39,12 +39,25 @@ export const Filters: FiltersType = {
 };
 
 export const APIRoute = {
-  Cameras: '/cameras?_limit=9&_page=:page',
+  Cameras: '/cameras',
   Camera: '/cameras/:id',
   Reviews: '/cameras/:id/reviews?_sort=createAt&_order=desc&_end=:count',
   PostReview: '/reviews',
   SimilarCameras: '/cameras/:id/similar',
   Promo: '/promo',
+} as const;
+
+export const QueryParameter = {
+  Limit: '_limit',
+  Page: '_page',
+  NameLike: 'name_like',
+  Sort: '_sort',
+  Order: '_order',
+  Type: 'type',
+  Category: 'category',
+  Level: 'level',
+  PriceFloor: 'price_gte',
+  PriceCeil: 'price_lte'
 } as const;
 
 export const NameSpace = {

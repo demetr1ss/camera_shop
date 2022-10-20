@@ -15,6 +15,11 @@ export type CameraType = {
   reviewCount: number
 }
 
+export type SearchCameraType = {
+  id: number,
+  name: string,
+}
+
 export type PromoType = {
   id: number,
   name: string,
