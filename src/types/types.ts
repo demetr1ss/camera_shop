@@ -15,6 +15,12 @@ export type CameraType = {
   reviewCount: number
 }
 
+export type fetchCameraPayloadType = {
+  page: number,
+  sortType?: string,
+  orderType?: string,
+}
+
 export type SearchCameraType = {
   id: number,
   name: string,

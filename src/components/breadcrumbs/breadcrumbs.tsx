@@ -20,7 +20,7 @@ export default function Breadcrumbs({ productName }: BreadcrumbsPropsType): JSX.
             <Link
               className="breadcrumbs__link"
               to={AppRoute.Main}
-              onClick={() => dispatch(fetchCamerasAction(currentPage))}
+              onClick={() => dispatch(fetchCamerasAction({ page: currentPage }))}
             >
               Главная
               <svg width="5" height="8" aria-hidden="true">
@@ -33,7 +33,7 @@ export default function Breadcrumbs({ productName }: BreadcrumbsPropsType): JSX.
               <Link
                 className="breadcrumbs__link"
                 to={AppRoute.CatalogPage}
-                onClick={() => dispatch(fetchCamerasAction(currentPage))}
+                onClick={() => dispatch(fetchCamerasAction({ page: currentPage }))}
                 data-testid="bread-link"
               >
                 Каталог

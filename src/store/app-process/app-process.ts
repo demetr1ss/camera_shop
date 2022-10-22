@@ -4,6 +4,8 @@ import { DEFAULT_PAGE, NameSpace } from '../../const/const';
 
 export type AppProcessType = {
   currentPage: number;
+  currentSortType?: string;
+  currentOrderType?: string;
 }
 
 const initialState: AppProcessType = {
@@ -17,7 +19,13 @@ export const appProcess = createSlice({
     changeCurrentPage: (state, action) => {
       state.currentPage = action.payload;
     },
+    changeCurrentSortType: (state, action) => {
+      state.currentSortType = action.payload;
+    },
+    changeCurrentOrderType: (state, action) => {
+      state.currentOrderType = action.payload;
+    }
   },
 });
 
-export const {changeCurrentPage} = appProcess.actions;
+export const { changeCurrentPage, changeCurrentSortType, changeCurrentOrderType } = appProcess.actions;

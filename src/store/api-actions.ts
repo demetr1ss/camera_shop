@@ -3,22 +3,24 @@ import { AxiosInstance } from 'axios';
 import { generatePath } from 'react-router-dom';
 import { APIRoute, AppRoute, LIMIT_CARD_PER_PAGE, QueryParameter } from '../const/const';
 import { AppDispatchType, StateType } from '../types/state-type';
-import { CameraType, FetchReviewType, PromoType, ReviewPostType, ReviewType, SearchCameraType } from '../types/types';
+import { CameraType, fetchCameraPayloadType, FetchReviewType, PromoType, ReviewPostType, ReviewType, SearchCameraType } from '../types/types';
 import { showNotify } from '../utils/utils';
 import { redirectToRoute } from './action';
 
-export const fetchCamerasAction = createAsyncThunk<{data: CameraType[], camerasTotalCount: number}, number, {
+export const fetchCamerasAction = createAsyncThunk<{ data: CameraType[], camerasTotalCount: number }, fetchCameraPayloadType, {
   dispatch: AppDispatchType,
   state: StateType,
   extra: AxiosInstance
 }>(
   'data/fetchCameras',
-  async (page, {extra: api}) => {
+  async (params, {extra: api}) => {
     try {
       const {data, headers} = await api.get<CameraType[]>(APIRoute.Cameras, {
         params: {
           [QueryParameter.Limit]: LIMIT_CARD_PER_PAGE,
-          [QueryParameter.Page]: String(page)
+          [QueryParameter.Page]: params.page,
+          [QueryParameter.Sort]: params.sortType,
+          [QueryParameter.Order]: params.orderType,
         }
       });
 

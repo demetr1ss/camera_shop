@@ -60,6 +60,16 @@ export const QueryParameter = {
   PriceCeil: 'price_lte'
 } as const;
 
+export const SortType = {
+  Price: 'price',
+  Rating: 'rating',
+} as const;
+
+export const OrderType = {
+  Desc: 'desc',
+  Asc: 'asc',
+} as const;
+
 export const NameSpace = {
   App: 'APP',
   Cameras: 'CAMERAS',

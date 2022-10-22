@@ -1,30 +1,30 @@
 import cn from 'classnames';
-import { useEffect } from 'react';
-import { generatePath, Link, useLocation, useNavigate } from 'react-router-dom';
+import { generatePath, Link } from 'react-router-dom';
 import { AppRoute, DEFAULT_PAGE, LIMIT_CARD_PER_PAGE, PAGE_STEP } from '../../const/const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { fetchCamerasAction } from '../../store/api-actions';
 import { changeCurrentPage } from '../../store/app-process/app-process';
-import { getCurrentPage } from '../../store/app-process/selectors';
+import { getCurrentOrderType, getCurrentPage, getCurrentSortType } from '../../store/app-process/selectors';
 import { getCamerasTotalCount } from '../../store/cameras-data/selectors';
 import { getArrayWithFixLength } from '../../utils/utils';
 
 export default function Pagination() {
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
-  const location = useLocation();
   const camerasTotalCount = useAppSelector(getCamerasTotalCount);
   const pageCount = Math.ceil(camerasTotalCount / LIMIT_CARD_PER_PAGE);
   const currentPage = useAppSelector(getCurrentPage);
-
-  useEffect(() => {
-    navigate(location?.search || `?_page=${currentPage}`);
-  }, [currentPage, location?.search, navigate]);
-
+  const currentSortType = useAppSelector(getCurrentSortType);
+  const currentOrderType = useAppSelector(getCurrentOrderType);
 
   const handlerPageClick = (page: number) => {
-    dispatch(fetchCamerasAction(page));
-    dispatch(changeCurrentPage(page));
+    if (page !== currentPage) {
+      dispatch(fetchCamerasAction({
+        page,
+        sortType: currentSortType,
+        orderType: currentOrderType
+      }));
+      dispatch(changeCurrentPage(page));
+    }
   };
 
   return (

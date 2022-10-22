@@ -1,11 +1,48 @@
-import Pagination from '../pagination/pagination';
-import { AppRoute, Filters, MAX_RATING } from '../../const/const';
-import { useAppSelector } from '../../hooks';
+import { useEffect } from 'react';
+import { generatePath, Link, useLocation, useNavigate } from 'react-router-dom';
+import { AppRoute, Filters, MAX_RATING, OrderType, SortType } from '../../const/const';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { fetchCamerasAction } from '../../store/api-actions';
+import { changeCurrentOrderType, changeCurrentPage, changeCurrentSortType } from '../../store/app-process/app-process';
+import { getCurrentOrderType, getCurrentPage, getCurrentSortType } from '../../store/app-process/selectors';
 import { getCameras } from '../../store/cameras-data/selectors';
-import { generatePath, Link } from 'react-router-dom';
+import Pagination from '../pagination/pagination';
 
 export default function Catalog(): JSX.Element {
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  const location = useLocation();
   const cameras = useAppSelector(getCameras);
+  const currentPage = useAppSelector(getCurrentPage);
+  const currentSortType = useAppSelector(getCurrentSortType);
+  const currentOrderType = useAppSelector(getCurrentOrderType);
+
+  useEffect(() => {
+    navigate(location?.search || `?_page=${currentPage}`);
+  }, [currentPage, location?.search, navigate]);
+
+
+  const handleSortTypeChange = (sortType: string) => {
+    dispatch(fetchCamerasAction({
+      page: currentPage,
+      sortType,
+      orderType: currentOrderType || OrderType.Asc,
+    }));
+    dispatch(changeCurrentOrderType(currentOrderType || OrderType.Asc,));
+    dispatch(changeCurrentSortType(sortType));
+    dispatch(changeCurrentPage(currentPage));
+  };
+
+  const handleOrderTypeChange = (orderType: string) => {
+    dispatch(fetchCamerasAction({
+      page: currentPage,
+      sortType: currentSortType || SortType.Price,
+      orderType,
+    }));
+    dispatch(changeCurrentOrderType(orderType));
+    dispatch(changeCurrentSortType(currentSortType || SortType.Price,));
+    dispatch(changeCurrentPage(currentPage));
+  };
 
   return (
     <section className="catalog">
@@ -73,13 +110,25 @@ export default function Catalog(): JSX.Element {
                   </p>
                   <div className="catalog-sort__type">
                     <div className="catalog-sort__btn-text">
-                      <input type="radio" id="sortPrice" name="sort" />
+                      <input
+                        type="radio"
+                        id="sortPrice"
+                        name="sort"
+                        onChange={() => handleSortTypeChange(SortType.Price)}
+                        checked={currentSortType === SortType.Price}
+                      />
                       <label htmlFor="sortPrice">
                         по цене
                       </label>
                     </div>
                     <div className="catalog-sort__btn-text">
-                      <input type="radio" id="sortPopular" name="sort" />
+                      <input
+                        type="radio"
+                        id="sortPopular"
+                        name="sort"
+                        onChange={() => handleSortTypeChange(SortType.Rating)}
+                        checked={currentSortType === SortType.Rating}
+                      />
                       <label htmlFor="sortPopular">
                         по популярности
                       </label>
@@ -87,7 +136,14 @@ export default function Catalog(): JSX.Element {
                   </div>
                   <div className="catalog-sort__order">
                     <div className="catalog-sort__btn catalog-sort__btn--up">
-                      <input type="radio" id="up" name="sort-icon" aria-label="По возрастанию" />
+                      <input
+                        type="radio"
+                        id="up"
+                        name="sort-icon"
+                        aria-label="По возрастанию"
+                        onChange={() => handleOrderTypeChange(OrderType.Asc)}
+                        checked={currentOrderType === OrderType.Asc}
+                      />
                       <label htmlFor="up">
                         <svg width="16" height="14" aria-hidden="true">
                           <use xlinkHref="#icon-sort" />
@@ -95,7 +151,14 @@ export default function Catalog(): JSX.Element {
                       </label>
                     </div>
                     <div className="catalog-sort__btn catalog-sort__btn--down">
-                      <input type="radio" id="down" name="sort-icon" aria-label="По убыванию" />
+                      <input
+                        type="radio"
+                        id="down"
+                        name="sort-icon"
+                        aria-label="По убыванию"
+                        onChange={() => handleOrderTypeChange(OrderType.Desc)}
+                        checked={currentOrderType === OrderType.Desc}
+                      />
                       <label htmlFor="down">
                         <svg width="16" height="14" aria-hidden="true">
                           <use xlinkHref="#icon-sort" />

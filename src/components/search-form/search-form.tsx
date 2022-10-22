@@ -27,7 +27,7 @@ export default function SearchForm() {
     navigate(generatePath(AppRoute.ProductPage, { id: String(camera.id) }));
   };
 
-  const handleEnterDownClick = (evt: React.KeyboardEvent<HTMLLIElement>, camera: SearchCameraType) => {
+  const handleKeyDownClick = (evt: React.KeyboardEvent<HTMLLIElement>, camera: SearchCameraType) => {
     if (evt.key === 'Enter') {
       handleItemClick(camera);
     }
@@ -60,7 +60,7 @@ export default function SearchForm() {
                 className="form-search__select-item"
                 tabIndex={0}
                 onClick={() => handleItemClick(camera)}
-                onKeyDown={(evt) => handleEnterDownClick(evt, camera)}
+                onKeyDown={(evt) => handleKeyDownClick(evt, camera)}
               >
                 {camera.name}
               </li>

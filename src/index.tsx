@@ -10,7 +10,12 @@ import { DEFAULT_PAGE } from './const/const';
 import { store } from './store';
 import { fetchCamerasAction, fetchPromoAction } from './store/api-actions';
 
-store.dispatch(fetchCamerasAction(Number(browserHistory.location?.search.at(-1)) || DEFAULT_PAGE));
+store.dispatch(fetchCamerasAction({
+  page:
+    Number(browserHistory.location?.search.at(-1)) ||
+    DEFAULT_PAGE
+}));
+
 store.dispatch(fetchPromoAction());
 
 const root = ReactDOM.createRoot(
