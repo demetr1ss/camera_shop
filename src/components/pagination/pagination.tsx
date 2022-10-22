@@ -29,11 +29,11 @@ export default function Pagination() {
         {currentPage !== DEFAULT_PAGE &&
           <li
             className="pagination__item"
-            onClick={() => handlerPageClick(currentPage - PAGE_STEP)}
           >
             <Link
               className="pagination__link pagination__link--text"
               to={generatePath(AppRoute.CatalogPage, { page: String(currentPage - PAGE_STEP) })}
+              onClick={() => handlerPageClick(currentPage - PAGE_STEP)}
             >
               Назад
             </Link>
@@ -45,10 +45,11 @@ export default function Pagination() {
           });
 
           return (
-            <li className="pagination__item" key={page} onClick={() => handlerPageClick(page)}>
+            <li className="pagination__item" key={page}>
               <Link
                 className={currentPageClassName}
                 to={generatePath(AppRoute.CatalogPage, { page: String(page) })}
+                onClick={() => handlerPageClick(page)}
               >
                 {page}
               </Link>
@@ -57,10 +58,11 @@ export default function Pagination() {
         })}
 
         {currentPage !== pageCount &&
-          <li className="pagination__item" onClick={() => handlerPageClick(currentPage + PAGE_STEP)}>
+          <li className="pagination__item">
             <Link
               className="pagination__link pagination__link--text"
               to={generatePath(AppRoute.CatalogPage, { page: String(currentPage + PAGE_STEP) })}
+              onClick={() => handlerPageClick(currentPage + PAGE_STEP)}
             >
               Далее
             </Link>
