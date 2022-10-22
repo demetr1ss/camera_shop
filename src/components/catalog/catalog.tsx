@@ -18,10 +18,10 @@ export default function Catalog(): JSX.Element {
   const currentOrderType = useAppSelector(getCurrentOrderType);
 
   useEffect(() => {
+    navigate(location?.search || `?_page=${currentPage}`);
+
     if (currentSortType && currentOrderType) {
       navigate(location?.search || `?_page=${currentPage}&_sort=${currentSortType}&_order=${currentOrderType}`);
-    } else {
-      navigate(location?.search || `?_page=${currentPage}`);
     }
   }, [currentOrderType, currentPage, currentSortType, location?.search, navigate]);
 
@@ -33,6 +33,7 @@ export default function Catalog(): JSX.Element {
     }));
     dispatch(changeCurrentOrderType(currentOrderType || OrderType.Asc,));
     dispatch(changeCurrentSortType(sortType));
+    navigate(`?_page=${currentPage}&_sort=${sortType}&_order=${currentOrderType || OrderType.Asc}`);
   };
 
   const handleOrderTypeChange = (orderType: string) => {
@@ -43,6 +44,7 @@ export default function Catalog(): JSX.Element {
     }));
     dispatch(changeCurrentOrderType(orderType));
     dispatch(changeCurrentSortType(currentSortType || SortType.Price,));
+    navigate(`?_page=${currentPage}&_sort=${currentSortType || SortType.Price}&_order=${orderType}`);
   };
 
   return (
