@@ -19,11 +19,7 @@ export default function Catalog(): JSX.Element {
 
   useEffect(() => {
     navigate(location?.search || `?_page=${currentPage}`);
-
-    if (currentSortType && currentOrderType) {
-      navigate(location?.search || `?_page=${currentPage}&_sort=${currentSortType}&_order=${currentOrderType}`);
-    }
-  }, [currentOrderType, currentPage, currentSortType, location?.search, navigate]);
+  }, [currentPage, location?.search, navigate]);
 
   const handleSortTypeChange = (sortType: string) => {
     dispatch(fetchCamerasAction({
@@ -31,9 +27,9 @@ export default function Catalog(): JSX.Element {
       sortType,
       orderType: currentOrderType || OrderType.Asc,
     }));
-    dispatch(changeCurrentOrderType(currentOrderType || OrderType.Asc,));
+    dispatch(changeCurrentOrderType(currentOrderType || OrderType.Asc));
     dispatch(changeCurrentSortType(sortType));
-    navigate(`?_page=${currentPage}&_sort=${sortType}&_order=${currentOrderType || OrderType.Asc}`);
+    navigate(`?_page=${currentPage}&_sort=${sortType}&_order=${currentOrderType}`);
   };
 
   const handleOrderTypeChange = (orderType: string) => {
@@ -43,8 +39,8 @@ export default function Catalog(): JSX.Element {
       orderType,
     }));
     dispatch(changeCurrentOrderType(orderType));
-    dispatch(changeCurrentSortType(currentSortType || SortType.Price,));
-    navigate(`?_page=${currentPage}&_sort=${currentSortType || SortType.Price}&_order=${orderType}`);
+    dispatch(changeCurrentSortType(currentSortType || SortType.Price));
+    navigate(`?_page=${currentPage}&_sort=${currentSortType}&_order=${orderType}`);
   };
 
   return (
