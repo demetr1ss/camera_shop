@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const/const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { fetchCamerasAction } from '../../store/api-actions';
-import { getCurrentPage } from '../../store/app-process/selectors';
+import { getCurrentOrderType, getCurrentPage, getCurrentSortType } from '../../store/app-process/selectors';
 
 type BreadcrumbsPropsType = {
   productName?: string;
@@ -10,7 +10,9 @@ type BreadcrumbsPropsType = {
 
 export default function Breadcrumbs({ productName }: BreadcrumbsPropsType): JSX.Element {
   const dispatch = useAppDispatch();
-  const currentPage = useAppSelector(getCurrentPage);
+  const page = useAppSelector(getCurrentPage);
+  const sortType = useAppSelector(getCurrentSortType);
+  const orderType = useAppSelector(getCurrentOrderType);
 
   return (
     <div className="breadcrumbs" data-testid="breadcrumbs">
@@ -20,7 +22,7 @@ export default function Breadcrumbs({ productName }: BreadcrumbsPropsType): JSX.
             <Link
               className="breadcrumbs__link"
               to={AppRoute.Main}
-              onClick={() => dispatch(fetchCamerasAction({ page: currentPage }))}
+              onClick={() => dispatch(fetchCamerasAction({ page, sortType, orderType }))}
             >
               Главная
               <svg width="5" height="8" aria-hidden="true">
@@ -33,7 +35,7 @@ export default function Breadcrumbs({ productName }: BreadcrumbsPropsType): JSX.
               <Link
                 className="breadcrumbs__link"
                 to={AppRoute.CatalogPage}
-                onClick={() => dispatch(fetchCamerasAction({ page: currentPage }))}
+                onClick={() => dispatch(fetchCamerasAction({ page, sortType, orderType }))}
                 data-testid="bread-link"
               >
                 Каталог

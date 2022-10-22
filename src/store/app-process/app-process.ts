@@ -8,8 +8,13 @@ export type AppProcessType = {
   currentOrderType?: string;
 }
 
+const urlSearchParams = new URLSearchParams(browserHistory.location.search);
+const params = Object.fromEntries(urlSearchParams.entries());
+
 const initialState: AppProcessType = {
-  currentPage: Number(browserHistory.location?.search.at(-1) || DEFAULT_PAGE)
+  currentPage: Number(params?.['_page']) || DEFAULT_PAGE,
+  currentSortType: params?.['_sort'],
+  currentOrderType: params?.['_order'],
 };
 
 export const appProcess = createSlice({

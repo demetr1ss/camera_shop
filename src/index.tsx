@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
@@ -10,10 +11,13 @@ import { DEFAULT_PAGE } from './const/const';
 import { store } from './store';
 import { fetchCamerasAction, fetchPromoAction } from './store/api-actions';
 
+const urlSearchParams = new URLSearchParams(browserHistory.location.search);
+const params = Object.fromEntries(urlSearchParams.entries());
+
 store.dispatch(fetchCamerasAction({
-  page:
-    Number(browserHistory.location?.search.at(-1)) ||
-    DEFAULT_PAGE
+  page: Number(params?.['_page']) || DEFAULT_PAGE,
+  sortType: params?.['_sort'],
+  orderType: params?.['_order']
 }));
 
 store.dispatch(fetchPromoAction());

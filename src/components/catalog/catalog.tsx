@@ -3,7 +3,7 @@ import { generatePath, Link, useLocation, useNavigate } from 'react-router-dom';
 import { AppRoute, Filters, MAX_RATING, OrderType, SortType } from '../../const/const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { fetchCamerasAction } from '../../store/api-actions';
-import { changeCurrentOrderType, changeCurrentPage, changeCurrentSortType } from '../../store/app-process/app-process';
+import { changeCurrentOrderType, changeCurrentSortType } from '../../store/app-process/app-process';
 import { getCurrentOrderType, getCurrentPage, getCurrentSortType } from '../../store/app-process/selectors';
 import { getCameras } from '../../store/cameras-data/selectors';
 import Pagination from '../pagination/pagination';
@@ -18,9 +18,12 @@ export default function Catalog(): JSX.Element {
   const currentOrderType = useAppSelector(getCurrentOrderType);
 
   useEffect(() => {
-    navigate(location?.search || `?_page=${currentPage}`);
-  }, [currentPage, location?.search, navigate]);
-
+    if (currentSortType && currentOrderType) {
+      navigate(location?.search || `?_page=${currentPage}&_sort=${currentSortType}&_order=${currentOrderType}`);
+    } else {
+      navigate(location?.search || `?_page=${currentPage}`);
+    }
+  }, [currentOrderType, currentPage, currentSortType, location?.search, navigate]);
 
   const handleSortTypeChange = (sortType: string) => {
     dispatch(fetchCamerasAction({
@@ -30,7 +33,6 @@ export default function Catalog(): JSX.Element {
     }));
     dispatch(changeCurrentOrderType(currentOrderType || OrderType.Asc,));
     dispatch(changeCurrentSortType(sortType));
-    dispatch(changeCurrentPage(currentPage));
   };
 
   const handleOrderTypeChange = (orderType: string) => {
@@ -41,7 +43,6 @@ export default function Catalog(): JSX.Element {
     }));
     dispatch(changeCurrentOrderType(orderType));
     dispatch(changeCurrentSortType(currentSortType || SortType.Price,));
-    dispatch(changeCurrentPage(currentPage));
   };
 
   return (

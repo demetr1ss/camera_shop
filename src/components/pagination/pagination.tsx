@@ -13,16 +13,12 @@ export default function Pagination() {
   const camerasTotalCount = useAppSelector(getCamerasTotalCount);
   const pageCount = Math.ceil(camerasTotalCount / LIMIT_CARD_PER_PAGE);
   const currentPage = useAppSelector(getCurrentPage);
-  const currentSortType = useAppSelector(getCurrentSortType);
-  const currentOrderType = useAppSelector(getCurrentOrderType);
+  const sortType = useAppSelector(getCurrentSortType);
+  const orderType = useAppSelector(getCurrentOrderType);
 
   const handlerPageClick = (page: number) => {
     if (page !== currentPage) {
-      dispatch(fetchCamerasAction({
-        page,
-        sortType: currentSortType,
-        orderType: currentOrderType
-      }));
+      dispatch(fetchCamerasAction({ page, sortType, orderType }));
       dispatch(changeCurrentPage(page));
     }
   };
