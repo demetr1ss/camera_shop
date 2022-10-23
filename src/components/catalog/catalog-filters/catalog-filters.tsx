@@ -1,6 +1,10 @@
 import { Filters } from '../../../const/const';
+import { useAppSelector } from '../../../hooks';
+import { getCamerasPriceRange } from '../../../store/cameras-data/selectors';
 
 export default function CatalogFilters() {
+  const camerasPriceRange = useAppSelector(getCamerasPriceRange);
+
   return (
     <div className="catalog-filter">
       <form action="#">
@@ -14,12 +18,12 @@ export default function CatalogFilters() {
           <div className="catalog-filter__price-range">
             <div className="custom-input">
               <label>
-                <input type="number" name="price" placeholder="от" />
+                <input type="number" name="price" placeholder={String(camerasPriceRange.min)} />
               </label>
             </div>
             <div className="custom-input">
               <label>
-                <input type="number" name="priceUp" placeholder="до" />
+                <input type="number" name="priceUp" placeholder={String(camerasPriceRange.max)} />
               </label>
             </div>
           </div>

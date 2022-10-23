@@ -1,5 +1,5 @@
 import { LoadingStatus } from '../../const/const';
-import { CameraType } from '../../types/types';
+import { CamerasPriceRangeType, CameraType } from '../../types/types';
 import { createRandomCamera, MOCK_CAMERAS_TOTAL_COUNT } from '../../utils/mocks/mocks';
 import { fetchCameraAction, fetchCamerasAction, fetchSimilarCamerasAction } from '../api-actions';
 import { camerasData, CamerasDataType } from './cameras-data';
@@ -13,6 +13,7 @@ describe('Reducer: cameras-data', () => {
   beforeEach(() => {
     state = {
       camera: {} as CameraType,
+      camerasPriceRange: {} as CamerasPriceRangeType,
       searchCameras: [],
       cameras: [],
       similarCameras: [],

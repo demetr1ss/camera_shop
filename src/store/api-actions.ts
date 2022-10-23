@@ -1,11 +1,39 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AxiosInstance } from 'axios';
 import { generatePath } from 'react-router-dom';
-import { APIRoute, AppRoute, LIMIT_CARD_PER_PAGE, QueryParameter } from '../const/const';
+import { APIRoute, AppRoute, LIMIT_CARD_PER_PAGE, QueryParameter, SortType } from '../const/const';
 import { AppDispatchType, StateType } from '../types/state-type';
 import { CameraType, fetchCameraPayloadType, FetchReviewType, PromoType, ReviewPostType, ReviewType, SearchCameraType } from '../types/types';
 import { showNotify } from '../utils/utils';
 import { redirectToRoute } from './action';
+
+export const fetchCamerasPriceRangeAction = createAsyncThunk<{ min: number, max: number }, undefined, {
+  dispatch: AppDispatchType,
+  state: StateType,
+  extra: AxiosInstance
+}>(
+  'data/fetchCamerasPriceRange',
+  async (_arg, { extra: api }) => {
+    try {
+      const { data } = await api.get<CameraType[]>(APIRoute.Cameras, {
+        params: {
+          [QueryParameter.Sort]: SortType.Price,
+        }
+      });
+
+      return {
+        min: data[0].price,
+        max: data[data.length - 1].price
+      };
+    }
+    catch (e) {
+      showNotify({
+        type: 'error',
+        message: 'Failed to load cameras price range',
+      });
+      throw e;
+    }
+  });
 
 export const fetchCamerasAction = createAsyncThunk<{ data: CameraType[], camerasTotalCount: number }, fetchCameraPayloadType, {
   dispatch: AppDispatchType,

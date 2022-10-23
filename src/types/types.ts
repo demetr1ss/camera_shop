@@ -15,6 +15,11 @@ export type CameraType = {
   reviewCount: number
 }
 
+export type CamerasPriceRangeType = {
+  min: number,
+  max: number
+}
+
 export type fetchCameraPayloadType = {
   page: number,
   sortType?: string,

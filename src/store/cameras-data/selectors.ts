@@ -1,6 +1,6 @@
 import { NameSpace } from '../../const/const';
 import { StateType } from '../../types/state-type';
-import { CameraType, SearchCameraType } from '../../types/types';
+import { CamerasPriceRangeType, CameraType, SearchCameraType } from '../../types/types';
 
 export const getCameras = (state: StateType): CameraType[] =>
   state[NameSpace.Cameras].cameras;
@@ -22,3 +22,6 @@ export const getSimilarCameras = (state: StateType): CameraType[] =>
 
 export const getCamerasBySearch = (state: StateType): SearchCameraType[] =>
   state[NameSpace.Cameras].searchCameras;
+
+export const getCamerasPriceRange = (state: StateType): CamerasPriceRangeType =>
+  state[NameSpace.Cameras].camerasPriceRange;

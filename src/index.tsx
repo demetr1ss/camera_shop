@@ -8,7 +8,7 @@ import App from './components/app/app';
 import HistoryRouter from './components/history-route/history-route';
 import { DEFAULT_PAGE } from './const/const';
 import { store } from './store';
-import { fetchCamerasAction, fetchPromoAction } from './store/api-actions';
+import { fetchCamerasAction, fetchCamerasPriceRangeAction, fetchPromoAction } from './store/api-actions';
 
 const urlSearchParams = new URLSearchParams(browserHistory.location.search);
 const params = Object.fromEntries(urlSearchParams.entries());
@@ -20,6 +20,7 @@ store.dispatch(fetchCamerasAction({
 }));
 
 store.dispatch(fetchPromoAction());
+store.dispatch(fetchCamerasPriceRangeAction());
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement,
