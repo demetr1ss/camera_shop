@@ -1,5 +1,4 @@
 import CatalogScreen from '../../pages/catalog-screen/catalog-screen';
-import ScrollToTop from '../scroll-to-top/scroll-to-top';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import { AppRoute, LoadingStatus } from '../../const/const';
 import { useAppSelector } from '../../hooks';
@@ -17,26 +16,23 @@ export default function App(): JSX.Element {
   }
 
   return (
-    <>
-      <ScrollToTop />
-      <Routes>
-        <Route
-          path={AppRoute.Main}
-          element={<Navigate to={AppRoute.CatalogPage} replace />}
-        />
-        <Route
-          path={AppRoute.CatalogPage}
-          element={<CatalogScreen />}
-        />
-        <Route
-          path={AppRoute.ProductPage}
-          element={<ProductScreen />}
-        />
-        <Route
-          path="*"
-          element={<NotFoundScreen />}
-        />
-      </Routes>
-    </>
+    <Routes>
+      <Route
+        path={AppRoute.Main}
+        element={<Navigate to={AppRoute.CatalogPage} replace />}
+      />
+      <Route
+        path={AppRoute.CatalogPage}
+        element={<CatalogScreen />}
+      />
+      <Route
+        path={AppRoute.ProductPage}
+        element={<ProductScreen />}
+      />
+      <Route
+        path="*"
+        element={<NotFoundScreen />}
+      />
+    </Routes>
   );
 }

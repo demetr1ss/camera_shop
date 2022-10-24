@@ -3,6 +3,7 @@ import { AppRoute } from '../../const/const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { fetchCamerasAction } from '../../store/api-actions';
 import { getCurrentOrderType, getCurrentPage, getCurrentSortType } from '../../store/app-process/selectors';
+import { scrollToTop } from '../../utils/utils';
 
 type BreadcrumbsPropsType = {
   productName?: string;
@@ -13,6 +14,11 @@ export default function Breadcrumbs({ productName }: BreadcrumbsPropsType): JSX.
   const page = useAppSelector(getCurrentPage);
   const sortType = useAppSelector(getCurrentSortType);
   const orderType = useAppSelector(getCurrentOrderType);
+  const linkClickHandler = () => {
+    dispatch(fetchCamerasAction({ page, sortType, orderType }));
+    scrollToTop(0);
+  };
+
 
   return (
     <div className="breadcrumbs" data-testid="breadcrumbs">
@@ -22,7 +28,7 @@ export default function Breadcrumbs({ productName }: BreadcrumbsPropsType): JSX.
             <Link
               className="breadcrumbs__link"
               to={AppRoute.Main}
-              onClick={() => dispatch(fetchCamerasAction({ page, sortType, orderType }))}
+              onClick={linkClickHandler}
             >
               Главная
               <svg width="5" height="8" aria-hidden="true">
@@ -35,7 +41,7 @@ export default function Breadcrumbs({ productName }: BreadcrumbsPropsType): JSX.
               <Link
                 className="breadcrumbs__link"
                 to={AppRoute.CatalogPage}
-                onClick={() => dispatch(fetchCamerasAction({ page, sortType, orderType }))}
+                onClick={linkClickHandler}
                 data-testid="bread-link"
               >
                 Каталог

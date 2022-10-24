@@ -18,6 +18,7 @@ import { getCamera, getCameraLoadingStatus, getSimilarCameras } from '../../stor
 import { scrollToTop } from '../../utils/utils';
 
 export default function ProductScreen(): JSX.Element {
+  window.scrollTo({ top: 0 });
   const { id } = useParams();
   const dispatch = useAppDispatch();
 
@@ -51,8 +52,8 @@ export default function ProductScreen(): JSX.Element {
           <Product camera={camera} />
           {similarCameras.length > 0 && <ProductSimilar similarCameras={similarCameras} />}
           <Reviews cameraId={String(id)} setIsReviewModalOpened={setIsReviewModalOpened} />
-        </div >
-        <button type="button" className="up-btn" onClick={() => scrollToTop()}>
+        </div>
+        <button type="button" className="up-btn" onClick={() => scrollToTop(0)}>
           <svg width="12" height="18" aria-hidden="true">
             <use xlinkHref="#icon-arrow2" />
           </svg>
@@ -73,7 +74,7 @@ export default function ProductScreen(): JSX.Element {
               <ReviewSuccessModal setIsReviewSuccessModalOpened={setIsReviewSuccessModalOpened} />
             </RemoveScroll>
           </FocusLock>}
-      </main >
+      </main>
       <Footer />
     </div>
   );

@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import { OrderType, SortType } from '../../../const/const';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { fetchCamerasAction } from '../../../store/api-actions';
-import { changeCurrentOrderType, changeCurrentSortType } from '../../../store/app-process/app-process';
+import { changeOrderType, changeSortType } from '../../../store/app-process/app-process';
 import { getCurrentPage } from '../../../store/app-process/selectors';
 
 type CatalogSortPropsType = {
@@ -21,8 +21,8 @@ export default function CatalogSort({ currentSortType, currentOrderType }: Catal
       sortType,
       orderType: currentOrderType || OrderType.Asc,
     }));
-    dispatch(changeCurrentOrderType(currentOrderType || OrderType.Asc));
-    dispatch(changeCurrentSortType(sortType));
+    dispatch(changeOrderType(currentOrderType || OrderType.Asc));
+    dispatch(changeSortType(sortType));
     navigate(`?_page=${currentPage}&_sort=${sortType}&_order=${currentOrderType || OrderType.Asc}`);
   };
 
@@ -32,8 +32,8 @@ export default function CatalogSort({ currentSortType, currentOrderType }: Catal
       sortType: currentSortType || SortType.Price,
       orderType,
     }));
-    dispatch(changeCurrentOrderType(orderType));
-    dispatch(changeCurrentSortType(currentSortType || SortType.Price));
+    dispatch(changeOrderType(orderType));
+    dispatch(changeSortType(currentSortType || SortType.Price));
     navigate(`?_page=${currentPage}&_sort=${currentSortType || SortType.Price}&_order=${orderType}`);
   };
 

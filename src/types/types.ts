@@ -24,6 +24,11 @@ export type fetchCameraPayloadType = {
   page: number,
   sortType?: string,
   orderType?: string,
+  minPrice?: string,
+  maxPrice?: string,
+  category?: string[],
+  type?: string[],
+  level?: string[],
 }
 
 export type SearchCameraType = {

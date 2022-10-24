@@ -6,7 +6,7 @@ import { fetchCamerasAction } from '../../store/api-actions';
 import { changeCurrentPage } from '../../store/app-process/app-process';
 import { getCurrentOrderType, getCurrentPage, getCurrentSortType } from '../../store/app-process/selectors';
 import { getCamerasTotalCount } from '../../store/cameras-data/selectors';
-import { getArrayWithFixLength } from '../../utils/utils';
+import { getArrayWithFixLength, scrollToTop } from '../../utils/utils';
 
 export default function Pagination() {
   const dispatch = useAppDispatch();
@@ -20,6 +20,7 @@ export default function Pagination() {
     if (page !== currentPage) {
       dispatch(fetchCamerasAction({ page, sortType, orderType }));
       dispatch(changeCurrentPage(page));
+      scrollToTop(380);
     }
   };
 

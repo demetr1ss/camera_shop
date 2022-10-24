@@ -1,9 +1,23 @@
-import { Filters } from '../../../const/const';
-import { useAppSelector } from '../../../hooks';
-import { getCamerasPriceRange } from '../../../store/cameras-data/selectors';
+import { ChangeEvent } from 'react';
+import { Filters, FilterType } from '../../../const/const';
+import { useAppDispatch } from '../../../hooks';
+import { changeCategory, changeLevel, changeType } from '../../../store/app-process/app-process';
+import PriceRange from './price-range/price-range';
 
 export default function CatalogFilters() {
-  const camerasPriceRange = useAppSelector(getCamerasPriceRange);
+  const dispatch = useAppDispatch();
+
+  const filterChangeHandler = (evt: ChangeEvent<HTMLInputElement>) => {
+    const filterName = evt.target.name;
+
+    if (filterName in Filters[FilterType.Category]) {
+      dispatch(changeCategory(Filters[FilterType.Category][filterName]));
+    } else if (filterName in Filters[FilterType.Type]) {
+      dispatch(changeType(Filters[FilterType.Type][filterName]));
+    } else {
+      dispatch(changeLevel(Filters[FilterType.Level][filterName]));
+    }
+  };
 
   return (
     <div className="catalog-filter">
@@ -15,18 +29,7 @@ export default function CatalogFilters() {
           <legend className="title title--h5">
             Цена, ₽
           </legend>
-          <div className="catalog-filter__price-range">
-            <div className="custom-input">
-              <label>
-                <input type="number" name="price" placeholder={String(camerasPriceRange.min)} />
-              </label>
-            </div>
-            <div className="custom-input">
-              <label>
-                <input type="number" name="priceUp" placeholder={String(camerasPriceRange.max)} />
-              </label>
-            </div>
-          </div>
+          <PriceRange />
         </fieldset>
 
         {Object.keys(Filters).map((filterType) => (
@@ -38,7 +41,7 @@ export default function CatalogFilters() {
             {Object.keys(Filters[filterType]).map((filterItem) => (
               <div className="custom-checkbox catalog-filter__item" key={filterItem}>
                 <label>
-                  <input type="checkbox" name={filterItem} />
+                  <input type="checkbox" name={filterItem} onChange={filterChangeHandler} />
                   <span className="custom-checkbox__icon" />
                   <span className="custom-checkbox__label">
                     {Filters[filterType][filterItem]}

@@ -3,12 +3,17 @@ import { AppRoute } from '../../const/const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { fetchCamerasAction } from '../../store/api-actions';
 import { getCurrentOrderType, getCurrentPage, getCurrentSortType } from '../../store/app-process/selectors';
+import { scrollToTop } from '../../utils/utils';
 
 export default function Footer() {
   const dispatch = useAppDispatch();
   const page = useAppSelector(getCurrentPage);
   const sortType = useAppSelector(getCurrentSortType);
   const orderType = useAppSelector(getCurrentOrderType);
+  const linkClickHandler = () => {
+    dispatch(fetchCamerasAction({ page, sortType, orderType }));
+    scrollToTop(0);
+  };
 
   return (
     <footer className="footer">
@@ -18,7 +23,7 @@ export default function Footer() {
             className="footer__logo"
             to={AppRoute.Main}
             aria-label="Переход на главную"
-            onClick={() => dispatch(fetchCamerasAction({ page, sortType, orderType }))}
+            onClick={linkClickHandler}
           >
             <svg width="100" height="36" aria-hidden="true">
               <use xlinkHref="#icon-logo-mono"></use>
@@ -61,7 +66,7 @@ export default function Footer() {
                 <Link
                   className="link"
                   to={AppRoute.Main}
-                  onClick={() => dispatch(fetchCamerasAction({ page, sortType, orderType }))}
+                  onClick={linkClickHandler}
                 >
                   Каталог
                 </Link>

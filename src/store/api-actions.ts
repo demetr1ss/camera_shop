@@ -7,35 +7,7 @@ import { CameraType, fetchCameraPayloadType, FetchReviewType, PromoType, ReviewP
 import { showNotify } from '../utils/utils';
 import { redirectToRoute } from './action';
 
-export const fetchCamerasPriceRangeAction = createAsyncThunk<{ min: number, max: number }, undefined, {
-  dispatch: AppDispatchType,
-  state: StateType,
-  extra: AxiosInstance
-}>(
-  'data/fetchCamerasPriceRange',
-  async (_arg, { extra: api }) => {
-    try {
-      const { data } = await api.get<CameraType[]>(APIRoute.Cameras, {
-        params: {
-          [QueryParameter.Sort]: SortType.Price,
-        }
-      });
-
-      return {
-        min: data[0].price,
-        max: data[data.length - 1].price
-      };
-    }
-    catch (e) {
-      showNotify({
-        type: 'error',
-        message: 'Failed to load cameras price range',
-      });
-      throw e;
-    }
-  });
-
-export const fetchCamerasAction = createAsyncThunk<{ data: CameraType[], camerasTotalCount: number }, fetchCameraPayloadType, {
+export const fetchCamerasAction = createAsyncThunk<{data: CameraType[], camerasTotalCount: number}, fetchCameraPayloadType, {
   dispatch: AppDispatchType,
   state: StateType,
   extra: AxiosInstance
@@ -49,6 +21,11 @@ export const fetchCamerasAction = createAsyncThunk<{ data: CameraType[], cameras
           [QueryParameter.Page]: params.page,
           [QueryParameter.Sort]: params.sortType,
           [QueryParameter.Order]: params.orderType,
+          [QueryParameter.MinPrice]: params.minPrice,
+          [QueryParameter.MaxPrice]: params.maxPrice,
+          [QueryParameter.Category]: params.category,
+          [QueryParameter.Type]: params.type,
+          [QueryParameter.Level]: params.level
         }
       });
 
@@ -65,9 +42,37 @@ export const fetchCamerasAction = createAsyncThunk<{ data: CameraType[], cameras
       throw e;
     }});
 
+export const fetchCamerasPriceRangeAction = createAsyncThunk<{min: number, max: number}, undefined, {
+      dispatch: AppDispatchType,
+      state: StateType,
+      extra: AxiosInstance
+    }>(
+      'data/fetchCamerasPriceRange',
+      async (_arg, { extra: api }) => {
+        try {
+          const { data } = await api.get<CameraType[]>(APIRoute.Cameras, {
+            params: {
+              [QueryParameter.Sort]: SortType.Price,
+            }
+          });
+
+          return {
+            min: data[0].price,
+            max: data[data.length - 1].price
+          };
+        }
+        catch (e) {
+          showNotify({
+            type: 'error',
+            message: 'Failed to load cameras price range',
+          });
+          throw e;
+        }
+      });
+
 export const fetchCamerasBySearchAction = createAsyncThunk<SearchCameraType[], string, {
-  dispatch: AppDispatchType,
-  state: StateType,
+      dispatch: AppDispatchType,
+      state: StateType,
   extra: AxiosInstance
 }>(
   'data/fetchCamerasBySearchAction',

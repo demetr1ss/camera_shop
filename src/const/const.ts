@@ -38,6 +38,12 @@ export const Filters: FiltersType = {
   }
 };
 
+export const FilterType = {
+  Category: 'Категория',
+  Type: 'Тип камеры',
+  Level: 'Уровень',
+} as const;
+
 export const APIRoute = {
   Cameras: '/cameras',
   Camera: '/cameras/:id',
@@ -56,8 +62,8 @@ export const QueryParameter = {
   Type: 'type',
   Category: 'category',
   Level: 'level',
-  PriceFloor: 'price_gte',
-  PriceCeil: 'price_lte'
+  MinPrice: 'price_gte',
+  MaxPrice: 'price_lte'
 } as const;
 
 export const SortType = {
