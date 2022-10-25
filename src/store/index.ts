@@ -5,7 +5,7 @@ import { rootReducer } from './root-reducer';
 
 export const api = createAPI();
 
-export const store = configureStore({
+export const createStore = (initialState = {}) => configureStore({
   reducer: rootReducer,
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware ({
@@ -13,4 +13,7 @@ export const store = configureStore({
         extraArgument: api,
       },
     }).concat(redirect),
+  preloadedState: initialState
 });
+
+export const store = createStore();

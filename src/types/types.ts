@@ -20,15 +20,22 @@ export type CamerasPriceRangeType = {
   max: number
 }
 
-export type fetchCameraPayloadType = {
-  page: number,
-  sortType?: string,
-  orderType?: string,
-  minPrice?: string,
-  maxPrice?: string,
-  category?: string[],
-  type?: string[],
-  level?: string[],
+export type FetchCameraPayloadType = {
+  currentPage: number;
+  params: {
+    sortType: string | null
+    orderType: string | null
+    category: string | null | string[]
+    level: string | null | string[]
+    maxPrice: string | null
+    minPrice: string | null
+    type: string | null | string[]
+  }
+}
+
+export type CurrentCatalogPathType = {
+  currentPage: number;
+  search?: string;
 }
 
 export type SearchCameraType = {

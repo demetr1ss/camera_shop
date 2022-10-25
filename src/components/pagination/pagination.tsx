@@ -1,27 +1,20 @@
 import cn from 'classnames';
 import { generatePath, Link } from 'react-router-dom';
-import { AppRoute, DEFAULT_PAGE, LIMIT_CARD_PER_PAGE, PAGE_STEP } from '../../const/const';
-import { useAppDispatch, useAppSelector } from '../../hooks';
-import { fetchCamerasAction } from '../../store/api-actions';
-import { changeCurrentPage } from '../../store/app-process/app-process';
-import { getCurrentOrderType, getCurrentPage, getCurrentSortType } from '../../store/app-process/selectors';
-import { getCamerasTotalCount } from '../../store/cameras-data/selectors';
-import { getArrayWithFixLength, scrollToTop } from '../../utils/utils';
+import { AppRoute, BREADCRUMBS_POX_X, DEFAULT_PAGE, PAGE_STEP } from '../../const/const';
+import { useAppSelector } from '../../hooks';
+import { getCurrentCatalogPath } from '../../store/app-process/selectors';
+import { getArrayWithFixLength } from '../../utils/utils';
 
-export default function Pagination() {
-  const dispatch = useAppDispatch();
-  const camerasTotalCount = useAppSelector(getCamerasTotalCount);
-  const pageCount = Math.ceil(camerasTotalCount / LIMIT_CARD_PER_PAGE);
-  const currentPage = useAppSelector(getCurrentPage);
-  const sortType = useAppSelector(getCurrentSortType);
-  const orderType = useAppSelector(getCurrentOrderType);
+type PaginationPropsType = {
+  pagesCount: number;
+}
 
-  const handlerPageClick = (page: number) => {
-    if (page !== currentPage) {
-      dispatch(fetchCamerasAction({ page, sortType, orderType }));
-      dispatch(changeCurrentPage(page));
-      scrollToTop(380);
-    }
+export default function Pagination({ pagesCount }: PaginationPropsType) {
+  const { currentPage, search } = useAppSelector(getCurrentCatalogPath);
+  const onClickLinkHandler = () => {
+    window.scrollTo({
+      top: BREADCRUMBS_POX_X,
+    });
   };
 
   return (
@@ -33,14 +26,17 @@ export default function Pagination() {
           >
             <Link
               className="pagination__link pagination__link--text"
-              to={generatePath(AppRoute.CatalogPage, { page: String(currentPage - PAGE_STEP) })}
-              onClick={() => handlerPageClick(currentPage - PAGE_STEP)}
+              to={{
+                pathname: generatePath(AppRoute.CatalogPage, { page: String(currentPage - PAGE_STEP) }),
+                search
+              }}
+              onClick={onClickLinkHandler}
             >
               Назад
             </Link>
           </li>}
 
-        {getArrayWithFixLength(pageCount).map((page) => {
+        {getArrayWithFixLength(pagesCount).map((page) => {
           const currentPageClassName = cn('pagination__link', {
             'pagination__link--active': currentPage === page
           });
@@ -49,8 +45,11 @@ export default function Pagination() {
             <li className="pagination__item" key={page}>
               <Link
                 className={currentPageClassName}
-                to={generatePath(AppRoute.CatalogPage, { page: String(page) })}
-                onClick={() => handlerPageClick(page)}
+                to={{
+                  pathname: generatePath(AppRoute.CatalogPage, { page: String(page) }),
+                  search
+                }}
+                onClick={onClickLinkHandler}
               >
                 {page}
               </Link>
@@ -58,12 +57,15 @@ export default function Pagination() {
           );
         })}
 
-        {currentPage !== pageCount &&
+        {currentPage !== pagesCount &&
           <li className="pagination__item">
             <Link
               className="pagination__link pagination__link--text"
-              to={generatePath(AppRoute.CatalogPage, { page: String(currentPage + PAGE_STEP) })}
-              onClick={() => handlerPageClick(currentPage + PAGE_STEP)}
+              to={{
+                pathname: generatePath(AppRoute.CatalogPage, { page: String(currentPage + PAGE_STEP) }),
+                search
+              }}
+              onClick={onClickLinkHandler}
             >
               Далее
             </Link>

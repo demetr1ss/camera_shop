@@ -8,7 +8,7 @@ export default function NotFoundScreen(): JSX.Element {
   const location = useLocation();
   showNotify({
     type: 'error',
-    message: `Page "${location.pathname.slice(1)}" not found`
+    message: `Page "${location.pathname}" not found`
   });
 
   return (

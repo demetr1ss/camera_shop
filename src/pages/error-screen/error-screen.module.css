@@ -1,0 +1,26 @@
+.container {
+  text-align: center;
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding-top: 10%;
+}
+
+.error404 {
+  font-size: 125px;
+  color: firebrick;
+  margin: 0;
+}
+
+.description {
+  margin-top: 2em;
+}
+
+.link {
+  color: rgba(0, 0, 0, 0.2);
+  font-weight: 700;
+}
+
+.link:hover {
+  text-decoration: underline;
+}

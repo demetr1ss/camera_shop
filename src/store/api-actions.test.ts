@@ -5,9 +5,9 @@ import { Action } from 'redux';
 import thunk, { ThunkDispatch } from 'redux-thunk';
 import { APIRoute, DEFAULT_PAGE, REVIEWS_PER_PAGE } from '../const/const';
 import { createAPI } from '../services/api';
+import { createRandomCamera, createRandomPostReview, createRandomPromo, createRandomReviews, MOCK_CAMERAS_TOTAL_COUNT, MOCK_REVIEWS_TOTAL_COUNT } from '../tests/mocks/mocks';
 import { StateType } from '../types/state-type';
 import { CameraType } from '../types/types';
-import { createRandomCamera, createRandomPostReview, createRandomPromo, createRandomReviews, MOCK_CAMERAS_TOTAL_COUNT, MOCK_REVIEWS_TOTAL_COUNT } from '../utils/mocks/mocks';
 import { fetchCameraAction, fetchCamerasAction, fetchPromoAction, fetchReviewsAction, fetchSimilarCamerasAction, sendReviewAction } from './api-actions';
 
 describe('Async actions', () => {
@@ -28,7 +28,18 @@ describe('Async actions', () => {
 
     const store = mockStore();
 
-    await store.dispatch(fetchCamerasAction({page: DEFAULT_PAGE}));
+    await store.dispatch(fetchCamerasAction({
+      currentPage: DEFAULT_PAGE,
+      params: {
+        sortType:  null,
+        orderType:  null,
+        category: null,
+        level: null,
+        maxPrice: null,
+        minPrice: null,
+        type: null,
+      }
+    }));
 
     const actions = store.getActions().map(({ type }) => type);
 

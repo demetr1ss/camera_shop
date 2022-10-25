@@ -1,21 +1,33 @@
 import { DEFAULT_PAGE } from '../../const/const';
-import { appProcess, changeCurrentPage } from './app-process';
+import { appProcess, AppProcessStateType, setCurrentCatalogPath } from './app-process';
 
 describe('Reducer: appProcess', () => {
-  it('without additional parameters should return initial state', () => {
-    expect(appProcess.reducer(undefined, {type: 'UNKNOWN_ACTION'}))
-      .toEqual({
-        page: DEFAULT_PAGE,
-      });
+  let state: AppProcessStateType;
+
+  beforeEach(() => {
+    state = {
+      currentCatalogPath: {
+        currentPage: DEFAULT_PAGE
+      },
+    };
   });
 
-  it('should update current page when the page is changed', () => {
-    const state = {
-      page: DEFAULT_PAGE,
-    };
-    expect(appProcess.reducer(state, changeCurrentPage(5)))
+  it('without additional parameters should return initial state', () => {
+    expect(appProcess.reducer(state, { type: 'UNKNOWN_ACTION' }))
+      .toEqual(state);
+  });
+
+  it('should set current catalog page and search', () => {
+    expect(appProcess.reducer(state, setCurrentCatalogPath({
+      currentPage: 3,
+      search: '?_order=asc'
+    })))
       .toEqual({
-        page: 5,
+        ...state,
+        currentCatalogPath: {
+          currentPage: 3,
+          search: '?_order=asc'
+        }
       });
   });
 });

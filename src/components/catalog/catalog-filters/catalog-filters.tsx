@@ -1,27 +1,40 @@
-import { ChangeEvent } from 'react';
-import { Filters, FilterType } from '../../../const/const';
-import { useAppDispatch } from '../../../hooks';
-import { changeCategory, changeLevel, changeType } from '../../../store/app-process/app-process';
+import { useRef } from 'react';
+import { useSearchParams } from 'react-router-dom';
+import { Filters, FilterTitle, FILTER_PARAMS } from '../../../const/const';
+import useResetPage from '../../../hooks/use-reset-page';
 import PriceRange from './price-range/price-range';
 
 export default function CatalogFilters() {
-  const dispatch = useAppDispatch();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const resetPage = useResetPage();
+  const formRef = useRef<HTMLFormElement>(null);
 
-  const filterChangeHandler = (evt: ChangeEvent<HTMLInputElement>) => {
-    const filterName = evt.target.name;
+  const changeSearch = (param: string, value: string) => {
+    if (!searchParams.getAll(param).includes(value)) {
+      searchParams.append(param, value);
+      setSearchParams(searchParams);
+      resetPage(searchParams);
 
-    if (filterName in Filters[FilterType.Category]) {
-      dispatch(changeCategory(Filters[FilterType.Category][filterName]));
-    } else if (filterName in Filters[FilterType.Type]) {
-      dispatch(changeType(Filters[FilterType.Type][filterName]));
-    } else {
-      dispatch(changeLevel(Filters[FilterType.Level][filterName]));
+      return;
     }
+    const newParams = Array.from(searchParams.entries())
+      .filter(([_, currentValue]) => currentValue !== value);
+    const newSearchParams = new URLSearchParams(newParams);
+
+    setSearchParams(newSearchParams);
+    resetPage(newSearchParams);
+  };
+
+  const handleResetClick = () => {
+    const paramsWithOutFilters = Array.from(searchParams.entries())
+      .filter(([key]) => !FILTER_PARAMS.includes(key));
+    setSearchParams(paramsWithOutFilters);
+    formRef.current && formRef.current.reset();
   };
 
   return (
     <div className="catalog-filter">
-      <form action="#">
+      <form action="#" ref={formRef}>
         <h2 className="visually-hidden">
           Фильтр
         </h2>
@@ -32,27 +45,39 @@ export default function CatalogFilters() {
           <PriceRange />
         </fieldset>
 
-        {Object.keys(Filters).map((filterType) => (
-          <fieldset className="catalog-filter__block" key={filterType}>
-            <legend className="title title--h5">
-              {filterType}
-            </legend>
+        {Object.keys(Filters).map((filter) => {
+          const currentParams = Array.from(searchParams.values());
 
-            {Object.keys(Filters[filterType]).map((filterItem) => (
-              <div className="custom-checkbox catalog-filter__item" key={filterItem}>
-                <label>
-                  <input type="checkbox" name={filterItem} onChange={filterChangeHandler} />
-                  <span className="custom-checkbox__icon" />
-                  <span className="custom-checkbox__label">
-                    {Filters[filterType][filterItem]}
-                  </span>
-                </label>
-              </div>
-            ))}
-          </fieldset>
-        ))}
+          return (
+            <fieldset className="catalog-filter__block" key={filter}>
+              <legend className="title title--h5">
+                {FilterTitle[filter]}
+              </legend>
 
-        <button className="btn catalog-filter__reset-btn" type="reset">
+              {Object.keys(Filters[filter]).map((filterItem) => (
+                <div className="custom-checkbox catalog-filter__item" key={filterItem}>
+                  <label>
+                    <input
+                      type="checkbox"
+                      name={filterItem}
+                      onChange={() => changeSearch(filter.toLowerCase(), Filters[filter][filterItem])}
+                      checked={currentParams.includes(Filters[filter][filterItem])}
+                    />
+                    <span className="custom-checkbox__icon" />
+                    <span className="custom-checkbox__label">
+                      {Filters[filter][filterItem]}
+                    </span>
+                  </label>
+                </div>))}
+            </fieldset>);
+        })}
+
+        <button
+          className="btn catalog-filter__reset-btn"
+          type="reset"
+          onClick={handleResetClick}
+          disabled={!FILTER_PARAMS.some((param) => searchParams.get(param))}
+        >
           Сбросить фильтры
         </button>
       </form>

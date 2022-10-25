@@ -2,8 +2,8 @@ import { render, screen } from '@testing-library/react';
 import { createMemoryHistory } from 'history';
 import { Provider } from 'react-redux';
 import HistoryRouter from '../../../components/history-route/history-route';
-import { mockStore } from '../../../utils/mocks/mock-store';
-import { createRandomCamera } from '../../../utils/mocks/mocks';
+import { mockStore } from '../../../tests/mocks/mock-store';
+import { createRandomCamera } from '../../../tests/mocks/mocks';
 import Reviews from './reviews';
 
 const mockCamera = createRandomCamera();

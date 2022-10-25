@@ -1,24 +1,14 @@
-import { Link } from 'react-router-dom';
-import { AppRoute } from '../../const/const';
-import { useAppDispatch, useAppSelector } from '../../hooks';
-import { fetchCamerasAction } from '../../store/api-actions';
-import { getCurrentOrderType, getCurrentPage, getCurrentSortType } from '../../store/app-process/selectors';
-import { scrollToTop } from '../../utils/utils';
+import { generatePath, Link } from 'react-router-dom';
+import { AppRoute, DEFAULT_PAGE } from '../../const/const';
+import { useAppSelector } from '../../hooks';
+import { getCurrentCatalogPath } from '../../store/app-process/selectors';
 
 type BreadcrumbsPropsType = {
   productName?: string;
 }
 
 export default function Breadcrumbs({ productName }: BreadcrumbsPropsType): JSX.Element {
-  const dispatch = useAppDispatch();
-  const page = useAppSelector(getCurrentPage);
-  const sortType = useAppSelector(getCurrentSortType);
-  const orderType = useAppSelector(getCurrentOrderType);
-  const linkClickHandler = () => {
-    dispatch(fetchCamerasAction({ page, sortType, orderType }));
-    scrollToTop(0);
-  };
-
+  const { currentPage, search } = useAppSelector(getCurrentCatalogPath);
 
   return (
     <div className="breadcrumbs" data-testid="breadcrumbs">
@@ -27,8 +17,12 @@ export default function Breadcrumbs({ productName }: BreadcrumbsPropsType): JSX.
           <li className="breadcrumbs__item">
             <Link
               className="breadcrumbs__link"
-              to={AppRoute.Main}
-              onClick={linkClickHandler}
+              to={{
+                pathname: generatePath(AppRoute.CatalogPage, {
+                  page: currentPage ? String(currentPage) : String(DEFAULT_PAGE)
+                }),
+                search
+              }}
             >
               Главная
               <svg width="5" height="8" aria-hidden="true">
@@ -40,8 +34,12 @@ export default function Breadcrumbs({ productName }: BreadcrumbsPropsType): JSX.
             {productName ?
               <Link
                 className="breadcrumbs__link"
-                to={AppRoute.CatalogPage}
-                onClick={linkClickHandler}
+                to={{
+                  pathname: generatePath(AppRoute.CatalogPage, {
+                    page: currentPage ? String(currentPage) : String(DEFAULT_PAGE)
+                  }),
+                  search
+                }}
                 data-testid="bread-link"
               >
                 Каталог

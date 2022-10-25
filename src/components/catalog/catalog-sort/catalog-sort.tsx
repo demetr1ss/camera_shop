@@ -1,40 +1,38 @@
-import { useNavigate } from 'react-router-dom';
-import { OrderType, SortType } from '../../../const/const';
-import { useAppDispatch, useAppSelector } from '../../../hooks';
-import { fetchCamerasAction } from '../../../store/api-actions';
-import { changeOrderType, changeSortType } from '../../../store/app-process/app-process';
-import { getCurrentPage } from '../../../store/app-process/selectors';
+import { ChangeEvent, useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
+import { OrderType, QueryParameter, SortType } from '../../../const/const';
+import { useAppSelector } from '../../../hooks';
+import { getCurrentCatalogPath } from '../../../store/app-process/selectors';
 
-type CatalogSortPropsType = {
-  currentSortType?: string;
-  currentOrderType?: string;
-}
+export default function CatalogSort() {
+  const { search } = useAppSelector(getCurrentCatalogPath);
+  const [searchParams, setSearchParams] = useSearchParams();
 
-export default function CatalogSort({ currentSortType, currentOrderType }: CatalogSortPropsType) {
-  const dispatch = useAppDispatch();
-  const navigate = useNavigate();
-  const currentPage = useAppSelector(getCurrentPage);
+  useEffect(() => {
+    if (searchParams.has(QueryParameter.Sort) && !searchParams.has(QueryParameter.Order)) {
+      searchParams.set(QueryParameter.Order, OrderType.Asc);
+      setSearchParams(searchParams);
+    }
 
-  const handleSortTypeChange = (sortType: string) => {
-    dispatch(fetchCamerasAction({
-      page: currentPage,
-      sortType,
-      orderType: currentOrderType || OrderType.Asc,
-    }));
-    dispatch(changeOrderType(currentOrderType || OrderType.Asc));
-    dispatch(changeSortType(sortType));
-    navigate(`?_page=${currentPage}&_sort=${sortType}&_order=${currentOrderType || OrderType.Asc}`);
-  };
+    if (!searchParams.has(QueryParameter.Sort) && searchParams.has(QueryParameter.Order)) {
+      searchParams.set(QueryParameter.Sort, SortType.Price);
+      setSearchParams(searchParams);
+    }
+  }, [searchParams, setSearchParams]);
 
-  const handleOrderTypeChange = (orderType: string) => {
-    dispatch(fetchCamerasAction({
-      page: currentPage,
-      sortType: currentSortType || SortType.Price,
-      orderType,
-    }));
-    dispatch(changeOrderType(orderType));
-    dispatch(changeSortType(currentSortType || SortType.Price));
-    navigate(`?_page=${currentPage}&_sort=${currentSortType || SortType.Price}&_order=${orderType}`);
+  const handleInputChange = ({ target }: ChangeEvent<HTMLInputElement>) => {
+    const { name } = target;
+    const value = target.getAttribute('data-value');
+
+    switch (name) {
+      case QueryParameter.Sort:
+        searchParams.set(QueryParameter.Sort, String(value));
+        break;
+      case QueryParameter.Order:
+        searchParams.set(QueryParameter.Order, String(value));
+    }
+
+    setSearchParams(searchParams);
   };
 
   return (
@@ -49,9 +47,10 @@ export default function CatalogSort({ currentSortType, currentOrderType }: Catal
               <input
                 type="radio"
                 id="sortPrice"
-                name="sort"
-                onChange={() => handleSortTypeChange(SortType.Price)}
-                checked={currentSortType === SortType.Price}
+                name="_sort"
+                data-value="price"
+                onChange={handleInputChange}
+                checked={search?.includes(SortType.Price) || false}
               />
               <label htmlFor="sortPrice">
                 по цене
@@ -61,9 +60,10 @@ export default function CatalogSort({ currentSortType, currentOrderType }: Catal
               <input
                 type="radio"
                 id="sortPopular"
-                name="sort"
-                onChange={() => handleSortTypeChange(SortType.Rating)}
-                checked={currentSortType === SortType.Rating}
+                name="_sort"
+                data-value="rating"
+                onChange={handleInputChange}
+                checked={search?.includes(SortType.Rating) || false}
               />
               <label htmlFor="sortPopular">
                 по популярности
@@ -75,10 +75,11 @@ export default function CatalogSort({ currentSortType, currentOrderType }: Catal
               <input
                 type="radio"
                 id="up"
-                name="sort-icon"
+                name="_order"
+                data-value="asc"
                 aria-label="По возрастанию"
-                onChange={() => handleOrderTypeChange(OrderType.Asc)}
-                checked={currentOrderType === OrderType.Asc}
+                onChange={handleInputChange}
+                checked={search?.includes(OrderType.Asc) || false}
               />
               <label htmlFor="up">
                 <svg width="16" height="14" aria-hidden="true">
@@ -90,10 +91,11 @@ export default function CatalogSort({ currentSortType, currentOrderType }: Catal
               <input
                 type="radio"
                 id="down"
-                name="sort-icon"
+                name="_order"
+                data-value="desc"
                 aria-label="По убыванию"
-                onChange={() => handleOrderTypeChange(OrderType.Desc)}
-                checked={currentOrderType === OrderType.Desc}
+                onChange={handleInputChange}
+                checked={search?.includes(OrderType.Desc) || false}
               />
               <label htmlFor="down">
                 <svg width="16" height="14" aria-hidden="true">

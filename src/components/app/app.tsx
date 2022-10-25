@@ -1,25 +1,20 @@
 import CatalogScreen from '../../pages/catalog-screen/catalog-screen';
-import { Navigate, Route, Routes } from 'react-router-dom';
-import { AppRoute, LoadingStatus } from '../../const/const';
-import { useAppSelector } from '../../hooks';
-import { getCamerasLoadingStatus } from '../../store/cameras-data/selectors';
-import LoadingScreen from '../../pages/loading-screen/loading-screen';
+import { generatePath, Navigate, Route, Routes } from 'react-router-dom';
+import { AppRoute, DEFAULT_PAGE } from '../../const/const';
 import ProductScreen from '../../pages/product-screen/product-screen';
 import NotFoundScreen from '../../pages/not-found-screen/not-found-screen';
 
 
 export default function App(): JSX.Element {
-  const camerasLoadingStatus = useAppSelector(getCamerasLoadingStatus);
-
-  if (camerasLoadingStatus === LoadingStatus.Idle || camerasLoadingStatus === LoadingStatus.Pending) {
-    return <LoadingScreen />;
-  }
-
   return (
     <Routes>
       <Route
         path={AppRoute.Main}
-        element={<Navigate to={AppRoute.CatalogPage} replace />}
+        element={
+          <Navigate
+            to={{ pathname: generatePath(AppRoute.CatalogPage, { page: String(DEFAULT_PAGE) }) }}
+          />
+        }
       />
       <Route
         path={AppRoute.CatalogPage}

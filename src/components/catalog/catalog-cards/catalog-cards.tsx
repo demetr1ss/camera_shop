@@ -1,11 +1,12 @@
 import { Link, generatePath } from 'react-router-dom';
 import { MAX_RATING, AppRoute } from '../../../const/const';
-import { useAppSelector } from '../../../hooks';
-import { getCameras } from '../../../store/cameras-data/selectors';
+import { CameraType } from '../../../types/types';
 
-export default function CatalogCards() {
-  const cameras = useAppSelector(getCameras);
+type CatalogCardsPropsType = {
+  cameras: CameraType[]
+}
 
+export default function CatalogCards({ cameras }: CatalogCardsPropsType) {
   return (
     <div className="cards catalog__cards">
       {cameras.map((camera) => {
@@ -24,8 +25,8 @@ export default function CatalogCards() {
           <div className="product-card" key={id}>
             <div className="product-card__img">
               <picture>
-                <source type="image/webp" srcSet={`${previewImgWebp}, ${previewImgWebp2x} 2x`} />
-                <img src={previewImg} srcSet={`${previewImg2x} 2x`} width="280" height="240" alt={name} />
+                <source type="image/webp" srcSet={`/${previewImgWebp}, /${previewImgWebp2x} 2x`} />
+                <img src={previewImg} srcSet={`${previewImg2x} 2x`} width={280} height={240} alt={name} />
               </picture>
             </div>
             <div className="product-card__info">

@@ -1,12 +1,12 @@
-import App from './app';
-import HistoryRouter from '../history-route/history-route';
 import { render, screen } from '@testing-library/react';
 import { createMemoryHistory } from 'history';
 import { Provider } from 'react-redux';
 import { generatePath } from 'react-router-dom';
 import { AppRoute } from '../../const/const';
-import { mockStore } from '../../utils/mocks/mock-store';
-import { createRandomCamera } from '../../utils/mocks/mocks';
+import { mockStore } from '../../tests/mocks/mock-store';
+import { createRandomCamera } from '../../tests/mocks/mocks';
+import HistoryRouter from '../history-route/history-route';
+import App from './app';
 
 global.scrollTo = jest.fn();
 

@@ -1,21 +1,8 @@
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const/const';
-import { useAppDispatch, useAppSelector } from '../../hooks';
-import { fetchCamerasAction } from '../../store/api-actions';
-import { getCurrentOrderType, getCurrentPage, getCurrentSortType } from '../../store/app-process/selectors';
-import { scrollToTop } from '../../utils/utils';
 import SearchForm from '../search-form/search-form';
 
 export default function Header() {
-  const dispatch = useAppDispatch();
-  const page = useAppSelector(getCurrentPage);
-  const sortType = useAppSelector(getCurrentSortType);
-  const orderType = useAppSelector(getCurrentOrderType);
-  const linkClickHandler = () => {
-    dispatch(fetchCamerasAction({ page, sortType, orderType }));
-    scrollToTop(0);
-  };
-
   return (
     <header className="header" id="header">
       <div className="container">
@@ -23,7 +10,6 @@ export default function Header() {
           className="header__logo"
           to={AppRoute.Main}
           aria-label="Переход на главную"
-          onClick={linkClickHandler}
           data-testid="header__logo-link"
         >
           <svg width="100" height="36" aria-hidden="true">
@@ -36,7 +22,6 @@ export default function Header() {
               <Link
                 className="main-nav__link"
                 to={AppRoute.Main}
-                onClick={linkClickHandler}
               >
                 Каталог
               </Link>

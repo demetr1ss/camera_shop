@@ -3,29 +3,38 @@ import { AxiosInstance } from 'axios';
 import { generatePath } from 'react-router-dom';
 import { APIRoute, AppRoute, LIMIT_CARD_PER_PAGE, QueryParameter, SortType } from '../const/const';
 import { AppDispatchType, StateType } from '../types/state-type';
-import { CameraType, fetchCameraPayloadType, FetchReviewType, PromoType, ReviewPostType, ReviewType, SearchCameraType } from '../types/types';
+import { CameraType, FetchCameraPayloadType, FetchReviewType, PromoType, ReviewPostType, ReviewType, SearchCameraType } from '../types/types';
 import { showNotify } from '../utils/utils';
 import { redirectToRoute } from './action';
 
-export const fetchCamerasAction = createAsyncThunk<{data: CameraType[], camerasTotalCount: number}, fetchCameraPayloadType, {
+export const fetchCamerasAction = createAsyncThunk<{data: CameraType[], camerasTotalCount: number}, FetchCameraPayloadType, {
   dispatch: AppDispatchType,
   state: StateType,
   extra: AxiosInstance
 }>(
   'data/fetchCameras',
-  async (params, {extra: api}) => {
+  async ({currentPage, params}, {extra: api}) => {
+    const {
+      sortType,
+      orderType,
+      category,
+      level,
+      maxPrice,
+      minPrice,
+      type
+    } = params;
     try {
       const {data, headers} = await api.get<CameraType[]>(APIRoute.Cameras, {
         params: {
           [QueryParameter.Limit]: LIMIT_CARD_PER_PAGE,
-          [QueryParameter.Page]: params.page,
-          [QueryParameter.Sort]: params.sortType,
-          [QueryParameter.Order]: params.orderType,
-          [QueryParameter.MinPrice]: params.minPrice,
-          [QueryParameter.MaxPrice]: params.maxPrice,
-          [QueryParameter.Category]: params.category,
-          [QueryParameter.Type]: params.type,
-          [QueryParameter.Level]: params.level
+          [QueryParameter.Page]: currentPage,
+          [QueryParameter.Sort]: sortType,
+          [QueryParameter.Order]: orderType,
+          [QueryParameter.MinPrice]: minPrice,
+          [QueryParameter.MaxPrice]: maxPrice,
+          [QueryParameter.Category]: category,
+          [QueryParameter.Type]: type,
+          [QueryParameter.Level]: level
         }
       });
 

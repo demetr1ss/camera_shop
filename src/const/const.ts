@@ -6,10 +6,11 @@ export const PAGE_STEP = 1;
 export const MAX_SIMILAR_CAMERAS = 3;
 export const SLIDE_STEP = 1;
 export const REVIEWS_PER_PAGE = 3;
+export const BREADCRUMBS_POX_X = 380;
 
 export const enum AppRoute {
   Main = '/',
-  CatalogPage = '/catalog',
+  CatalogPage = '/catalog/page_:page',
   ProductPage = '/product/:id',
   NotFound = '/*',
 }
@@ -21,24 +22,28 @@ type FiltersType = {
 }
 
 export const Filters: FiltersType = {
-  'Категория': {
-    photocamera: 'Фотокамера',
+  Category: {
+    photocamera: 'Фотоаппарат',
     videocamera: 'Видеокамера'
   },
-  'Тип камеры': {
+  Type: {
     digital: 'Цифровая',
-    film: 'Пленочная',
+    film: 'Плёночная',
     snapshot: 'Моментальная',
     collection: 'Коллекционная'
   },
-  'Уровень': {
+  Level: {
     zero: 'Нулевой',
     'non-professional': 'Любительский',
     professional: 'Профессиональный'
   }
 };
 
-export const FilterType = {
+type FilterTitleType = {
+    [key: string]: string
+}
+
+export const FilterTitle: FilterTitleType = {
   Category: 'Категория',
   Type: 'Тип камеры',
   Level: 'Уровень',
@@ -65,6 +70,17 @@ export const QueryParameter = {
   MinPrice: 'price_gte',
   MaxPrice: 'price_lte'
 } as const;
+
+type QueryParameterKeys = keyof typeof QueryParameter;
+export type QueryParameterValues = typeof QueryParameter[QueryParameterKeys];
+
+export const FILTER_PARAMS: string[] = [
+  QueryParameter.Level,
+  QueryParameter.Type,
+  QueryParameter.Category,
+  QueryParameter.MaxPrice,
+  QueryParameter.MinPrice
+];
 
 export const SortType = {
   Price: 'price',

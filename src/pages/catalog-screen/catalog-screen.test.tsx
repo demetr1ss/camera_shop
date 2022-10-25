@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/react';
 import { createMemoryHistory } from 'history';
 import { Provider } from 'react-redux';
 import HistoryRouter from '../../components/history-route/history-route';
-import { mockStore } from '../../utils/mocks/mock-store';
+import { mockStore } from '../../tests/mocks/mock-store';
 import CatalogScreen from './catalog-screen';
 
 describe('Component: CatalogScreen', () => {
