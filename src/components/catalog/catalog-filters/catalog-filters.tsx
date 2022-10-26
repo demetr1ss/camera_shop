@@ -54,21 +54,41 @@ export default function CatalogFilters() {
                 {FilterTitle[filter]}
               </legend>
 
-              {Object.keys(Filters[filter]).map((filterItem) => (
-                <div className="custom-checkbox catalog-filter__item" key={filterItem}>
-                  <label>
-                    <input
-                      type="checkbox"
-                      name={filterItem}
-                      onChange={() => changeSearch(filter.toLowerCase(), Filters[filter][filterItem])}
-                      checked={currentParams.includes(Filters[filter][filterItem])}
-                    />
-                    <span className="custom-checkbox__icon" />
-                    <span className="custom-checkbox__label">
-                      {Filters[filter][filterItem]}
-                    </span>
-                  </label>
-                </div>))}
+              {Object.keys(Filters[filter]).map((filterItem) => {
+                const isDisabled = () => {
+                  if (currentParams.includes(Filters.Category.videocamera)) {
+                    return (
+                      Filters[filter][filterItem] === Filters.Type.film ||
+                      Filters[filter][filterItem] === Filters.Type.snapshot
+                    );
+                  }
+
+                  if (currentParams.includes(Filters.Type.film) || currentParams.includes(Filters.Type.snapshot)) {
+                    return (
+                      Filters[filter][filterItem] === Filters.Category.videocamera
+                    );
+                  }
+
+                  return false;
+                };
+                return (
+                  <div className="custom-checkbox catalog-filter__item" key={filterItem}>
+                    <label>
+                      <input
+                        type="checkbox"
+                        name={filterItem}
+                        onChange={() => changeSearch(filter.toLowerCase(), Filters[filter][filterItem])}
+                        checked={currentParams.includes(Filters[filter][filterItem])}
+                        disabled={isDisabled()}
+                      />
+                      <span className="custom-checkbox__icon" />
+                      <span className="custom-checkbox__label">
+                        {Filters[filter][filterItem]}
+                      </span>
+                    </label>
+                  </div>
+                );
+              })}
             </fieldset>);
         })}
 
