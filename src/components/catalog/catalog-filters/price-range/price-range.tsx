@@ -1,4 +1,9 @@
+import { useAppSelector } from '../../../../hooks';
+import { getCamerasPriceRange } from '../../../../store/cameras-data/selectors';
+
 export default function PriceRange() {
+  const camerasPriceRange = useAppSelector(getCamerasPriceRange);
+
   return (
     <div className="catalog-filter__price-range">
       <div className="custom-input">
@@ -6,7 +11,7 @@ export default function PriceRange() {
           <input
             type="number"
             name="price"
-            placeholder="MIN"
+            placeholder={camerasPriceRange.min ? String(camerasPriceRange.min) : ''}
           />
         </label>
       </div>
@@ -15,7 +20,7 @@ export default function PriceRange() {
           <input
             type="number"
             name="priceUp"
-            placeholder="MAX"
+            placeholder={camerasPriceRange.max ? String(camerasPriceRange.max) : ''}
           />
         </label>
       </div>

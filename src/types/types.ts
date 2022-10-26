@@ -33,6 +33,14 @@ export type FetchCameraPayloadType = {
   }
 }
 
+export type fetchCamerasPriceRangePayloadType = {
+  params: {
+    category: string | null | string[],
+    level: string | null | string[],
+    type: string | null | string[]
+  }
+}
+
 export type CurrentCatalogPathType = {
   currentPage: number;
   search?: string;

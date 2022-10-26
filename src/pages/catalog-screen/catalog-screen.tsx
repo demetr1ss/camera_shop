@@ -23,8 +23,8 @@ export default function CatalogScreen(): JSX.Element {
   const dispatch = useAppDispatch();
   const cameras = useAppSelector(getCameras);
   const camerasTotalCount = useAppSelector(getCamerasTotalCount);
-  const cameraLoadingStatus = useAppSelector(getCamerasLoadingStatus);
-  const isCamerasLoadingStatusPending = cameraLoadingStatus === LoadingStatus.Pending;
+  const camerasLoadingStatus = useAppSelector(getCamerasLoadingStatus);
+  const isCamerasLoadingStatusPending = camerasLoadingStatus === LoadingStatus.Pending;
   const { page } = useParams();
   const [searchParams] = useSearchParams();
   const isMounted = useRef(false);
@@ -41,8 +41,6 @@ export default function CatalogScreen(): JSX.Element {
     minPrice: searchParams.get(QueryParameter.MinPrice),
     type: searchParams.getAll(QueryParameter.Type),
   }), [searchParams]);
-
-  const filterParamsJSON = JSON.stringify(filterParams);
 
   const pagesCount = useMemo(() => (
     Math.ceil(camerasTotalCount / LIMIT_CARD_PER_PAGE)
@@ -71,18 +69,28 @@ export default function CatalogScreen(): JSX.Element {
   }, [dispatch]);
 
   useEffect(() => {
-    dispatch(fetchCamerasPriceRangeAction());
-  }, [dispatch, filterParamsJSON]);
+    dispatch(fetchCamerasPriceRangeAction({
+      params: {
+        category: filterParams.category,
+        level: filterParams.level,
+        type: filterParams.type,
+      }
+    }));
+  }, [dispatch, filterParams.category, filterParams.level, filterParams.type]);
 
   if (currentPage === 0) {
     return <NotFoundScreen />;
   }
 
-  if (isCamerasLoadingStatusPending && !pagesCount && !isMounted.current) {
+  if (
+    isCamerasLoadingStatusPending &&
+    !pagesCount &&
+    !isMounted.current
+  ) {
     return <LoadingScreen />;
   }
 
-  if (cameraLoadingStatus === LoadingStatus.Rejected) {
+  if (camerasLoadingStatus === LoadingStatus.Rejected) {
     return <ErrorScreen />;
   }
 
@@ -91,7 +99,6 @@ export default function CatalogScreen(): JSX.Element {
   }
 
   isMounted.current = true;
-
 
   return (
     <div className="wrapper">
@@ -111,7 +118,7 @@ export default function CatalogScreen(): JSX.Element {
                 </div>
                 <div className="catalog__content">
                   <CatalogSort />
-                  {cameraLoadingStatus === LoadingStatus.Pending ? <InnerLoader /> : ''}
+                  {isCamerasLoadingStatusPending ? <InnerLoader /> : ''}
                   {cameras.length && !isCamerasLoadingStatusPending ?
                     <>
                       <CatalogCards cameras={cameras} />

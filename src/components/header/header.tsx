@@ -1,14 +1,23 @@
-import { Link } from 'react-router-dom';
-import { AppRoute } from '../../const/const';
+import { generatePath, Link } from 'react-router-dom';
+import { AppRoute, DEFAULT_PAGE } from '../../const/const';
+import { useAppSelector } from '../../hooks';
+import { getCurrentCatalogPath } from '../../store/app-process/selectors';
 import SearchForm from '../search-form/search-form';
 
 export default function Header() {
+  const { currentPage, search } = useAppSelector(getCurrentCatalogPath);
+
   return (
     <header className="header" id="header">
       <div className="container">
         <Link
           className="header__logo"
-          to={AppRoute.Main}
+          to={{
+            pathname: generatePath(AppRoute.CatalogPage, {
+              page: currentPage ? String(currentPage) : String(DEFAULT_PAGE)
+            }),
+            search
+          }}
           aria-label="Переход на главную"
           data-testid="header__logo-link"
         >
@@ -21,7 +30,12 @@ export default function Header() {
             <li className="main-nav__item">
               <Link
                 className="main-nav__link"
-                to={AppRoute.Main}
+                to={{
+                  pathname: generatePath(AppRoute.CatalogPage, {
+                    page: currentPage ? String(currentPage) : String(DEFAULT_PAGE)
+                  }),
+                  search
+                }}
               >
                 Каталог
               </Link>
