@@ -16,8 +16,8 @@ export type CameraType = {
 }
 
 export type CamerasPriceRangeType = {
-  min: number,
-  max: number
+  minPriceInRange: number,
+  maxPriceInRange: number
 }
 
 export type FetchCameraPayloadType = {

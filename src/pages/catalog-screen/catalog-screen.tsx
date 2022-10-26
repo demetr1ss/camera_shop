@@ -24,10 +24,11 @@ export default function CatalogScreen(): JSX.Element {
   const cameras = useAppSelector(getCameras);
   const camerasTotalCount = useAppSelector(getCamerasTotalCount);
   const camerasLoadingStatus = useAppSelector(getCamerasLoadingStatus);
-  const isCamerasLoadingStatusPending = camerasLoadingStatus === LoadingStatus.Pending;
   const { page } = useParams();
   const [searchParams] = useSearchParams();
   const isMounted = useRef(false);
+  const currentPage = Number(page);
+  const isCamerasLoadingStatusPending = camerasLoadingStatus === LoadingStatus.Pending;
 
   const sortParams = useMemo(() => ({
     sortType: searchParams.get(QueryParameter.Sort),
@@ -45,8 +46,6 @@ export default function CatalogScreen(): JSX.Element {
   const pagesCount = useMemo(() => (
     Math.ceil(camerasTotalCount / LIMIT_CARD_PER_PAGE)
   ), [camerasTotalCount]);
-
-  const currentPage = Number(page);
 
   useEffect(() => {
     if (currentPage) {

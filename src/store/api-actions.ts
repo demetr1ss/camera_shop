@@ -51,7 +51,7 @@ export const fetchCamerasAction = createAsyncThunk<{data: CameraType[], camerasT
       throw e;
     }});
 
-export const fetchCamerasPriceRangeAction = createAsyncThunk<{ min: number, max: number }, fetchCamerasPriceRangePayloadType, {
+export const fetchCamerasPriceRangeAction = createAsyncThunk<{ minPriceInRange: number, maxPriceInRange: number }, fetchCamerasPriceRangePayloadType, {
       dispatch: AppDispatchType,
       state: StateType,
       extra: AxiosInstance
@@ -70,8 +70,8 @@ export const fetchCamerasPriceRangeAction = createAsyncThunk<{ min: number, max:
           });
 
           return {
-            min: data[0].price,
-            max: data[data.length - 1].price
+            minPriceInRange: data[0].price,
+            maxPriceInRange: data[data.length - 1].price
           };
         }
         catch (e) {
