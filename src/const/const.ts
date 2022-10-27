@@ -15,13 +15,13 @@ export const enum AppRoute {
   NotFound = '/*',
 }
 
-type FiltersType = {
+type FilterType = {
   [key: string]: {
     [key: string]: string
   }
 }
 
-export const Filters: FiltersType = {
+export const Filter: FilterType = {
   Category: {
     photocamera: 'Фотоаппарат',
     videocamera: 'Видеокамера'
@@ -37,7 +37,7 @@ export const Filters: FiltersType = {
     'non-professional': 'Любительский',
     professional: 'Профессиональный'
   }
-};
+} as const;
 
 type FilterTitleType = {
     [key: string]: string
@@ -70,9 +70,6 @@ export const QueryParameter = {
   MinPrice: 'price_gte',
   MaxPrice: 'price_lte'
 } as const;
-
-type QueryParameterKeys = keyof typeof QueryParameter;
-export type QueryParameterValues = typeof QueryParameter[QueryParameterKeys];
 
 export const FILTER_PARAMS: string[] = [
   QueryParameter.Level,
@@ -112,11 +109,11 @@ export const ProductTabsHash = {
   Description: '#description'
 } as const;
 
-type RatingTitlesType = {
+type RatingTitleType = {
   [key: number]: string
 }
 
-export const RatingTitle: RatingTitlesType = {
+export const RatingTitle: RatingTitleType = {
   1: 'Ужасно',
   2: 'Плохо',
   3: 'Нормально',

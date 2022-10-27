@@ -1,6 +1,6 @@
 import { toast, Zoom } from 'react-toastify';
 
-type showNotifyPropsType = {
+type ShowNotifyPropsType = {
   type: string;
   message: string;
 }
@@ -11,7 +11,7 @@ const ToastType = {
 } as const;
 
 
-export const showNotify = (options: showNotifyPropsType): void => {
+export const showNotify = (options: ShowNotifyPropsType): void => {
   switch(options.type) {
     case ToastType.Error:
       toast.error(options.message, {

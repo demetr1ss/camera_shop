@@ -2,11 +2,11 @@ import { RefObject, useEffect } from 'react';
 
 type Event = MouseEvent | TouchEvent;
 
-const useOutsideClick = <T extends HTMLElement = HTMLElement>(
+export default function useOutsideClick <T extends HTMLElement = HTMLElement>(
   firstInputRef: RefObject<T>,
   secondInputRef: RefObject<T>,
   handler: (event: Event) => void,
-) => {
+){
   useEffect(() => {
     const handleFirstInputRefOutsideClick = (event: Event) => {
       const el = firstInputRef?.current;
@@ -41,6 +41,4 @@ const useOutsideClick = <T extends HTMLElement = HTMLElement>(
       document.removeEventListener('touchstart', handleSecondInputRefOutsideClick);
     };
   }, [handler, secondInputRef, firstInputRef]);
-};
-
-export default useOutsideClick;
+}

@@ -38,7 +38,7 @@ export type FetchCameraPayloadType = {
   }
 }
 
-export type fetchCamerasPriceRangePayloadType = {
+export type FetchCamerasPriceRangePayloadType = {
   params: {
     category: string | null | string[],
     level: string | null | string[],

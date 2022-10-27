@@ -2,7 +2,7 @@ import { generatePath, useNavigate } from 'react-router-dom';
 import { URLSearchParams } from 'url';
 import { AppRoute, DEFAULT_PAGE } from '../const/const';
 
-function useResetPage() {
+export default function useResetPage() {
   const navigate = useNavigate();
 
   return (params: URLSearchParams) => navigate({
@@ -10,5 +10,3 @@ function useResetPage() {
     search: decodeURI(params.toString())
   });
 }
-
-export default useResetPage;

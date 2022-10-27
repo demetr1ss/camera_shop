@@ -1,6 +1,6 @@
 import { useRef } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { Filters, FilterTitle, FILTER_PARAMS } from '../../../const/const';
+import { Filter, FilterTitle, FILTER_PARAMS } from '../../../const/const';
 import useResetPage from '../../../hooks/use-reset-page';
 import PriceRange from './price-range/price-range';
 
@@ -45,27 +45,30 @@ export default function CatalogFilters() {
           <PriceRange />
         </fieldset>
 
-        {Object.keys(Filters).map((filter) => {
+        {Object.keys(Filter).map((filterTitle) => {
           const currentParams = Array.from(searchParams.values());
+          const filterValue = Filter[filterTitle];
 
           return (
-            <fieldset className="catalog-filter__block" key={filter}>
+            <fieldset className="catalog-filter__block" key={filterTitle}>
               <legend className="title title--h5">
-                {FilterTitle[filter]}
+                {FilterTitle[filterTitle]}
               </legend>
 
-              {Object.keys(Filters[filter]).map((filterItem) => {
+              {Object.keys(filterValue).map((filterItem) => {
+                const filterName = filterValue[filterItem];
+
                 const isDisabled = () => {
-                  if (currentParams.includes(Filters.Category.videocamera)) {
+                  if (currentParams.includes(Filter.Category.videocamera)) {
                     return (
-                      Filters[filter][filterItem] === Filters.Type.film ||
-                      Filters[filter][filterItem] === Filters.Type.snapshot
+                      filterName === Filter.Type.film ||
+                      filterName === Filter.Type.snapshot
                     );
                   }
 
-                  if (currentParams.includes(Filters.Type.film) || currentParams.includes(Filters.Type.snapshot)) {
+                  if (currentParams.includes(Filter.Type.film) || currentParams.includes(Filter.Type.snapshot)) {
                     return (
-                      Filters[filter][filterItem] === Filters.Category.videocamera
+                      filterName === Filter.Category.videocamera
                     );
                   }
 
@@ -77,13 +80,13 @@ export default function CatalogFilters() {
                       <input
                         type="checkbox"
                         name={filterItem}
-                        onChange={() => changeSearch(filter.toLowerCase(), Filters[filter][filterItem])}
-                        checked={currentParams.includes(Filters[filter][filterItem])}
+                        onChange={() => changeSearch(filterTitle.toLowerCase(), filterName)}
+                        checked={currentParams.includes(filterName)}
                         disabled={isDisabled()}
                       />
                       <span className="custom-checkbox__icon" />
                       <span className="custom-checkbox__label">
-                        {Filters[filter][filterItem]}
+                        {filterName}
                       </span>
                     </label>
                   </div>
