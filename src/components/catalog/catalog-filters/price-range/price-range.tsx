@@ -61,7 +61,11 @@ export default function PriceRange() {
       return;
     }
 
-    if (minPriceInputValue === maxPriceInputValue) {
+    if (
+      minPriceInputValue === maxPriceInputValue &&
+      Number(minPriceInputValue) >= minPriceInRange &&
+      Number(maxPriceInputValue) <= maxPriceInRange
+    ) {
       searchParams.set(QueryParameter.MinPrice, minPriceInputValue);
       searchParams.set(QueryParameter.MaxPrice, maxPriceInputValue);
 
