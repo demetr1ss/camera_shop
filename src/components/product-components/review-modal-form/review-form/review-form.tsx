@@ -48,7 +48,7 @@ export default function ReviewForm({ isReviewModalOpened, setIsReviewModalOpened
         setFormDisabled(false);
         break;
       default:
-        throw new Error(`sendingStatus-${sendingStatus} dosn't exist`);
+        throw new Error(`sendingStatus-${sendingStatus} doesn't exist`);
     }
   }, [dispatch, id, sendingStatus, setIsReviewModalOpened, setIsReviewSuccessModalOpened]);
 

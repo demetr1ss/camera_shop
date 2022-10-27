@@ -71,7 +71,7 @@ describe('Reducer: reviews-data', () => {
         });
     });
 
-    it('should update reviewSendingStatus if sendReviewAction fullfilled', () => {
+    it('should update reviewSendingStatus if sendReviewAction fulfilled', () => {
       expect(reviewsData.reducer(state, { type: sendReviewAction.fulfilled.type }))
         .toEqual({
           reviews: [] as ReviewType[],

@@ -5,12 +5,10 @@ import { AppRoute, DEFAULT_PAGE } from '../const/const';
 function useResetPage() {
   const navigate = useNavigate();
 
-  const resetPage = (params: URLSearchParams) => navigate({
+  return (params: URLSearchParams) => navigate({
     pathname: generatePath(AppRoute.CatalogPage, {page: String(DEFAULT_PAGE)}),
     search: decodeURI(params.toString())
   });
-
-  return resetPage;
 }
 
 export default useResetPage;

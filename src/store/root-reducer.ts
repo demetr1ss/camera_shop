@@ -1,6 +1,6 @@
 import { combineReducers } from '@reduxjs/toolkit';
 import { NameSpace } from '../const/const';
-import { camerasData } from '../store/cameras-data/cameras-data';
+import { camerasData } from './cameras-data/cameras-data';
 import { appProcess } from './app-process/app-process';
 import { promoData } from './promo-data/promo-data';
 import { reviewsData } from './reviews-data/reviews-data';

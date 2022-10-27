@@ -18,7 +18,7 @@ export default function SearchForm() {
     const value = evt.target.value;
     setInputField(value);
 
-    if (value.length) {
+    if (value) {
       dispatch(fetchCamerasBySearchAction(value));
     }
   };
@@ -54,7 +54,7 @@ export default function SearchForm() {
             />
           </label>
           <ul className="form-search__select-list">
-            {foundCameras.map((camera) => (
+            {foundCameras?.map((camera) => (
               <li
                 key={camera.id}
                 className="form-search__select-item"

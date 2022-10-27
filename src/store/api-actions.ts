@@ -52,40 +52,40 @@ export const fetchCamerasAction = createAsyncThunk<{data: CameraType[], camerasT
     }});
 
 export const fetchCamerasPriceRangeAction = createAsyncThunk<{ minPriceInRange: number, maxPriceInRange: number }, fetchCamerasPriceRangePayloadType, {
-      dispatch: AppDispatchType,
-      state: StateType,
-      extra: AxiosInstance
-    }>(
-      'data/fetchCamerasPriceRange',
-      async ({params}, { extra: api }) => {
-        const { category, type, level } = params;
-        try {
-          const { data } = await api.get<CameraType[]>(APIRoute.Cameras, {
-            params: {
-              [QueryParameter.Sort]: SortType.Price,
-              [QueryParameter.Category]: category,
-              [QueryParameter.Type]: type,
-              [QueryParameter.Level]: level
-            }
-          });
-
-          return {
-            minPriceInRange: data[0].price,
-            maxPriceInRange: data[data.length - 1].price
-          };
-        }
-        catch (e) {
-          showNotify({
-            type: 'error',
-            message: 'Failed to load cameras price range',
-          });
-          throw e;
+  dispatch: AppDispatchType,
+  state: StateType,
+  extra: AxiosInstance
+}>(
+  'data/fetchCamerasPriceRange',
+  async ({params}, { extra: api }) => {
+    const { category, type, level } = params;
+    try {
+      const { data } = await api.get<CameraType[]>(APIRoute.Cameras, {
+        params: {
+          [QueryParameter.Sort]: SortType.Price,
+          [QueryParameter.Category]: category,
+          [QueryParameter.Type]: type,
+          [QueryParameter.Level]: level
         }
       });
 
+      return {
+        minPriceInRange: data[0].price,
+        maxPriceInRange: data[data.length - 1].price
+      };
+    }
+    catch (e) {
+      showNotify({
+        type: 'error',
+        message: 'Failed to load cameras price range',
+      });
+      throw e;
+    }
+  });
+
 export const fetchCamerasBySearchAction = createAsyncThunk<SearchCameraType[], string, {
-      dispatch: AppDispatchType,
-      state: StateType,
+  dispatch: AppDispatchType,
+  state: StateType,
   extra: AxiosInstance
 }>(
   'data/fetchCamerasBySearchAction',
@@ -105,7 +105,6 @@ export const fetchCamerasBySearchAction = createAsyncThunk<SearchCameraType[], s
       });
       throw e;
     }});
-
 
 export const fetchPromoAction = createAsyncThunk<PromoType, undefined, {
   dispatch: AppDispatchType,
@@ -147,7 +146,7 @@ export const fetchCameraAction = createAsyncThunk<CameraType, string, {
     catch(e) {
       showNotify({
         type: 'error',
-        message: `Camera ${id} dosn't exist`,
+        message: `Camera ${id} doesn't exist`,
       });
       dispatch(redirectToRoute(AppRoute.NotFound));
       throw e;
