@@ -10,6 +10,7 @@ export default function useOutsideClick <T extends HTMLElement = HTMLElement>(
   useEffect(() => {
     const handleFirstInputRefOutsideClick = (event: Event) => {
       const el = firstInputRef?.current;
+
       if (!el || el.contains((event?.target as Node) || null) || event?.target === secondInputRef.current) {
         return;
       }

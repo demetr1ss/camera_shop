@@ -36,6 +36,14 @@ export default function PriceRange() {
     const maxPriceInputValue = inputMaxPriceRef.current?.value;
     const minPriceInputValue = inputMinPriceRef.current?.value;
 
+    if ((!maxPriceInputValue && !minPriceInputValue) && (maxPriceSearch || minPriceSearch)) {
+      searchParams.delete(QueryParameter.MaxPrice);
+      searchParams.delete(QueryParameter.MinPrice);
+      setSearchParams(searchParams);
+      resetPage(searchParams);
+
+      return;
+    }
 
     if (!maxPriceInputValue && maxPriceSearch) {
       searchParams.delete(QueryParameter.MaxPrice);
@@ -67,7 +75,7 @@ export default function PriceRange() {
       searchParams.set(QueryParameter.MinPrice, minPriceInputValue);
 
       if (
-        Number(minPriceInputValue) > maxPriceInRange ||
+        Number(minPriceInputValue) > (maxPriceInputValue ? Number(maxPriceInputValue) : maxPriceInRange) ||
         Number(minPriceInputValue) < minPriceInRange
       ) {
         inputMinPriceRef.current.value = String(minPriceInRange);
