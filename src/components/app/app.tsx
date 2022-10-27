@@ -4,7 +4,6 @@ import { AppRoute, DEFAULT_PAGE } from '../../const/const';
 import ProductScreen from '../../pages/product-screen/product-screen';
 import NotFoundScreen from '../../pages/not-found-screen/not-found-screen';
 
-
 export default function App(): JSX.Element {
   return (
     <Routes>
