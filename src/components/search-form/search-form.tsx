@@ -39,7 +39,7 @@ export default function SearchForm() {
 
   return (
     <ClickAwayListener onClickAway={() => setInputField('')}>
-      <div className={formSearchClassName}>
+      <div className={formSearchClassName} data-testid="search form">
         <form>
           <label>
             <svg className="form-search__icon" width="16" height="16" aria-hidden="true">

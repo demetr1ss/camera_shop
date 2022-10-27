@@ -1,11 +1,13 @@
 import { LoadingStatus } from '../../const/const';
-import { createRandomCamera, MOCK_CAMERAS_TOTAL_COUNT } from '../../tests/mocks/mocks';
+import { createRandomCamera, createRandomCamerasPriceRange, createRandomSearchCameras, MOCK_CAMERAS_TOTAL_COUNT } from '../../tests/mocks/mocks';
 import { CamerasPriceRangeType, CameraType } from '../../types/types';
-import { fetchCameraAction, fetchCamerasAction, fetchSimilarCamerasAction } from '../api-actions';
+import { fetchCameraAction, fetchCamerasAction, fetchCamerasBySearchAction, fetchCamerasPriceRangeAction, fetchSimilarCamerasAction } from '../api-actions';
 import { camerasData, CamerasDataType } from './cameras-data';
 
-const mockCameras = [createRandomCamera(), createRandomCamera(), createRandomCamera()];
 const mockCamera = createRandomCamera();
+const mockCameras = [createRandomCamera(), mockCamera];
+const mockSearchCameras = [createRandomSearchCameras()];
+const mockCamerasPriceRange = createRandomCamerasPriceRange();
 
 describe('Reducer: cameras-data', () => {
   let state: CamerasDataType;
@@ -35,6 +37,8 @@ describe('Reducer: cameras-data', () => {
           cameras: mockCameras,
           camerasLoadingStatus: LoadingStatus.Fulfilled,
           camerasTotalCount: MOCK_CAMERAS_TOTAL_COUNT,
+          camerasPriceRange: {} as CamerasPriceRangeType,
+          searchCameras: [],
           camera: {} as CameraType,
           cameraLoadingStatus: LoadingStatus.Idle,
           similarCameras: [],
@@ -47,6 +51,8 @@ describe('Reducer: cameras-data', () => {
           cameras: [],
           camerasLoadingStatus: LoadingStatus.Pending,
           camerasTotalCount: 0,
+          camerasPriceRange: {} as CamerasPriceRangeType,
+          searchCameras: [],
           camera: {} as CameraType,
           cameraLoadingStatus: LoadingStatus.Idle,
           similarCameras: [],
@@ -59,6 +65,8 @@ describe('Reducer: cameras-data', () => {
           cameras: [],
           camerasLoadingStatus: LoadingStatus.Rejected,
           camerasTotalCount: 0,
+          camerasPriceRange: {} as CamerasPriceRangeType,
+          searchCameras: [],
           camera: {} as CameraType,
           cameraLoadingStatus: LoadingStatus.Idle,
           similarCameras: [],
@@ -73,6 +81,8 @@ describe('Reducer: cameras-data', () => {
           camera: mockCamera,
           cameraLoadingStatus: LoadingStatus.Fulfilled,
           cameras: [] as CameraType[],
+          camerasPriceRange: {} as CamerasPriceRangeType,
+          searchCameras: [],
           camerasLoadingStatus: LoadingStatus.Idle,
           camerasTotalCount: 0,
           similarCameras: [] as CameraType[]
@@ -85,6 +95,8 @@ describe('Reducer: cameras-data', () => {
           camera: {} as CameraType,
           cameraLoadingStatus: LoadingStatus.Pending,
           cameras: [] as CameraType[],
+          camerasPriceRange: {} as CamerasPriceRangeType,
+          searchCameras: [],
           camerasLoadingStatus: LoadingStatus.Idle,
           camerasTotalCount: 0,
           similarCameras: [] as CameraType[]
@@ -97,6 +109,8 @@ describe('Reducer: cameras-data', () => {
           camera: {} as CameraType,
           cameraLoadingStatus: LoadingStatus.Rejected,
           cameras: [] as CameraType[],
+          camerasPriceRange: {} as CamerasPriceRangeType,
+          searchCameras: [],
           camerasLoadingStatus: LoadingStatus.Idle,
           camerasTotalCount: 0,
           similarCameras: [] as CameraType[]
@@ -109,6 +123,40 @@ describe('Reducer: cameras-data', () => {
       expect(camerasData.reducer(state, { type: fetchSimilarCamerasAction.fulfilled.type, payload: mockCameras }))
         .toEqual({
           similarCameras: mockCameras,
+          camera: {} as CameraType,
+          camerasPriceRange: {} as CamerasPriceRangeType,
+          searchCameras: [],
+          cameraLoadingStatus: LoadingStatus.Idle,
+          cameras: [] as CameraType[],
+          camerasLoadingStatus: LoadingStatus.Idle,
+          camerasTotalCount: 0,
+        });
+    });
+  });
+
+  describe('fetchCamerasBySearchAction test', () => {
+    it('should update searchCameras by load searchCameras', () => {
+      expect(camerasData.reducer(state, { type: fetchCamerasBySearchAction.fulfilled.type, payload: mockSearchCameras }))
+        .toEqual({
+          searchCameras: mockSearchCameras,
+          similarCameras: [] as CameraType[],
+          camera: {} as CameraType,
+          camerasPriceRange: {} as CamerasPriceRangeType,
+          cameraLoadingStatus: LoadingStatus.Idle,
+          cameras: [] as CameraType[],
+          camerasLoadingStatus: LoadingStatus.Idle,
+          camerasTotalCount: 0,
+        });
+    });
+  });
+
+  describe('fetchCamerasPriceRangeAction test', () => {
+    it('should update camerasPriceRange by load camerasPriceRange', () => {
+      expect(camerasData.reducer(state, { type: fetchCamerasPriceRangeAction.fulfilled.type, payload: mockCamerasPriceRange }))
+        .toEqual({
+          camerasPriceRange: mockCamerasPriceRange,
+          searchCameras: [],
+          similarCameras: [] as CameraType[],
           camera: {} as CameraType,
           cameraLoadingStatus: LoadingStatus.Idle,
           cameras: [] as CameraType[],

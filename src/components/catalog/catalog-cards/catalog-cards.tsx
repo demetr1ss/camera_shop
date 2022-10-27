@@ -8,7 +8,7 @@ type CatalogCardsPropsType = {
 
 export default function CatalogCards({ cameras }: CatalogCardsPropsType) {
   return (
-    <div className="cards catalog__cards">
+    <div className="cards catalog__cards" data-testid="catalog cards">
       {cameras.map((camera) => {
         const {
           id,

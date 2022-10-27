@@ -118,6 +118,7 @@ export default function PriceRange() {
       <div className="custom-input">
         <label>
           <input
+            data-testid="price min"
             ref={inputMinPriceRef}
             type="number"
             name="price_gte"
@@ -130,6 +131,7 @@ export default function PriceRange() {
       <div className="custom-input">
         <label>
           <input
+            data-testid="price max"
             ref={inputMaxPriceRef}
             type="number"
             name="price_lte"

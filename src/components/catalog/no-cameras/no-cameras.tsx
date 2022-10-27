@@ -1,6 +1,6 @@
 import styles from './no-cameras.module.css';
 
-function NoCameras() {
+export default function NoCameras() {
   return (
     <div className={styles.titleContent}>
       <h1 className="title title--h3">
@@ -9,5 +9,3 @@ function NoCameras() {
     </div>
   );
 }
-
-export default NoCameras;

@@ -88,7 +88,7 @@ export default function ReviewForm({ isReviewModalOpened, setIsReviewModalOpened
   };
 
   return (
-    <div className={modalClassName}>
+    <div className={modalClassName} data-testid="review form">
       <div className="modal__wrapper">
         <div className="modal__overlay" onClick={() => setIsReviewModalOpened(false)}>
         </div>

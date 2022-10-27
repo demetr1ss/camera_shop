@@ -20,7 +20,7 @@ export default function RatingForm({ getInputClassName, ratingRegester, isFormDi
         </svg>
       </legend>
       <div className="rate__bar">
-        <div className="rate__group">
+        <div className="rate__group" data-testid="rating-form">
           {rating.map((item) => (
             <Fragment key={item}>
               <input

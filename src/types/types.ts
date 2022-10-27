@@ -15,6 +15,11 @@ export type CameraType = {
   reviewCount: number
 }
 
+export type FetchCamerasType = {
+  data: CameraType[],
+  camerasTotalCount: number
+}
+
 export type CamerasPriceRangeType = {
   minPriceInRange: number,
   maxPriceInRange: number

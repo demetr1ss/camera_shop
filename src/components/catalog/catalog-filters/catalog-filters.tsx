@@ -33,7 +33,7 @@ export default function CatalogFilters() {
   };
 
   return (
-    <div className="catalog-filter">
+    <div className="catalog-filter" data-testid="catalog filter">
       <form action="#" ref={formRef}>
         <h2 className="visually-hidden">
           Фильтр

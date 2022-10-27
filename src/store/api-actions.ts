@@ -3,11 +3,11 @@ import { AxiosInstance } from 'axios';
 import { generatePath } from 'react-router-dom';
 import { APIRoute, AppRoute, LIMIT_CARD_PER_PAGE, QueryParameter, SortType } from '../const/const';
 import { AppDispatchType, StateType } from '../types/state-type';
-import { CameraType, FetchCameraPayloadType, fetchCamerasPriceRangePayloadType, FetchReviewType, PromoType, ReviewPostType, ReviewType, SearchCameraType } from '../types/types';
+import { CamerasPriceRangeType, CameraType, FetchCameraPayloadType, fetchCamerasPriceRangePayloadType, FetchCamerasType, FetchReviewType, PromoType, ReviewPostType, ReviewType, SearchCameraType } from '../types/types';
 import { showNotify } from '../utils/utils';
 import { redirectToRoute } from './action';
 
-export const fetchCamerasAction = createAsyncThunk<{data: CameraType[], camerasTotalCount: number}, FetchCameraPayloadType, {
+export const fetchCamerasAction = createAsyncThunk<FetchCamerasType, FetchCameraPayloadType, {
   dispatch: AppDispatchType,
   state: StateType,
   extra: AxiosInstance
@@ -51,7 +51,7 @@ export const fetchCamerasAction = createAsyncThunk<{data: CameraType[], camerasT
       throw e;
     }});
 
-export const fetchCamerasPriceRangeAction = createAsyncThunk<{ minPriceInRange: number, maxPriceInRange: number }, fetchCamerasPriceRangePayloadType, {
+export const fetchCamerasPriceRangeAction = createAsyncThunk<CamerasPriceRangeType, fetchCamerasPriceRangePayloadType, {
   dispatch: AppDispatchType,
   state: StateType,
   extra: AxiosInstance
@@ -59,6 +59,7 @@ export const fetchCamerasPriceRangeAction = createAsyncThunk<{ minPriceInRange: 
   'data/fetchCamerasPriceRange',
   async ({params}, { extra: api }) => {
     const { category, type, level } = params;
+
     try {
       const { data } = await api.get<CameraType[]>(APIRoute.Cameras, {
         params: {
