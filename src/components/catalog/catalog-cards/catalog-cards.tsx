@@ -32,7 +32,7 @@ export default function CatalogCards({ cameras }: CatalogCardsPropsType) {
             <div className="product-card__info">
               <div className="rate product-card__rate">
                 {Array.from({ length: MAX_RATING }, (_, index) => (
-                  <svg width="17" height="16" aria-hidden="true" key={index}>
+                  <svg width="17" height="16" aria-hidden="true" key={`star-${index}`}>
                     <use xlinkHref={`#icon${index < rating ? '-full' : ''}-star`} />
                   </svg>
                 ))}

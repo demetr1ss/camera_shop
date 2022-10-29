@@ -24,7 +24,7 @@ export default function CatalogScreen(): JSX.Element {
   const cameras = useAppSelector(getCameras);
   const camerasTotalCount = useAppSelector(getCamerasTotalCount);
   const camerasLoadingStatus = useAppSelector(getCamerasLoadingStatus);
-  const { page } = useParams();
+  const { page = 1 } = useParams();
   const [searchParams] = useSearchParams();
   const isMounted = useRef(false);
   const currentPage = Number(page);
@@ -77,12 +77,12 @@ export default function CatalogScreen(): JSX.Element {
     }));
   }, [dispatch, filterParams.category, filterParams.level, filterParams.type]);
 
-  if (currentPage === 0) {
+  if (currentPage === 0 || isNaN(currentPage)) {
     return <NotFoundScreen />;
   }
 
   if (
-    isCamerasLoadingStatusPending &&
+    (camerasLoadingStatus === LoadingStatus.Idle || isCamerasLoadingStatusPending) &&
     !pagesCount &&
     !isMounted.current
   ) {

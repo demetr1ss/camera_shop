@@ -1,6 +1,7 @@
 import cn from 'classnames';
 import React, { ChangeEvent, useState } from 'react';
 import ClickAwayListener from 'react-click-away-listener';
+import { DebounceInput } from 'react-debounce-input';
 import { generatePath, useNavigate } from 'react-router-dom';
 import { AppRoute } from '../../const/const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
@@ -45,11 +46,12 @@ export default function SearchForm() {
             <svg className="form-search__icon" width="16" height="16" aria-hidden="true">
               <use xlinkHref="#icon-lens" />
             </svg>
-            <input
+            <DebounceInput
               className="form-search__input"
               type="text" autoComplete="off"
               placeholder="Поиск по сайту"
               onChange={handleChange}
+              debounceTimeout={300}
               value={inputField}
             />
           </label>
