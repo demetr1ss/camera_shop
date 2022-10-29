@@ -1,7 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AxiosInstance } from 'axios';
 import { generatePath } from 'react-router-dom';
-import { APIRoute, AppRoute, LIMIT_CARD_PER_PAGE, QueryParameter, SortType } from '../const/const';
+import { APIRoute, AppRoute, LIMIT_CARD_PER_PAGE, OrderType, QueryParameter, SortType } from '../const/const';
 import { AppDispatchType, StateType } from '../types/state-type';
 import { CamerasPriceRangeType, CameraType, FetchCameraPayloadType, FetchCamerasPriceRangePayloadType, FetchCamerasType, FetchReviewType, PromoType, ReviewPostType, ReviewType, SearchCameraType } from '../types/types';
 import { showNotify } from '../utils/utils';
@@ -62,9 +62,22 @@ export const fetchCamerasPriceRangeAction = createAsyncThunk<CamerasPriceRangeTy
     const { category, type, level } = params;
 
     try {
-      const { data } = await api.get<CameraType[]>(APIRoute.Cameras, {
+      const responseCameraWithMinPrice = await api.get<CameraType[]>(APIRoute.Cameras, {
         params: {
           [QueryParameter.Sort]: SortType.Price,
+          [QueryParameter.Order]: OrderType.Asc,
+          [QueryParameter.Limit]: 1,
+          [QueryParameter.Category]: category,
+          [QueryParameter.Type]: type,
+          [QueryParameter.Level]: level
+        }
+      });
+
+      const responseCameraWithMaxPrice = await api.get<CameraType[]>(APIRoute.Cameras, {
+        params: {
+          [QueryParameter.Sort]: SortType.Price,
+          [QueryParameter.Order]: OrderType.Desc,
+          [QueryParameter.Limit]: 1,
           [QueryParameter.Category]: category,
           [QueryParameter.Type]: type,
           [QueryParameter.Level]: level
@@ -72,8 +85,8 @@ export const fetchCamerasPriceRangeAction = createAsyncThunk<CamerasPriceRangeTy
       });
 
       return {
-        minPriceInRange: data[0].price,
-        maxPriceInRange: data[data.length - 1].price
+        minPriceInRange: responseCameraWithMinPrice.data[0].price,
+        maxPriceInRange: responseCameraWithMaxPrice.data[0].price,
       };
     }
     catch (e) {
