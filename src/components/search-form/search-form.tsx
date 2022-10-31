@@ -34,9 +34,9 @@ export default function SearchForm() {
     }
   };
 
-  const formSearchClassName = cn('form-search',
-    { 'list-opened': inputField && foundCameras.length }
-  );
+  const formSearchClassName = cn('form-search', {
+    'list-opened': inputField && foundCameras.length,
+  });
 
   return (
     <ClickAwayListener onClickAway={() => setInputField('')}>
@@ -55,7 +55,7 @@ export default function SearchForm() {
               value={inputField}
             />
           </label>
-          <ul className="form-search__select-list">
+          <ul className="form-search__select-list scroller">
             {foundCameras?.map((camera) => (
               <li
                 key={camera.id}
