@@ -21,7 +21,6 @@ import {scrollToTop} from '../../utils/utils';
 import LoadingScreen from '../loading-screen/loading-screen';
 
 export default function ProductScreen(): JSX.Element {
-  window.scrollTo({top: 0});
   const {id} = useParams();
   const dispatch = useAppDispatch();
 
