@@ -1,12 +1,14 @@
-import { render, screen } from '@testing-library/react';
-import { createMemoryHistory } from 'history';
-import { Provider } from 'react-redux';
+import {render, screen} from '@testing-library/react';
+import {createMemoryHistory} from 'history';
+import {Provider} from 'react-redux';
 import HistoryRouter from '../../../components/history-route/history-route';
-import { mockStore } from '../../../tests/mocks/mock-store';
-import { createRandomCamera } from '../../../tests/mocks/mocks';
+import {mockStore} from '../../../tests/mocks/mock-store';
+import {createRandomCamera} from '../../../tests/mocks/mocks';
 import ProductSimilar from './product-similar';
 
 const mockSimilarCameras = [createRandomCamera()];
+const setIsAddItemModalOpened = jest.fn();
+const setCurrentCamera = jest.fn();
 
 describe('Component: ProductSimilar', () => {
   it('should render correctly', () => {
@@ -15,7 +17,11 @@ describe('Component: ProductSimilar', () => {
     render(
       <HistoryRouter history={history}>
         <Provider store={mockStore}>
-          <ProductSimilar similarCameras={mockSimilarCameras} />
+          <ProductSimilar
+            similarCameras={mockSimilarCameras}
+            setIsAddItemModalOpened={setIsAddItemModalOpened}
+            setCurrentCamera={setCurrentCamera}
+          />
         </Provider>
       </HistoryRouter>,
     );

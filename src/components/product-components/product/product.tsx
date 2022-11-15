@@ -6,10 +6,11 @@ import ProductTabs from '../product-tabs/product-tabs';
 
 type ProductPropsType = {
   camera: CameraType;
-  setIsAddItemModalOpened: (status: boolean) => void
+  setIsAddItemModalOpened: (status: boolean) => void;
+  setCurrentCamera: (camera: CameraType) => void;
 }
 
-export default function Product({camera, setIsAddItemModalOpened}: ProductPropsType): JSX.Element {
+export default function Product({camera, setIsAddItemModalOpened, setCurrentCamera}: ProductPropsType): JSX.Element {
   const reviewsCount = useAppSelector(getReviewsTotalCount);
   const {
     previewImgWebp,
@@ -21,6 +22,11 @@ export default function Product({camera, setIsAddItemModalOpened}: ProductPropsT
     price,
     category
   } = camera;
+
+  const onBuyButtonClick = () => {
+    setIsAddItemModalOpened(true);
+    setCurrentCamera(camera);
+  };
 
   return (
     <div className="page-content__section">
@@ -50,7 +56,7 @@ export default function Product({camera, setIsAddItemModalOpened}: ProductPropsT
             <p className="product__price">
               <span className="visually-hidden">Цена:</span>{price.toLocaleString('ru-RU')} ₽
             </p>
-            <button className="btn btn--purple" type="button" onClick={() => setIsAddItemModalOpened(true)}>
+            <button className="btn btn--purple" type="button" onClick={onBuyButtonClick}>
               <svg width="24" height="16" aria-hidden="true">
                 <use xlinkHref="#icon-add-basket" />
               </svg>Добавить в корзину

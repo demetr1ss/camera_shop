@@ -30,7 +30,16 @@ const initialState: CamerasDataType = {
 export const camerasData = createSlice({
   name: NameSpace.Cameras,
   initialState,
-  reducers: {},
+  reducers: {
+    addCameraToCart: (state, action) => {
+      state.camerasInCart.push(action.payload);
+    },
+    removeCameraFromCart: (state, action) => {
+      state.camerasInCart = state.camerasInCart.filter((camera) =>
+        camera.id !== action.payload.id
+      );
+    }
+  },
   extraReducers(builder) {
     builder
       .addCase(fetchCamerasAction.pending, (state) => {
@@ -66,3 +75,6 @@ export const camerasData = createSlice({
       });
   }
 });
+
+
+export const {addCameraToCart, removeCameraFromCart} = camerasData.actions;

@@ -1,14 +1,22 @@
 import cn from 'classnames';
+import {useAppDispatch} from '../../../../hooks';
 import useKeydown from '../../../../hooks/use-keydown';
+import {addCameraToCart} from '../../../../store/cameras-data/cameras-data';
 import {CameraType} from '../../../../types/types';
 
 type AddItemModalPropsType = {
   camera: CameraType;
   isAddItemModalOpened: boolean;
   setIsAddItemModalOpened: (status: boolean) => void;
+  setIsAddItemSuccessModalOpened: (status: boolean) => void;
 }
 
-export default function AddItemModal({camera, isAddItemModalOpened, setIsAddItemModalOpened}: AddItemModalPropsType) {
+export default function AddItemModal({
+  camera,
+  isAddItemModalOpened,
+  setIsAddItemModalOpened,
+  setIsAddItemSuccessModalOpened
+}: AddItemModalPropsType) {
   const {
     previewImgWebp,
     previewImgWebp2x,
@@ -22,12 +30,19 @@ export default function AddItemModal({camera, isAddItemModalOpened, setIsAddItem
     price,
   } = camera;
 
+  const dispatch = useAppDispatch();
+
   useKeydown('Escape', () => setIsAddItemModalOpened(false));
 
   const modalClassName = cn('modal', {
     'is-active': isAddItemModalOpened
   });
 
+  const onAddItemButtonClick = () => {
+    dispatch(addCameraToCart(camera));
+    setIsAddItemModalOpened(false);
+    setIsAddItemSuccessModalOpened(true);
+  };
 
   return (
     <div className={modalClassName}>
@@ -71,7 +86,7 @@ export default function AddItemModal({camera, isAddItemModalOpened, setIsAddItem
             </div>
           </div>
           <div className="modal__buttons">
-            <button className="btn btn--purple modal__btn modal__btn--fit-width" type="button">
+            <button className="btn btn--purple modal__btn modal__btn--fit-width" type="button" onClick={onAddItemButtonClick}>
               <svg width="24" height="16" aria-hidden="true">
                 <use xlinkHref="#icon-add-basket"></use>
               </svg>Добавить в корзину

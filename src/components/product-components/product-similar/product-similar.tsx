@@ -5,13 +5,14 @@ import {CameraType} from '../../../types/types';
 
 type ProductSimilarPropsType = {
   similarCameras: CameraType[];
+  setIsAddItemModalOpened: (status: boolean) => void;
+  setCurrentCamera: (camera: CameraType) => void;
 }
 
-export default function ProductSimilar({similarCameras}: ProductSimilarPropsType) {
+export default function ProductSimilar({similarCameras, setIsAddItemModalOpened, setCurrentCamera}: ProductSimilarPropsType) {
   const [currentSlide, setCurrentSlide] = useState(0);
 
   const slidesCount = similarCameras.length - 2;
-
   const activeSimilarCameras = similarCameras.slice(
     currentSlide, currentSlide + MAX_SIMILAR_CAMERAS
   );
@@ -37,6 +38,11 @@ export default function ProductSimilar({similarCameras}: ProductSimilarPropsType
                   category
                 } = camera;
 
+                const onBuyButtonClick = () => {
+                  setCurrentCamera(camera);
+                  setIsAddItemModalOpened(true);
+                };
+
                 return (
                   <div className="product-card is-active" key={id}>
                     <div className="product-card__img">
@@ -53,16 +59,32 @@ export default function ProductSimilar({similarCameras}: ProductSimilarPropsType
                           </svg>
                         ))}
                         <p className="visually-hidden">Рейтинг: {rating}</p>
-                        <p className="rate__count"><span className="visually-hidden">Всего оценок:</span>{reviewCount}</p>
+                        <p className="rate__count">
+                          <span className="visually-hidden">Всего оценок:</span>
+                          {reviewCount}
+                        </p>
                       </div>
-                      <p className="product-card__title">{category} {name}</p>
-                      <p className="product-card__price"><span className="visually-hidden">Цена:</span>{price.toLocaleString('ru-RU')} ₽
+                      <p className="product-card__title">
+                        {category} {name}
+                      </p>
+                      <p className="product-card__price">
+                        <span className="visually-hidden">Цена:</span>
+                        {price.toLocaleString('ru-RU')} ₽
                       </p>
                     </div>
                     <div className="product-card__buttons">
-                      <button className="btn btn--purple product-card__btn" type="button">Купить
+                      <button
+                        className="btn btn--purple product-card__btn"
+                        type="button"
+                        onClick={onBuyButtonClick}
+                      >
+                        Купить
                       </button>
-                      <Link className="btn btn--transparent" to={generatePath(AppRoute.ProductPage, {id: String(id)})}>Подробнее
+                      <Link
+                        className="btn btn--transparent"
+                        to={generatePath(AppRoute.ProductPage, {id: String(id)})}
+                      >
+                        Подробнее
                       </Link>
                     </div>
                   </div>);

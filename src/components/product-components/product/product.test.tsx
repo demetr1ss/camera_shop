@@ -8,6 +8,7 @@ import Product from './product';
 
 const mockCamera = createRandomCamera();
 const setIsAddItemModalOpened = jest.fn();
+const setCurrentCamera = jest.fn();
 
 describe('Component: Product', () => {
   it('should render correctly', () => {
@@ -16,7 +17,7 @@ describe('Component: Product', () => {
     render(
       <HistoryRouter history={history}>
         <Provider store={mockStore}>
-          <Product camera={mockCamera} setIsAddItemModalOpened={setIsAddItemModalOpened} />
+          <Product camera={mockCamera} setIsAddItemModalOpened={setIsAddItemModalOpened} setCurrentCamera={setCurrentCamera} />
         </Provider>
       </HistoryRouter>,
     );

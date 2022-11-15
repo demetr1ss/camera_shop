@@ -1,11 +1,13 @@
-import { generatePath, Link } from 'react-router-dom';
-import { AppRoute, DEFAULT_PAGE } from '../../const/const';
-import { useAppSelector } from '../../hooks';
-import { getCurrentCatalogPath } from '../../store/app-process/selectors';
+import {generatePath, Link} from 'react-router-dom';
+import {AppRoute, DEFAULT_PAGE} from '../../const/const';
+import {useAppSelector} from '../../hooks';
+import {getCurrentCatalogPath} from '../../store/app-process/selectors';
+import {getCamerasInCart} from '../../store/cameras-data/selectors';
 import SearchForm from '../search-form/search-form';
 
 export default function Header() {
-  const { currentPage, search } = useAppSelector(getCurrentCatalogPath);
+  const {currentPage, search} = useAppSelector(getCurrentCatalogPath);
+  const camerasInCartCount = useAppSelector(getCamerasInCart).length;
 
   return (
     <header className="header" id="header">
@@ -62,6 +64,7 @@ export default function Header() {
           <svg width="16" height="16" aria-hidden="true">
             <use xlinkHref="#icon-basket" />
           </svg>
+          {camerasInCartCount > 0 && <span className="header__basket-count">{camerasInCartCount}</span>}
         </a>
       </div>
     </header>

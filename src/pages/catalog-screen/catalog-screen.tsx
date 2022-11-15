@@ -1,7 +1,11 @@
-import { useEffect, useMemo, useRef } from 'react';
-import { useParams, useSearchParams } from 'react-router-dom';
+import {useEffect, useMemo, useRef, useState} from 'react';
+import FocusLock from 'react-focus-lock';
+import {RemoveScroll} from 'react-remove-scroll';
+import {useParams, useSearchParams} from 'react-router-dom';
 import Banner from '../../components/banner/banner';
 import Breadcrumbs from '../../components/breadcrumbs/breadcrumbs';
+import AddItemModal from '../../components/cart/modals/add-item-modal/add-item-modal';
+import AddItemSuccesModal from '../../components/cart/modals/add-item-success-modal/add-item-succes-modal';
 import CatalogCards from '../../components/catalog/catalog-cards/catalog-cards';
 import CatalogFilters from '../../components/catalog/catalog-filters/catalog-filters';
 import CatalogSort from '../../components/catalog/catalog-sort/catalog-sort';
@@ -10,11 +14,12 @@ import NoCameras from '../../components/catalog/no-cameras/no-cameras';
 import Footer from '../../components/footer/footer';
 import Header from '../../components/header/header';
 import Pagination from '../../components/pagination/pagination';
-import { LIMIT_CARD_PER_PAGE, LoadingStatus, QueryParameter } from '../../const/const';
-import { useAppDispatch, useAppSelector } from '../../hooks';
-import { fetchCamerasAction, fetchCamerasPriceRangeAction, fetchPromoAction } from '../../store/api-actions';
-import { setCurrentCatalogPath } from '../../store/app-process/app-process';
-import { getCameras, getCamerasLoadingStatus, getCamerasTotalCount } from '../../store/cameras-data/selectors';
+import {LIMIT_CARD_PER_PAGE, LoadingStatus, QueryParameter} from '../../const/const';
+import {useAppDispatch, useAppSelector} from '../../hooks';
+import {fetchCamerasAction, fetchCamerasPriceRangeAction, fetchPromoAction} from '../../store/api-actions';
+import {setCurrentCatalogPath} from '../../store/app-process/app-process';
+import {getCameras, getCamerasLoadingStatus, getCamerasTotalCount} from '../../store/cameras-data/selectors';
+import {CameraType} from '../../types/types';
 import ErrorScreen from '../error-screen/error-screen';
 import LoadingScreen from '../loading-screen/loading-screen';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
@@ -24,7 +29,10 @@ export default function CatalogScreen(): JSX.Element {
   const cameras = useAppSelector(getCameras);
   const camerasTotalCount = useAppSelector(getCamerasTotalCount);
   const camerasLoadingStatus = useAppSelector(getCamerasLoadingStatus);
-  const { page = 1 } = useParams();
+  const [currentCamera, setCurrentCamera] = useState({} as CameraType);
+  const [isAddItemModalOpened, setIsAddItemModalOpened] = useState(false);
+  const [isAddItemSuccessModalOpened, setIsAddItemSuccessModalOpened] = useState(false);
+  const {page = 1} = useParams();
   const [searchParams] = useSearchParams();
   const isMounted = useRef(false);
   const currentPage = Number(page);
@@ -120,7 +128,7 @@ export default function CatalogScreen(): JSX.Element {
                   {isCamerasLoadingStatusPending ? <InnerLoader /> : ''}
                   {cameras.length && !isCamerasLoadingStatusPending ?
                     <>
-                      <CatalogCards cameras={cameras} />
+                      <CatalogCards cameras={cameras} setCurrentCamera={setCurrentCamera} setIsAddItemModalOpened={setIsAddItemModalOpened} />
                       <Pagination pagesCount={pagesCount} />
                     </>
                     : ''}
@@ -130,6 +138,26 @@ export default function CatalogScreen(): JSX.Element {
             </div>
           </section>
         </div >
+        {isAddItemModalOpened &&
+          <FocusLock>
+            <RemoveScroll enabled={isAddItemModalOpened}>
+              <AddItemModal
+                camera={currentCamera}
+                isAddItemModalOpened={isAddItemModalOpened}
+                setIsAddItemModalOpened={setIsAddItemModalOpened}
+                setIsAddItemSuccessModalOpened={setIsAddItemSuccessModalOpened}
+              />
+            </RemoveScroll>
+          </FocusLock>}
+
+        {isAddItemSuccessModalOpened &&
+          <FocusLock>
+            <RemoveScroll enabled={isAddItemSuccessModalOpened}>
+              <AddItemSuccesModal
+                setIsAddItemSuccessModalOpened={setIsAddItemSuccessModalOpened}
+              />
+            </RemoveScroll>
+          </FocusLock>}
       </main >
       <Footer />
     </div>

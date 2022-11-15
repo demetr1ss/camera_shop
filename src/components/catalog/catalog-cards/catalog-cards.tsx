@@ -3,10 +3,12 @@ import {MAX_RATING, AppRoute} from '../../../const/const';
 import {CameraType} from '../../../types/types';
 
 type CatalogCardsPropsType = {
-  cameras: CameraType[]
+  cameras: CameraType[];
+  setCurrentCamera: (camera: CameraType) => void;
+  setIsAddItemModalOpened: (status: boolean) => void;
 }
 
-export default function CatalogCards({cameras}: CatalogCardsPropsType) {
+export default function CatalogCards({cameras, setCurrentCamera, setIsAddItemModalOpened}: CatalogCardsPropsType) {
   return (
     <div className="cards catalog__cards" data-testid="catalog cards">
       {cameras.map((camera) => {
@@ -22,6 +24,12 @@ export default function CatalogCards({cameras}: CatalogCardsPropsType) {
           price,
           category
         } = camera;
+
+        const onBuyButtonClick = () => {
+          setCurrentCamera(camera);
+          setIsAddItemModalOpened(true);
+        };
+
         return (
           <div className="product-card" key={id}>
             <div className="product-card__img">
@@ -54,7 +62,7 @@ export default function CatalogCards({cameras}: CatalogCardsPropsType) {
               </p>
             </div>
             <div className="product-card__buttons">
-              <button className="btn btn--purple product-card__btn" type="button">
+              <button className="btn btn--purple product-card__btn" type="button" onClick={onBuyButtonClick}>
                 Купить
               </button>
               <Link className="btn btn--transparent" to={generatePath(AppRoute.ProductPage, {id: String(id)})}>
