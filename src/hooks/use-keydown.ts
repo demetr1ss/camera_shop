@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from 'react';
+import {useCallback, useEffect} from 'react';
 
 export default function useKeydown(key: string, action: () => void) {
   const handleModalClose = useCallback((evt: KeyboardEvent) => {

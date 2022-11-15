@@ -1,5 +1,5 @@
-import { DEFAULT_PAGE } from '../../const/const';
-import { appProcess, AppProcessStateType, setCurrentCatalogPath } from './app-process';
+import {DEFAULT_PAGE} from '../../const/const';
+import {appProcess, AppProcessStateType, setCurrentCatalogPath} from './app-process';
 
 describe('Reducer: appProcess', () => {
   let state: AppProcessStateType;
@@ -13,7 +13,7 @@ describe('Reducer: appProcess', () => {
   });
 
   it('without additional parameters should return initial state', () => {
-    expect(appProcess.reducer(state, { type: 'UNKNOWN_ACTION' }))
+    expect(appProcess.reducer(state, {type: 'UNKNOWN_ACTION'}))
       .toEqual(state);
   });
 

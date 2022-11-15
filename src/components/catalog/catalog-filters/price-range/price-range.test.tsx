@@ -1,9 +1,9 @@
-import { render, screen } from '@testing-library/react';
-import { createMemoryHistory } from 'history';
-import { Provider } from 'react-redux';
-import { mockStore } from '../../../../tests/mocks/mock-store';
 import HistoryRouter from '../../../history-route/history-route';
 import PriceRange from './price-range';
+import {render, screen} from '@testing-library/react';
+import {createMemoryHistory} from 'history';
+import {Provider} from 'react-redux';
+import {mockStore} from '../../../../tests/mocks/mock-store';
 
 describe('Component: PriceRange', () => {
   it('should render correctly', () => {

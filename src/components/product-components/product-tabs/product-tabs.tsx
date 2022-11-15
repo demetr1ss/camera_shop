@@ -1,13 +1,13 @@
-import { useEffect, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { ProductTabsHash } from '../../../const/const';
-import { CameraType } from '../../../types/types';
+import {useEffect, useState} from 'react';
+import {useLocation, useNavigate} from 'react-router-dom';
+import {ProductTabsHash} from '../../../const/const';
+import {CameraType} from '../../../types/types';
 
 type ProductTabsType = {
   camera: CameraType
 }
 
-export default function ProductTabs({ camera }: ProductTabsType) {
+export default function ProductTabs({camera}: ProductTabsType) {
   const location = useLocation();
   const navigate = useNavigate();
   const {

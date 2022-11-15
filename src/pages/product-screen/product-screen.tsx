@@ -1,7 +1,4 @@
-import {useEffect, useState} from 'react';
 import FocusLock from 'react-focus-lock';
-import {RemoveScroll} from 'react-remove-scroll';
-import {useParams} from 'react-router-dom';
 import Breadcrumbs from '../../components/breadcrumbs/breadcrumbs';
 import AddItemModal from '../../components/cart/modals/add-item-modal/add-item-modal';
 import AddItemSuccesModal from '../../components/cart/modals/add-item-success-modal/add-item-succes-modal';
@@ -11,14 +8,17 @@ import ProductSimilar from '../../components/product-components/product-similar/
 import Product from '../../components/product-components/product/product';
 import ReviewForm from '../../components/product-components/review-modal-form/review-form/review-form';
 import ReviewSuccessModal from '../../components/product-components/review-success-modal/review-success-modal';
+import LoadingScreen from '../loading-screen/loading-screen';
 import Reviews from '../../components/product-components/reviews/reviews';
+import {RemoveScroll} from 'react-remove-scroll';
+import {useParams} from 'react-router-dom';
 import {LoadingStatus} from '../../const/const';
+import {useEffect, useState} from 'react';
 import {useAppDispatch, useAppSelector} from '../../hooks';
 import {fetchCameraAction} from '../../store/api-actions';
 import {getCamera, getCameraLoadingStatus, getSimilarCameras} from '../../store/cameras-data/selectors';
 import {CameraType} from '../../types/types';
 import {scrollToTop} from '../../utils/utils';
-import LoadingScreen from '../loading-screen/loading-screen';
 
 export default function ProductScreen(): JSX.Element {
   const {id} = useParams();

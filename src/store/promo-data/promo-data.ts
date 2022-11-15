@@ -1,7 +1,7 @@
-import { createSlice } from '@reduxjs/toolkit';
-import { NameSpace } from '../../const/const';
-import { fetchPromoAction } from '../api-actions';
-import { PromoType } from '../../types/types';
+import {createSlice} from '@reduxjs/toolkit';
+import {NameSpace} from '../../const/const';
+import {fetchPromoAction} from '../api-actions';
+import {PromoType} from '../../types/types';
 
 export type PromoDataType = {
   promo: PromoType;
@@ -20,4 +20,5 @@ export const promoData = createSlice({
       .addCase(fetchPromoAction.fulfilled, (state, action) => {
         state.promo = action.payload;
       });
-  }});
+  }
+});

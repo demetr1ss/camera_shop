@@ -1,8 +1,19 @@
-import { LoadingStatus } from '../../const/const';
-import { createRandomCamera, createRandomCamerasPriceRange, createRandomSearchCameras, MOCK_CAMERAS_TOTAL_COUNT } from '../../tests/mocks/mocks';
-import { CamerasPriceRangeType, CameraType } from '../../types/types';
-import { fetchCameraAction, fetchCamerasAction, fetchCamerasBySearchAction, fetchCamerasPriceRangeAction, fetchSimilarCamerasAction } from '../api-actions';
-import { camerasData, CamerasDataType } from './cameras-data';
+import {LoadingStatus} from '../../const/const';
+import {
+  createRandomCamera,
+  createRandomCamerasPriceRange,
+  createRandomSearchCameras,
+  MOCK_CAMERAS_TOTAL_COUNT
+} from '../../tests/mocks/mocks';
+import {CamerasPriceRangeType, CameraType} from '../../types/types';
+import {
+  fetchCameraAction,
+  fetchCamerasAction,
+  fetchCamerasBySearchAction,
+  fetchCamerasPriceRangeAction,
+  fetchSimilarCamerasAction
+} from '../api-actions';
+import {camerasData, CamerasDataType} from './cameras-data';
 
 const mockCamera = createRandomCamera();
 const mockCameras = [createRandomCamera(), mockCamera];
@@ -27,13 +38,13 @@ describe('Reducer: cameras-data', () => {
   });
 
   it('without additional parameters should return initial state', () => {
-    expect(camerasData.reducer(undefined, { type: 'UNKNOWN_ACTION' }))
+    expect(camerasData.reducer(undefined, {type: 'UNKNOWN_ACTION'}))
       .toEqual(state);
   });
 
   describe('fetchCamerasAction test', () => {
     it('should update cameras, camerasTotalCount and camerasLoadingStatus by load cameras', () => {
-      expect(camerasData.reducer(state, { type: fetchCamerasAction.fulfilled.type, payload: { data: mockCameras, camerasTotalCount: MOCK_CAMERAS_TOTAL_COUNT } }))
+      expect(camerasData.reducer(state, {type: fetchCamerasAction.fulfilled.type, payload: {data: mockCameras, camerasTotalCount: MOCK_CAMERAS_TOTAL_COUNT}}))
         .toEqual({
           cameras: mockCameras,
           camerasLoadingStatus: LoadingStatus.Fulfilled,
@@ -48,7 +59,7 @@ describe('Reducer: cameras-data', () => {
     });
 
     it('should update camerasLoadingStatus to pending if fetchCamerasAction pending', () => {
-      expect(camerasData.reducer(state, { type: fetchCamerasAction.pending.type }))
+      expect(camerasData.reducer(state, {type: fetchCamerasAction.pending.type}))
         .toEqual({
           cameras: [],
           camerasLoadingStatus: LoadingStatus.Pending,
@@ -63,7 +74,7 @@ describe('Reducer: cameras-data', () => {
     });
 
     it('should update camerasLoadingStatus to rejected if fetchCamerasAction rejected', () => {
-      expect(camerasData.reducer(state, { type: fetchCamerasAction.rejected.type }))
+      expect(camerasData.reducer(state, {type: fetchCamerasAction.rejected.type}))
         .toEqual({
           cameras: [],
           camerasLoadingStatus: LoadingStatus.Rejected,
@@ -80,7 +91,7 @@ describe('Reducer: cameras-data', () => {
 
   describe('fetchCameraAction test', () => {
     it('should update camera and cameraLoadingStatus by load camera', () => {
-      expect(camerasData.reducer(state, { type: fetchCameraAction.fulfilled.type, payload: mockCamera }))
+      expect(camerasData.reducer(state, {type: fetchCameraAction.fulfilled.type, payload: mockCamera}))
         .toEqual({
           camera: mockCamera,
           cameraLoadingStatus: LoadingStatus.Fulfilled,
@@ -95,7 +106,7 @@ describe('Reducer: cameras-data', () => {
     });
 
     it('should update cameraLoadingStatus to pending if fetchCameraAction pending', () => {
-      expect(camerasData.reducer(state, { type: fetchCameraAction.pending.type }))
+      expect(camerasData.reducer(state, {type: fetchCameraAction.pending.type}))
         .toEqual({
           camera: {} as CameraType,
           cameraLoadingStatus: LoadingStatus.Pending,
@@ -110,7 +121,7 @@ describe('Reducer: cameras-data', () => {
     });
 
     it('should update cameraLoadingStatus to rejected if fetchCameraAction rejected', () => {
-      expect(camerasData.reducer(state, { type: fetchCameraAction.rejected.type }))
+      expect(camerasData.reducer(state, {type: fetchCameraAction.rejected.type}))
         .toEqual({
           camera: {} as CameraType,
           cameraLoadingStatus: LoadingStatus.Rejected,
@@ -127,7 +138,7 @@ describe('Reducer: cameras-data', () => {
 
   describe('fetchSimilarCamerasAction test', () => {
     it('should update similarCameras by load similarCameras', () => {
-      expect(camerasData.reducer(state, { type: fetchSimilarCamerasAction.fulfilled.type, payload: mockCameras }))
+      expect(camerasData.reducer(state, {type: fetchSimilarCamerasAction.fulfilled.type, payload: mockCameras}))
         .toEqual({
           similarCameras: mockCameras,
           camera: {} as CameraType,
@@ -144,7 +155,7 @@ describe('Reducer: cameras-data', () => {
 
   describe('fetchCamerasBySearchAction test', () => {
     it('should update searchCameras by load searchCameras', () => {
-      expect(camerasData.reducer(state, { type: fetchCamerasBySearchAction.fulfilled.type, payload: mockSearchCameras }))
+      expect(camerasData.reducer(state, {type: fetchCamerasBySearchAction.fulfilled.type, payload: mockSearchCameras}))
         .toEqual({
           searchCameras: mockSearchCameras,
           similarCameras: [] as CameraType[],
@@ -161,7 +172,7 @@ describe('Reducer: cameras-data', () => {
 
   describe('fetchCamerasPriceRangeAction test', () => {
     it('should update camerasPriceRange by load camerasPriceRange', () => {
-      expect(camerasData.reducer(state, { type: fetchCamerasPriceRangeAction.fulfilled.type, payload: mockCamerasPriceRange }))
+      expect(camerasData.reducer(state, {type: fetchCamerasPriceRangeAction.fulfilled.type, payload: mockCamerasPriceRange}))
         .toEqual({
           camerasPriceRange: mockCamerasPriceRange,
           searchCameras: [],

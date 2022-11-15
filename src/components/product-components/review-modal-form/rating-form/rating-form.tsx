@@ -1,7 +1,7 @@
-import { Fragment, useState } from 'react';
-import { UseFormRegisterReturn } from 'react-hook-form';
-import { rating, RatingTitle } from '../../../../const/const';
-import { ReviewPostKeysType } from '../../../../types/types';
+import {Fragment, useState} from 'react';
+import {UseFormRegisterReturn} from 'react-hook-form';
+import {rating, RatingTitle} from '../../../../const/const';
+import {ReviewPostKeysType} from '../../../../types/types';
 
 type RatingFormPropsType = {
   getInputClassName: (inputName: ReviewPostKeysType, additionalClassName?: string) => string;
@@ -9,7 +9,7 @@ type RatingFormPropsType = {
   isFormDisabled: boolean;
 }
 
-export default function RatingForm({ getInputClassName, ratingRegester, isFormDisabled }: RatingFormPropsType) {
+export default function RatingForm({getInputClassName, ratingRegester, isFormDisabled}: RatingFormPropsType) {
   const [currentRating, setCurrentRating] = useState(0);
 
   return (

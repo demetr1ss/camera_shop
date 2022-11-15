@@ -1,10 +1,10 @@
-import { render, screen } from '@testing-library/react';
-import { createMemoryHistory } from 'history';
-import { Provider } from 'react-redux';
-import HistoryRouter from '../../components/history-route/history-route';
-import { mockStore } from '../../tests/mocks/mock-store';
-import { createRandomCamera } from '../../tests/mocks/mocks';
 import Breadcrumbs from './breadcrumbs';
+import HistoryRouter from '../../components/history-route/history-route';
+import {render, screen} from '@testing-library/react';
+import {createMemoryHistory} from 'history';
+import {Provider} from 'react-redux';
+import {mockStore} from '../../tests/mocks/mock-store';
+import {createRandomCamera} from '../../tests/mocks/mocks';
 
 const mockCamera = createRandomCamera();
 

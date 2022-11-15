@@ -1,7 +1,13 @@
-import { createSlice } from '@reduxjs/toolkit';
-import { LoadingStatus, NameSpace } from '../../const/const';
-import { CamerasPriceRangeType, CameraType, SearchCameraType } from '../../types/types';
-import { fetchCameraAction, fetchCamerasAction, fetchCamerasBySearchAction, fetchCamerasPriceRangeAction, fetchSimilarCamerasAction } from '../api-actions';
+import {createSlice} from '@reduxjs/toolkit';
+import {LoadingStatus, NameSpace} from '../../const/const';
+import {CamerasPriceRangeType, CameraType, SearchCameraType} from '../../types/types';
+import {
+  fetchCameraAction,
+  fetchCamerasAction,
+  fetchCamerasBySearchAction,
+  fetchCamerasPriceRangeAction,
+  fetchSimilarCamerasAction
+} from '../api-actions';
 
 export type CamerasDataType = {
   camera: CameraType;

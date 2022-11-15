@@ -1,9 +1,9 @@
-import { render, screen } from '@testing-library/react';
-import { createMemoryHistory } from 'history';
-import { Provider } from 'react-redux';
 import HistoryRouter from '../../components/history-route/history-route';
-import { mockStore } from '../../tests/mocks/mock-store';
 import LoadingScreen from './loading-screen';
+import {render, screen} from '@testing-library/react';
+import {createMemoryHistory} from 'history';
+import {Provider} from 'react-redux';
+import {mockStore} from '../../tests/mocks/mock-store';
 
 describe('Component: LoadingScreen', () => {
   it('should render correctly', () => {

@@ -1,8 +1,8 @@
 import styles from './not-found-screen.module.css';
-import { Link, useLocation } from 'react-router-dom';
-import { AppRoute } from '../../const/const';
-import { showNotify } from '../../utils/utils';
 import Header from '../../components/header/header';
+import {Link, useLocation} from 'react-router-dom';
+import {AppRoute} from '../../const/const';
+import {showNotify} from '../../utils/utils';
 
 export default function NotFoundScreen(): JSX.Element {
   const location = useLocation();

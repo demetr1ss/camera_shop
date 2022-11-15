@@ -1,6 +1,6 @@
 import cn from 'classnames';
-import {useAppDispatch} from '../../../../hooks';
 import useKeydown from '../../../../hooks/use-keydown';
+import {useAppDispatch} from '../../../../hooks';
 import {addCameraToCart} from '../../../../store/cameras-data/cameras-data';
 import {CameraType} from '../../../../types/types';
 

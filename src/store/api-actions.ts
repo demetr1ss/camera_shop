@@ -1,11 +1,21 @@
-import { createAsyncThunk } from '@reduxjs/toolkit';
-import { AxiosInstance } from 'axios';
-import { generatePath } from 'react-router-dom';
-import { APIRoute, AppRoute, LIMIT_CARD_PER_PAGE, OrderType, QueryParameter, SortType } from '../const/const';
-import { AppDispatchType, StateType } from '../types/state-type';
-import { CamerasPriceRangeType, CameraType, FetchCameraPayloadType, FetchCamerasPriceRangePayloadType, FetchCamerasType, FetchReviewType, PromoType, ReviewPostType, ReviewType, SearchCameraType } from '../types/types';
-import { showNotify } from '../utils/utils';
-import { redirectToRoute } from './action';
+import {createAsyncThunk} from '@reduxjs/toolkit';
+import {AxiosInstance} from 'axios';
+import {generatePath} from 'react-router-dom';
+import {APIRoute, AppRoute, LIMIT_CARD_PER_PAGE, OrderType, QueryParameter, SortType} from '../const/const';
+import {AppDispatchType, StateType} from '../types/state-type';
+import {
+  CamerasPriceRangeType,
+  CameraType,
+  FetchCameraPayloadType,
+  FetchCamerasPriceRangePayloadType,
+  FetchCamerasType, FetchReviewType,
+  PromoType,
+  ReviewPostType,
+  ReviewType,
+  SearchCameraType
+} from '../types/types';
+import {showNotify} from '../utils/utils';
+import {redirectToRoute} from './action';
 
 export const fetchCamerasAction = createAsyncThunk<FetchCamerasType, FetchCameraPayloadType, {
   dispatch: AppDispatchType,
@@ -13,7 +23,7 @@ export const fetchCamerasAction = createAsyncThunk<FetchCamerasType, FetchCamera
   extra: AxiosInstance
 }>(
   'data/fetchCameras',
-  async ({ currentPage, params }, { extra: api }) => {
+  async ({currentPage, params}, {extra: api}) => {
     const {
       sortType,
       orderType,
@@ -24,7 +34,7 @@ export const fetchCamerasAction = createAsyncThunk<FetchCamerasType, FetchCamera
       type
     } = params;
     try {
-      const { data, headers } = await api.get<CameraType[]>(APIRoute.Cameras, {
+      const {data, headers} = await api.get<CameraType[]>(APIRoute.Cameras, {
         params: {
           [QueryParameter.Limit]: LIMIT_CARD_PER_PAGE,
           [QueryParameter.Page]: currentPage,
@@ -58,8 +68,8 @@ export const fetchCamerasPriceRangeAction = createAsyncThunk<CamerasPriceRangeTy
   extra: AxiosInstance
 }>(
   'data/fetchCamerasPriceRange',
-  async ({ params }, { extra: api }) => {
-    const { category, type, level } = params;
+  async ({params}, {extra: api}) => {
+    const {category, type, level} = params;
 
     try {
       const responseCameraWithMinPrice = await api.get<CameraType[]>(APIRoute.Cameras, {
@@ -104,15 +114,15 @@ export const fetchCamerasBySearchAction = createAsyncThunk<SearchCameraType[], s
   extra: AxiosInstance
 }>(
   'data/fetchCamerasBySearchAction',
-  async (value, { extra: api }) => {
+  async (value, {extra: api}) => {
     try {
-      const { data } = await api.get<CameraType[]>(APIRoute.Cameras, {
+      const {data} = await api.get<CameraType[]>(APIRoute.Cameras, {
         params: {
           [QueryParameter.NameLike]: value,
         }
       });
 
-      return data.map(({ name, id }) => ({ name, id }));
+      return data.map(({name, id}) => ({name, id}));
     }
     catch (e) {
       showNotify({
@@ -129,9 +139,9 @@ export const fetchPromoAction = createAsyncThunk<PromoType, undefined, {
   extra: AxiosInstance
 }>(
   'data/fetchPromo',
-  async (_arg, { extra: api }) => {
+  async (_arg, {extra: api}) => {
     try {
-      const { data } = await api.get<PromoType>(APIRoute.Promo);
+      const {data} = await api.get<PromoType>(APIRoute.Promo);
 
       return data;
     }
@@ -151,9 +161,9 @@ export const fetchCameraAction = createAsyncThunk<CameraType, string, {
   extra: AxiosInstance
 }>(
   'data/fetchCamera',
-  async (id, { dispatch, extra: api }) => {
+  async (id, {dispatch, extra: api}) => {
     try {
-      const { data } = await api.get<CameraType>(generatePath(APIRoute.Camera, {
+      const {data} = await api.get<CameraType>(generatePath(APIRoute.Camera, {
         id
       }));
       dispatch(fetchSimilarCamerasAction(String(id)));
@@ -176,9 +186,9 @@ export const fetchSimilarCamerasAction = createAsyncThunk<CameraType[], string, 
   extra: AxiosInstance
 }>(
   'data/fetchSimilarCameras',
-  async (id, { extra: api }) => {
+  async (id, {extra: api}) => {
     try {
-      const { data } = await api.get<CameraType[]>(generatePath(APIRoute.SimilarCameras, {
+      const {data} = await api.get<CameraType[]>(generatePath(APIRoute.SimilarCameras, {
         id
       }));
 
@@ -193,15 +203,15 @@ export const fetchSimilarCamerasAction = createAsyncThunk<CameraType[], string, 
     }
   });
 
-export const fetchReviewsAction = createAsyncThunk<{ data: ReviewType[], reviewsTotalCount: number }, FetchReviewType, {
+export const fetchReviewsAction = createAsyncThunk<{data: ReviewType[], reviewsTotalCount: number}, FetchReviewType, {
   dispatch: AppDispatchType,
   state: StateType,
   extra: AxiosInstance
 }>(
   'data/fetchReviews',
-  async ({ id, count }, { extra: api }) => {
+  async ({id, count}, {extra: api}) => {
     try {
-      const { data, headers } = await api.get<ReviewType[]>(generatePath(APIRoute.Reviews, { id: String(id), count: String(count) }));
+      const {data, headers} = await api.get<ReviewType[]>(generatePath(APIRoute.Reviews, {id: String(id), count: String(count)}));
 
       return {
         data,
@@ -223,7 +233,7 @@ export const sendReviewAction = createAsyncThunk<void, ReviewPostType, {
   extra: AxiosInstance
 }>(
   'data/sendReview',
-  async (review, { extra: api }) => {
+  async (review, {extra: api}) => {
     try {
       await api.post<ReviewType>(APIRoute.PostReview, review);
     }

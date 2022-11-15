@@ -1,16 +1,16 @@
-import { commerce, datatype, image, internet } from 'faker';
-import { CamerasPriceRangeType, CameraType, PromoType, ReviewPostType, ReviewType, SearchCameraType } from '../../types/types';
+import {commerce, datatype, image, internet} from 'faker';
+import {CamerasPriceRangeType, CameraType, PromoType, ReviewPostType, ReviewType, SearchCameraType} from '../../types/types';
 
 export const MOCK_REVIEWS_TOTAL_COUNT = 10;
 export const MOCK_CAMERAS_TOTAL_COUNT = 20;
 
 export const createRandomCamerasPriceRange = (): CamerasPriceRangeType => ({
-  minPriceInRange: datatype.number({ min: 1, max: 1900 }),
-  maxPriceInRange: datatype.number({ min: 1900, max: 50000 })
+  minPriceInRange: datatype.number({min: 1, max: 1900}),
+  maxPriceInRange: datatype.number({min: 1900, max: 50000})
 });
 
 export const createRandomSearchCameras = (): SearchCameraType => ({
-  id: datatype.number({ min: 0, max: 20 }),
+  id: datatype.number({min: 0, max: 20}),
   name: commerce.product(),
 });
 

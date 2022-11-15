@@ -1,8 +1,8 @@
+import ProductTabs from '../product-tabs/product-tabs';
 import {MAX_RATING} from '../../../const/const';
 import {useAppSelector} from '../../../hooks';
 import {getReviewsTotalCount} from '../../../store/reviews-data/selectors';
 import {CameraType} from '../../../types/types';
-import ProductTabs from '../product-tabs/product-tabs';
 
 type ProductPropsType = {
   camera: CameraType;

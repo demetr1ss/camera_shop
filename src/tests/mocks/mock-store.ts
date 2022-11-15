@@ -1,8 +1,8 @@
 import thunk from 'redux-thunk';
-import { configureMockStore } from '@jedmao/redux-mock-store';
-import { DEFAULT_PAGE, LoadingStatus } from '../../const/const';
-import { createRandomCamera, createRandomCamerasPriceRange, createRandomPromo, createRandomReviews, createRandomSearchCameras, MOCK_CAMERAS_TOTAL_COUNT, MOCK_REVIEWS_TOTAL_COUNT } from './mocks';
-import { createAPI } from '../../services/api';
+import {configureMockStore} from '@jedmao/redux-mock-store';
+import {DEFAULT_PAGE, LoadingStatus} from '../../const/const';
+import {createRandomCamera, createRandomCamerasPriceRange, createRandomPromo, createRandomReviews, createRandomSearchCameras, MOCK_CAMERAS_TOTAL_COUNT, MOCK_REVIEWS_TOTAL_COUNT} from './mocks';
+import {createAPI} from '../../services/api';
 
 const api = createAPI();
 const middlewares = [thunk.withExtraArgument(api)];

@@ -1,9 +1,9 @@
-import { render, screen } from '@testing-library/react';
-import { createMemoryHistory } from 'history';
-import { Provider } from 'react-redux';
 import HistoryRouter from '../../components/history-route/history-route';
-import { mockStore } from '../../tests/mocks/mock-store';
 import Banner from './banner';
+import {render, screen} from '@testing-library/react';
+import {createMemoryHistory} from 'history';
+import {Provider} from 'react-redux';
+import {mockStore} from '../../tests/mocks/mock-store';
 
 describe('Component: Banner', () => {
   it('should render correctly', () => {

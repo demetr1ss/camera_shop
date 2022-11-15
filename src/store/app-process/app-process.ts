@@ -1,6 +1,6 @@
-import { createSlice } from '@reduxjs/toolkit';
-import { NameSpace } from '../../const/const';
-import { CurrentCatalogPathType } from '../../types/types';
+import {createSlice} from '@reduxjs/toolkit';
+import {NameSpace} from '../../const/const';
+import {CurrentCatalogPathType} from '../../types/types';
 
 export type AppProcessStateType = {
   currentCatalogPath: CurrentCatalogPathType;
@@ -17,7 +17,8 @@ export const appProcess = createSlice({
     setCurrentCatalogPath: (state, action) => {
       state.currentCatalogPath = action.payload;
     },
-  }});
+  }
+});
 
 export const {
   setCurrentCatalogPath,

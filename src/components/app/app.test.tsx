@@ -1,12 +1,12 @@
-import { render, screen } from '@testing-library/react';
-import { createMemoryHistory } from 'history';
-import { Provider } from 'react-redux';
-import { generatePath } from 'react-router-dom';
-import { AppRoute, DEFAULT_PAGE } from '../../const/const';
-import { mockStore } from '../../tests/mocks/mock-store';
-import { createRandomCamera } from '../../tests/mocks/mocks';
 import HistoryRouter from '../history-route/history-route';
 import App from './app';
+import {render, screen} from '@testing-library/react';
+import {createMemoryHistory} from 'history';
+import {Provider} from 'react-redux';
+import {generatePath} from 'react-router-dom';
+import {AppRoute, DEFAULT_PAGE} from '../../const/const';
+import {mockStore} from '../../tests/mocks/mock-store';
+import {createRandomCamera} from '../../tests/mocks/mocks';
 
 global.scrollTo = jest.fn();
 
@@ -31,7 +31,7 @@ describe('Application Routing', () => {
   });
 
   it('should render "CatalogScreen" when user navigate to "/catalog/page_:page"', () => {
-    history.push(generatePath(AppRoute.CatalogPage, { page: String(DEFAULT_PAGE) }));
+    history.push(generatePath(AppRoute.CatalogPage, {page: String(DEFAULT_PAGE)}));
 
     render(fakeApp);
 
@@ -39,7 +39,7 @@ describe('Application Routing', () => {
   });
 
   it('should render "ProductScreen" when user navigate to "/product/:id"', async () => {
-    history.push(generatePath(AppRoute.ProductPage, { id: String(mockCamera.id) }));
+    history.push(generatePath(AppRoute.ProductPage, {id: String(mockCamera.id)}));
 
     render(fakeApp);
 

@@ -1,6 +1,6 @@
-import { LoadingStatus, NameSpace } from '../../const/const';
-import { StateType } from '../../types/state-type';
-import { ReviewType } from '../../types/types';
+import {LoadingStatus, NameSpace} from '../../const/const';
+import {StateType} from '../../types/state-type';
+import {ReviewType} from '../../types/types';
 
 export const getReviews = (state: StateType): ReviewType[] =>
   state[NameSpace.Reviews].reviews;

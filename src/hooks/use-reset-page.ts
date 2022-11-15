@@ -1,6 +1,6 @@
-import { generatePath, useNavigate } from 'react-router-dom';
-import { URLSearchParams } from 'url';
-import { AppRoute, DEFAULT_PAGE } from '../const/const';
+import {generatePath, useNavigate} from 'react-router-dom';
+import {URLSearchParams} from 'url';
+import {AppRoute, DEFAULT_PAGE} from '../const/const';
 
 export default function useResetPage() {
   const navigate = useNavigate();

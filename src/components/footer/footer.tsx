@@ -1,5 +1,5 @@
-import { Link } from 'react-router-dom';
-import { AppRoute } from '../../const/const';
+import {Link} from 'react-router-dom';
+import {AppRoute} from '../../const/const';
 
 export default function Footer() {
   return (

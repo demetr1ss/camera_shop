@@ -1,9 +1,9 @@
-import { configureMockStore } from '@jedmao/redux-mock-store';
-import { AnyAction } from 'redux';
-import { AppRoute } from '../../const/const';
-import { StateType } from '../../types/state-type';
-import { redirectToRoute } from '../action';
-import { redirect } from './redirect';
+import {configureMockStore} from '@jedmao/redux-mock-store';
+import {AnyAction} from 'redux';
+import {AppRoute} from '../../const/const';
+import {StateType} from '../../types/state-type';
+import {redirectToRoute} from '../action';
+import {redirect} from './redirect';
 
 const fakeHistory = {
   location: {pathname: ''},

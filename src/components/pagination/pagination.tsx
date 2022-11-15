@@ -1,16 +1,16 @@
 import cn from 'classnames';
-import { generatePath, Link } from 'react-router-dom';
-import { AppRoute, BREADCRUMBS_POX_X, DEFAULT_PAGE, PAGE_STEP } from '../../const/const';
-import { useAppSelector } from '../../hooks';
-import { getCurrentCatalogPath } from '../../store/app-process/selectors';
-import { getArrayWithFixLength } from '../../utils/utils';
+import {generatePath, Link} from 'react-router-dom';
+import {AppRoute, BREADCRUMBS_POX_X, DEFAULT_PAGE, PAGE_STEP} from '../../const/const';
+import {useAppSelector} from '../../hooks';
+import {getCurrentCatalogPath} from '../../store/app-process/selectors';
+import {getArrayWithFixLength} from '../../utils/utils';
 
 type PaginationPropsType = {
   pagesCount: number;
 }
 
-export default function Pagination({ pagesCount }: PaginationPropsType) {
-  const { currentPage, search } = useAppSelector(getCurrentCatalogPath);
+export default function Pagination({pagesCount}: PaginationPropsType) {
+  const {currentPage, search} = useAppSelector(getCurrentCatalogPath);
   const onClickLinkHandler = () => {
     window.scrollTo({
       top: BREADCRUMBS_POX_X,
@@ -27,7 +27,7 @@ export default function Pagination({ pagesCount }: PaginationPropsType) {
             <Link
               className="pagination__link pagination__link--text"
               to={{
-                pathname: generatePath(AppRoute.CatalogPage, { page: String(currentPage - PAGE_STEP) }),
+                pathname: generatePath(AppRoute.CatalogPage, {page: String(currentPage - PAGE_STEP)}),
                 search
               }}
               onClick={onClickLinkHandler}
@@ -46,7 +46,7 @@ export default function Pagination({ pagesCount }: PaginationPropsType) {
               <Link
                 className={currentPageClassName}
                 to={{
-                  pathname: generatePath(AppRoute.CatalogPage, { page: String(page) }),
+                  pathname: generatePath(AppRoute.CatalogPage, {page: String(page)}),
                   search
                 }}
                 onClick={onClickLinkHandler}
@@ -62,7 +62,7 @@ export default function Pagination({ pagesCount }: PaginationPropsType) {
             <Link
               className="pagination__link pagination__link--text"
               to={{
-                pathname: generatePath(AppRoute.CatalogPage, { page: String(currentPage + PAGE_STEP) }),
+                pathname: generatePath(AppRoute.CatalogPage, {page: String(currentPage + PAGE_STEP)}),
                 search
               }}
               onClick={onClickLinkHandler}

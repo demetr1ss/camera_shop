@@ -1,16 +1,16 @@
-import { useEffect, useState } from 'react';
-import { LoadingStatus, MAX_RATING, REVIEWS_PER_PAGE } from '../../../const/const';
-import { useAppDispatch, useAppSelector } from '../../../hooks';
-import { fetchReviewsAction } from '../../../store/api-actions';
-import { getReviews, getReviewsLoadingStatus, getReviewsTotalCount } from '../../../store/reviews-data/selectors';
-import { dateTime, humanDate } from '../../../utils/utils';
+import {useEffect, useState} from 'react';
+import {LoadingStatus, MAX_RATING, REVIEWS_PER_PAGE} from '../../../const/const';
+import {useAppDispatch, useAppSelector} from '../../../hooks';
+import {fetchReviewsAction} from '../../../store/api-actions';
+import {getReviews, getReviewsLoadingStatus, getReviewsTotalCount} from '../../../store/reviews-data/selectors';
+import {dateTime, humanDate} from '../../../utils/utils';
 
 type ReviewsPropsType = {
   cameraId: string;
   setIsReviewModalOpened: (status: boolean) => void;
 }
 
-export default function Reviews({ cameraId, setIsReviewModalOpened }: ReviewsPropsType): JSX.Element {
+export default function Reviews({cameraId, setIsReviewModalOpened}: ReviewsPropsType): JSX.Element {
   const dispatch = useAppDispatch();
   const reviews = useAppSelector(getReviews);
   const reviewLoadingStatus = useAppSelector(getReviewsLoadingStatus);
@@ -50,7 +50,7 @@ export default function Reviews({ cameraId, setIsReviewModalOpened }: ReviewsPro
                     <time className="review-card__data" dateTime={dateTime(createAt)}>{humanDate(createAt)}</time>
                   </div>
                   <div className="rate review-card__rate">
-                    {Array.from({ length: MAX_RATING }, (_, index) => (
+                    {Array.from({length: MAX_RATING}, (_, index) => (
                       <svg width="17" height="16" aria-hidden="true" key={index}>
                         <use xlinkHref={`#icon${index < rating ? '-full' : ''}-star`} />
                       </svg>

@@ -1,15 +1,15 @@
 import cn from 'classnames';
-import { useEffect, useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { useParams } from 'react-router-dom';
-import { LoadingStatus, MIN_REVIEW_LENGTH, REVIEWS_PER_PAGE } from '../../../../const/const';
-import { useAppDispatch, useAppSelector } from '../../../../hooks';
 import useKeydown from '../../../../hooks/use-keydown';
-import { fetchReviewsAction, sendReviewAction } from '../../../../store/api-actions';
-import { changeReviewSendingStatus } from '../../../../store/reviews-data/reviews-data';
-import { getReviewSendingStatus } from '../../../../store/reviews-data/selectors';
-import { ReviewPostKeysType, ReviewPostType } from '../../../../types/types';
 import RatingForm from '../rating-form/rating-form';
+import {useEffect, useState} from 'react';
+import {useForm} from 'react-hook-form';
+import {useParams} from 'react-router-dom';
+import {LoadingStatus, MIN_REVIEW_LENGTH, REVIEWS_PER_PAGE} from '../../../../const/const';
+import {useAppDispatch, useAppSelector} from '../../../../hooks';
+import {fetchReviewsAction, sendReviewAction} from '../../../../store/api-actions';
+import {changeReviewSendingStatus} from '../../../../store/reviews-data/reviews-data';
+import {getReviewSendingStatus} from '../../../../store/reviews-data/selectors';
+import {ReviewPostKeysType, ReviewPostType} from '../../../../types/types';
 
 type ReviewFormPropsType = {
   isReviewModalOpened: boolean
@@ -18,8 +18,8 @@ type ReviewFormPropsType = {
 }
 
 
-export default function ReviewForm({ isReviewModalOpened, setIsReviewModalOpened, setIsReviewSuccessModalOpened }: ReviewFormPropsType) {
-  const { id } = useParams();
+export default function ReviewForm({isReviewModalOpened, setIsReviewModalOpened, setIsReviewSuccessModalOpened}: ReviewFormPropsType) {
+  const {id} = useParams();
   const dispatch = useAppDispatch();
   const sendingStatus = useAppSelector(getReviewSendingStatus);
   const [isFormDisabled, setFormDisabled] = useState(false);
@@ -55,7 +55,7 @@ export default function ReviewForm({ isReviewModalOpened, setIsReviewModalOpened
   const {
     register,
     handleSubmit,
-    formState: { errors } } = useForm<ReviewPostType>({
+    formState: {errors}} = useForm<ReviewPostType>({
       mode: 'all',
       defaultValues: {
         cameraId: Number(id),

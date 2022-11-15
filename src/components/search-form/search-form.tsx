@@ -1,13 +1,13 @@
 import cn from 'classnames';
-import React, { ChangeEvent, useState } from 'react';
+import React, {ChangeEvent, useState} from 'react';
 import ClickAwayListener from 'react-click-away-listener';
-import { DebounceInput } from 'react-debounce-input';
-import { generatePath, useNavigate } from 'react-router-dom';
-import { AppRoute } from '../../const/const';
-import { useAppDispatch, useAppSelector } from '../../hooks';
-import { fetchCamerasBySearchAction } from '../../store/api-actions';
-import { getCamerasBySearch } from '../../store/cameras-data/selectors';
-import { SearchCameraType } from '../../types/types';
+import {DebounceInput} from 'react-debounce-input';
+import {generatePath, useNavigate} from 'react-router-dom';
+import {AppRoute} from '../../const/const';
+import {useAppDispatch, useAppSelector} from '../../hooks';
+import {fetchCamerasBySearchAction} from '../../store/api-actions';
+import {getCamerasBySearch} from '../../store/cameras-data/selectors';
+import {SearchCameraType} from '../../types/types';
 
 export default function SearchForm() {
   const dispatch = useAppDispatch();
@@ -25,7 +25,7 @@ export default function SearchForm() {
   };
 
   const handleItemClick = (camera: SearchCameraType) => {
-    navigate(generatePath(AppRoute.ProductPage, { id: String(camera.id) }));
+    navigate(generatePath(AppRoute.ProductPage, {id: String(camera.id)}));
   };
 
   const handleKeyDownClick = (evt: React.KeyboardEvent<HTMLLIElement>, camera: SearchCameraType) => {

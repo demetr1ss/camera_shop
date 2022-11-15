@@ -1,10 +1,10 @@
+import HistoryRouter from '../../history-route/history-route';
+import CatalogCards from './catalog-cards';
 import {render, screen} from '@testing-library/react';
 import {createMemoryHistory} from 'history';
 import {Provider} from 'react-redux';
 import {mockStore} from '../../../tests/mocks/mock-store';
 import {createRandomCamera} from '../../../tests/mocks/mocks';
-import HistoryRouter from '../../history-route/history-route';
-import CatalogCards from './catalog-cards';
 
 const mockCameras = [createRandomCamera()];
 const setCurrentCamera = jest.fn();

@@ -1,9 +1,9 @@
-import { render, screen } from '@testing-library/react';
-import { createMemoryHistory } from 'history';
-import { Provider } from 'react-redux';
 import HistoryRouter from '../../components/history-route/history-route';
-import { mockStore } from '../../tests/mocks/mock-store';
 import NotFoundScreen from './not-found-screen';
+import {render, screen} from '@testing-library/react';
+import {createMemoryHistory} from 'history';
+import {Provider} from 'react-redux';
+import {mockStore} from '../../tests/mocks/mock-store';
 
 describe('Component: NotFoundScreen', () => {
   it('should render correctly', () => {

@@ -1,11 +1,11 @@
-import { ChangeEvent, useEffect } from 'react';
-import { useSearchParams } from 'react-router-dom';
-import { OrderType, QueryParameter, SortType } from '../../../const/const';
-import { useAppSelector } from '../../../hooks';
-import { getCurrentCatalogPath } from '../../../store/app-process/selectors';
+import {ChangeEvent, useEffect} from 'react';
+import {useSearchParams} from 'react-router-dom';
+import {OrderType, QueryParameter, SortType} from '../../../const/const';
+import {useAppSelector} from '../../../hooks';
+import {getCurrentCatalogPath} from '../../../store/app-process/selectors';
 
 export default function CatalogSort() {
-  const { search } = useAppSelector(getCurrentCatalogPath);
+  const {search} = useAppSelector(getCurrentCatalogPath);
   const [searchParams, setSearchParams] = useSearchParams();
 
   useEffect(() => {
@@ -20,8 +20,8 @@ export default function CatalogSort() {
     }
   }, [searchParams, setSearchParams]);
 
-  const handleInputChange = ({ target }: ChangeEvent<HTMLInputElement>) => {
-    const { name } = target;
+  const handleInputChange = ({target}: ChangeEvent<HTMLInputElement>) => {
+    const {name} = target;
     const value = target.getAttribute('data-value');
 
     switch (name) {

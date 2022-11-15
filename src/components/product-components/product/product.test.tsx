@@ -1,10 +1,10 @@
+import HistoryRouter from '../../../components/history-route/history-route';
+import Product from './product';
 import {render, screen} from '@testing-library/react';
 import {createMemoryHistory} from 'history';
 import {Provider} from 'react-redux';
-import HistoryRouter from '../../../components/history-route/history-route';
 import {mockStore} from '../../../tests/mocks/mock-store';
 import {createRandomCamera} from '../../../tests/mocks/mocks';
-import Product from './product';
 
 const mockCamera = createRandomCamera();
 const setIsAddItemModalOpened = jest.fn();

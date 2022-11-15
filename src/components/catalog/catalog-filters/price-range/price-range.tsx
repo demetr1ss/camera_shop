@@ -1,10 +1,10 @@
+import useKeydown from '../../../../hooks/use-keydown';
+import useOutsideClick from '../../../../hooks/use-outside-click';
+import useResetPage from '../../../../hooks/use-reset-page';
 import {ChangeEvent, useEffect, useRef, useState} from 'react';
 import {useSearchParams} from 'react-router-dom';
 import {QueryParameter} from '../../../../const/const';
 import {useAppSelector} from '../../../../hooks';
-import useKeydown from '../../../../hooks/use-keydown';
-import useOutsideClick from '../../../../hooks/use-outside-click';
-import useResetPage from '../../../../hooks/use-reset-page';
 import {getCamerasPriceRange} from '../../../../store/cameras-data/selectors';
 
 export default function PriceRange() {

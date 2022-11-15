@@ -1,9 +1,9 @@
-import { render, screen } from '@testing-library/react';
-import { createMemoryHistory } from 'history';
-import { Provider } from 'react-redux';
-import { mockStore } from '../../../../tests/mocks/mock-store';
 import HistoryRouter from '../../../history-route/history-route';
 import RatingForm from './rating-form';
+import {render, screen} from '@testing-library/react';
+import {createMemoryHistory} from 'history';
+import {Provider} from 'react-redux';
+import {mockStore} from '../../../../tests/mocks/mock-store';
 
 const getInputClassName = jest.fn();
 const register = jest.fn();

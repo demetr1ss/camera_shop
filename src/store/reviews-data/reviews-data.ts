@@ -1,7 +1,7 @@
-import { createSlice } from '@reduxjs/toolkit';
-import { LoadingStatus, NameSpace, REVIEWS_PER_PAGE } from '../../const/const';
-import { ReviewType } from '../../types/types';
-import { fetchReviewsAction, sendReviewAction } from '../api-actions';
+import {createSlice} from '@reduxjs/toolkit';
+import {LoadingStatus, NameSpace, REVIEWS_PER_PAGE} from '../../const/const';
+import {ReviewType} from '../../types/types';
+import {fetchReviewsAction, sendReviewAction} from '../api-actions';
 
 export type ReviewsDataType = {
   reviews: ReviewType[];
@@ -48,6 +48,7 @@ export const reviewsData = createSlice({
       .addCase(sendReviewAction.rejected, (state) => {
         state.reviewSendingStatus = LoadingStatus.Rejected;
       });
-  }});
+  }
+});
 
 export const {changeReviewSendingStatus} = reviewsData.actions;

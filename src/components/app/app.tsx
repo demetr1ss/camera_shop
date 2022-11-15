@@ -1,8 +1,8 @@
 import CatalogScreen from '../../pages/catalog-screen/catalog-screen';
-import { generatePath, Navigate, Route, Routes } from 'react-router-dom';
-import { AppRoute, DEFAULT_PAGE } from '../../const/const';
 import ProductScreen from '../../pages/product-screen/product-screen';
 import NotFoundScreen from '../../pages/not-found-screen/not-found-screen';
+import {generatePath, Navigate, Route, Routes} from 'react-router-dom';
+import {AppRoute, DEFAULT_PAGE} from '../../const/const';
 
 export default function App(): JSX.Element {
   return (
@@ -11,7 +11,7 @@ export default function App(): JSX.Element {
         path={AppRoute.Main}
         element={
           <Navigate
-            to={{ pathname: generatePath(AppRoute.CatalogPage, { page: String(DEFAULT_PAGE) }) }}
+            to={{pathname: generatePath(AppRoute.CatalogPage, {page: String(DEFAULT_PAGE)})}}
           />
         }
       />

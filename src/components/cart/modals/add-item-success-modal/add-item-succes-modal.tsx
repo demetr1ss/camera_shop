@@ -1,7 +1,7 @@
+import useKeydown from '../../../../hooks/use-keydown';
 import {generatePath, Link} from 'react-router-dom';
 import {AppRoute, DEFAULT_PAGE} from '../../../../const/const';
 import {useAppSelector} from '../../../../hooks';
-import useKeydown from '../../../../hooks/use-keydown';
 import {getCurrentCatalogPath} from '../../../../store/app-process/selectors';
 
 type AddItemSuccesModalPropsType = {

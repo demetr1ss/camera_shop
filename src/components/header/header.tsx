@@ -1,9 +1,9 @@
+import SearchForm from '../search-form/search-form';
 import {generatePath, Link} from 'react-router-dom';
 import {AppRoute, DEFAULT_PAGE} from '../../const/const';
 import {useAppSelector} from '../../hooks';
 import {getCurrentCatalogPath} from '../../store/app-process/selectors';
 import {getCamerasInCart} from '../../store/cameras-data/selectors';
-import SearchForm from '../search-form/search-form';
 
 export default function Header() {
   const {currentPage, search} = useAppSelector(getCurrentCatalogPath);
