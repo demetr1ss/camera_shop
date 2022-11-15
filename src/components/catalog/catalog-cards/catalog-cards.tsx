@@ -1,12 +1,12 @@
-import { Link, generatePath } from 'react-router-dom';
-import { MAX_RATING, AppRoute } from '../../../const/const';
-import { CameraType } from '../../../types/types';
+import {Link, generatePath} from 'react-router-dom';
+import {MAX_RATING, AppRoute} from '../../../const/const';
+import {CameraType} from '../../../types/types';
 
 type CatalogCardsPropsType = {
   cameras: CameraType[]
 }
 
-export default function CatalogCards({ cameras }: CatalogCardsPropsType) {
+export default function CatalogCards({cameras}: CatalogCardsPropsType) {
   return (
     <div className="cards catalog__cards" data-testid="catalog cards">
       {cameras.map((camera) => {
@@ -19,7 +19,8 @@ export default function CatalogCards({ cameras }: CatalogCardsPropsType) {
           name,
           rating,
           reviewCount,
-          price
+          price,
+          category
         } = camera;
         return (
           <div className="product-card" key={id}>
@@ -31,7 +32,7 @@ export default function CatalogCards({ cameras }: CatalogCardsPropsType) {
             </div>
             <div className="product-card__info">
               <div className="rate product-card__rate">
-                {Array.from({ length: MAX_RATING }, (_, index) => (
+                {Array.from({length: MAX_RATING}, (_, index) => (
                   <svg width="17" height="16" aria-hidden="true" key={`star-${index}`}>
                     <use xlinkHref={`#icon${index < rating ? '-full' : ''}-star`} />
                   </svg>
@@ -45,18 +46,18 @@ export default function CatalogCards({ cameras }: CatalogCardsPropsType) {
                 </p>
               </div>
               <p className="product-card__title">
-                {name}
+                {name.includes('Ретрокамера') ? name : `${category} ${name}`}
               </p>
               <p className="product-card__price">
                 <span className="visually-hidden">Цена:</span>
-                {price} ₽
+                {price.toLocaleString('ru-RU')} ₽
               </p>
             </div>
             <div className="product-card__buttons">
               <button className="btn btn--purple product-card__btn" type="button">
                 Купить
               </button>
-              <Link className="btn btn--transparent" to={generatePath(AppRoute.ProductPage, { id: String(id) })}>
+              <Link className="btn btn--transparent" to={generatePath(AppRoute.ProductPage, {id: String(id)})}>
                 Подробнее
               </Link>
             </div>

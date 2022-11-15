@@ -19,6 +19,7 @@ describe('Reducer: cameras-data', () => {
       searchCameras: [],
       cameras: [],
       similarCameras: [],
+      camerasInCart: [],
       camerasTotalCount: 0,
       camerasLoadingStatus: LoadingStatus.Idle,
       cameraLoadingStatus: LoadingStatus.Idle,
@@ -42,6 +43,7 @@ describe('Reducer: cameras-data', () => {
           camera: {} as CameraType,
           cameraLoadingStatus: LoadingStatus.Idle,
           similarCameras: [],
+          camerasInCart: [],
         });
     });
 
@@ -56,6 +58,7 @@ describe('Reducer: cameras-data', () => {
           camera: {} as CameraType,
           cameraLoadingStatus: LoadingStatus.Idle,
           similarCameras: [],
+          camerasInCart: [],
         });
     });
 
@@ -70,6 +73,7 @@ describe('Reducer: cameras-data', () => {
           camera: {} as CameraType,
           cameraLoadingStatus: LoadingStatus.Idle,
           similarCameras: [],
+          camerasInCart: [],
         });
     });
   });
@@ -85,7 +89,8 @@ describe('Reducer: cameras-data', () => {
           searchCameras: [],
           camerasLoadingStatus: LoadingStatus.Idle,
           camerasTotalCount: 0,
-          similarCameras: [] as CameraType[]
+          similarCameras: [] as CameraType[],
+          camerasInCart: [],
         });
     });
 
@@ -99,7 +104,8 @@ describe('Reducer: cameras-data', () => {
           searchCameras: [],
           camerasLoadingStatus: LoadingStatus.Idle,
           camerasTotalCount: 0,
-          similarCameras: [] as CameraType[]
+          similarCameras: [] as CameraType[],
+          camerasInCart: [],
         });
     });
 
@@ -113,7 +119,8 @@ describe('Reducer: cameras-data', () => {
           searchCameras: [],
           camerasLoadingStatus: LoadingStatus.Idle,
           camerasTotalCount: 0,
-          similarCameras: [] as CameraType[]
+          similarCameras: [] as CameraType[],
+          camerasInCart: [],
         });
     });
   });
@@ -130,6 +137,7 @@ describe('Reducer: cameras-data', () => {
           cameras: [] as CameraType[],
           camerasLoadingStatus: LoadingStatus.Idle,
           camerasTotalCount: 0,
+          camerasInCart: [],
         });
     });
   });
@@ -146,6 +154,7 @@ describe('Reducer: cameras-data', () => {
           cameras: [] as CameraType[],
           camerasLoadingStatus: LoadingStatus.Idle,
           camerasTotalCount: 0,
+          camerasInCart: [],
         });
     });
   });
@@ -162,6 +171,7 @@ describe('Reducer: cameras-data', () => {
           cameras: [] as CameraType[],
           camerasLoadingStatus: LoadingStatus.Idle,
           camerasTotalCount: 0,
+          camerasInCart: [],
         });
     });
   });

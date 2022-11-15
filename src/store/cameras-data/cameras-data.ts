@@ -12,6 +12,7 @@ export type CamerasDataType = {
   camerasTotalCount: number;
   camerasLoadingStatus: LoadingStatus;
   cameraLoadingStatus: LoadingStatus;
+  camerasInCart: CameraType[];
 };
 
 const initialState: CamerasDataType = {
@@ -23,6 +24,7 @@ const initialState: CamerasDataType = {
   camerasTotalCount: 0,
   camerasLoadingStatus: LoadingStatus.Idle,
   cameraLoadingStatus: LoadingStatus.Idle,
+  camerasInCart: [],
 };
 
 export const camerasData = createSlice({

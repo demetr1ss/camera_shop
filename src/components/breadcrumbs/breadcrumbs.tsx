@@ -1,14 +1,15 @@
-import { generatePath, Link } from 'react-router-dom';
-import { AppRoute, DEFAULT_PAGE } from '../../const/const';
-import { useAppSelector } from '../../hooks';
-import { getCurrentCatalogPath } from '../../store/app-process/selectors';
+import {generatePath, Link} from 'react-router-dom';
+import {AppRoute, DEFAULT_PAGE} from '../../const/const';
+import {useAppSelector} from '../../hooks';
+import {getCurrentCatalogPath} from '../../store/app-process/selectors';
 
 type BreadcrumbsPropsType = {
   productName?: string;
+  category?: string;
 }
 
-export default function Breadcrumbs({ productName }: BreadcrumbsPropsType): JSX.Element {
-  const { currentPage, search } = useAppSelector(getCurrentCatalogPath);
+export default function Breadcrumbs({productName, category}: BreadcrumbsPropsType): JSX.Element {
+  const {currentPage, search} = useAppSelector(getCurrentCatalogPath);
 
   return (
     <div className="breadcrumbs" data-testid="breadcrumbs">
@@ -54,7 +55,7 @@ export default function Breadcrumbs({ productName }: BreadcrumbsPropsType): JSX.
           {productName &&
             <li className="breadcrumbs__item">
               <span className="breadcrumbs__link breadcrumbs__link--active">
-                {productName}
+                {productName.includes('Ретрокамера') ? productName : `${category} ${productName}`}
               </span>
             </li>}
         </ul>

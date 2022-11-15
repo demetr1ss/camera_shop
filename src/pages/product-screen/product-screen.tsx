@@ -8,18 +8,19 @@ import LoadingScreen from '../loading-screen/loading-screen';
 import ReviewForm from '../../components/product-components/review-modal-form/review-form/review-form';
 import ReviewSuccessModal from '../../components/product-components/review-success-modal/review-succeess-modal';
 import FocusLock from 'react-focus-lock';
-import { RemoveScroll } from 'react-remove-scroll';
-import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import { LoadingStatus } from '../../const/const';
-import { useAppDispatch, useAppSelector } from '../../hooks';
-import { fetchCameraAction } from '../../store/api-actions';
-import { getCamera, getCameraLoadingStatus, getSimilarCameras } from '../../store/cameras-data/selectors';
-import { scrollToTop } from '../../utils/utils';
+import {RemoveScroll} from 'react-remove-scroll';
+import {useEffect, useState} from 'react';
+import {useParams} from 'react-router-dom';
+import {LoadingStatus} from '../../const/const';
+import {useAppDispatch, useAppSelector} from '../../hooks';
+import {fetchCameraAction} from '../../store/api-actions';
+import {getCamera, getCameraLoadingStatus, getSimilarCameras} from '../../store/cameras-data/selectors';
+import {scrollToTop} from '../../utils/utils';
+import AddItemModal from '../../components/basket/modals/add-item-modal/add-item-modal';
 
 export default function ProductScreen(): JSX.Element {
-  window.scrollTo({ top: 0 });
-  const { id } = useParams();
+  window.scrollTo({top: 0});
+  const {id} = useParams();
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -30,6 +31,7 @@ export default function ProductScreen(): JSX.Element {
   const similarCameras = useAppSelector(getSimilarCameras);
   const [isReviewModalOpened, setIsReviewModalOpened] = useState(false);
   const [isReviewSuccessModalOpened, setIsReviewSuccessModalOpened] = useState(false);
+  const [isAddItemModalOpened, setIsAddItemModalOpened] = useState(false);
 
   const cameraLoadingStatus = useAppSelector(getCameraLoadingStatus);
 
@@ -48,8 +50,8 @@ export default function ProductScreen(): JSX.Element {
       <Header />
       <main>
         <div className="page-content">
-          <Breadcrumbs productName={camera.name} />
-          <Product camera={camera} />
+          <Breadcrumbs productName={camera.name} category={camera.category} />
+          <Product camera={camera} setIsAddItemModalOpened={setIsAddItemModalOpened} />
           {similarCameras.length > 0 && <ProductSimilar similarCameras={similarCameras} />}
           <Reviews cameraId={String(id)} setIsReviewModalOpened={setIsReviewModalOpened} />
         </div>
@@ -58,6 +60,17 @@ export default function ProductScreen(): JSX.Element {
             <use xlinkHref="#icon-arrow2" />
           </svg>
         </button>
+        {isAddItemModalOpened &&
+          <FocusLock>
+            <RemoveScroll enabled={isAddItemModalOpened}>
+              <AddItemModal
+                camera={camera}
+                isAddItemModalOpened={isAddItemModalOpened}
+                setIsAddItemModalOpened={setIsAddItemModalOpened}
+              />
+            </RemoveScroll>
+          </FocusLock>}
+
         {isReviewModalOpened &&
           <FocusLock>
             <RemoveScroll enabled={isReviewModalOpened}>
@@ -68,6 +81,7 @@ export default function ProductScreen(): JSX.Element {
               />
             </RemoveScroll>
           </FocusLock>}
+
         {isReviewSuccessModalOpened &&
           <FocusLock>
             <RemoveScroll enabled={isReviewSuccessModalOpened}>

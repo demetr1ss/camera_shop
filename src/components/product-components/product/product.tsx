@@ -1,14 +1,15 @@
-import { MAX_RATING } from '../../../const/const';
-import { useAppSelector } from '../../../hooks';
-import { getReviewsTotalCount } from '../../../store/reviews-data/selectors';
-import { CameraType } from '../../../types/types';
+import {MAX_RATING} from '../../../const/const';
+import {useAppSelector} from '../../../hooks';
+import {getReviewsTotalCount} from '../../../store/reviews-data/selectors';
+import {CameraType} from '../../../types/types';
 import ProductTabs from '../product-tabs/product-tabs';
 
 type ProductPropsType = {
   camera: CameraType;
+  setIsAddItemModalOpened: (status: boolean) => void
 }
 
-export default function Product({ camera }: ProductPropsType): JSX.Element {
+export default function Product({camera, setIsAddItemModalOpened}: ProductPropsType): JSX.Element {
   const reviewsCount = useAppSelector(getReviewsTotalCount);
   const {
     previewImgWebp,
@@ -18,6 +19,7 @@ export default function Product({ camera }: ProductPropsType): JSX.Element {
     name,
     rating,
     price,
+    category
   } = camera;
 
   return (
@@ -31,9 +33,9 @@ export default function Product({ camera }: ProductPropsType): JSX.Element {
             </picture>
           </div>
           <div className="product__content">
-            <h1 className="title title--h3">{name}</h1>
+            <h1 className="title title--h3">{name.includes('Ретрокамера') ? name : `${category} ${name}`}</h1>
             <div className="rate product__rate">
-              {Array.from({ length: MAX_RATING }, (_, index) => (
+              {Array.from({length: MAX_RATING}, (_, index) => (
                 <svg width="17" height="16" aria-hidden="true" key={index}>
                   <use xlinkHref={`#icon${index < rating ? '-full' : ''}-star`} />
                 </svg>
@@ -46,9 +48,9 @@ export default function Product({ camera }: ProductPropsType): JSX.Element {
               </p>
             </div>
             <p className="product__price">
-              <span className="visually-hidden">Цена:</span>{price} ₽
+              <span className="visually-hidden">Цена:</span>{price.toLocaleString('ru-RU')} ₽
             </p>
-            <button className="btn btn--purple" type="button">
+            <button className="btn btn--purple" type="button" onClick={() => setIsAddItemModalOpened(true)}>
               <svg width="24" height="16" aria-hidden="true">
                 <use xlinkHref="#icon-add-basket" />
               </svg>Добавить в корзину

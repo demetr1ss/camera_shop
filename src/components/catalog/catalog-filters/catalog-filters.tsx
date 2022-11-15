@@ -1,6 +1,6 @@
-import { useRef } from 'react';
-import { useSearchParams } from 'react-router-dom';
-import { Filter, FilterTitle, FILTER_PARAMS } from '../../../const/const';
+import {useRef} from 'react';
+import {useSearchParams} from 'react-router-dom';
+import {Filter, FilterTitle, FILTER_PARAMS} from '../../../const/const';
 import useResetPage from '../../../hooks/use-reset-page';
 import PriceRange from './price-range/price-range';
 
@@ -86,7 +86,7 @@ export default function CatalogFilters() {
                       />
                       <span className="custom-checkbox__icon" />
                       <span className="custom-checkbox__label">
-                        {filterName}
+                        {filterName === 'Фотоаппарат' ? 'Фотокамера' : filterName}
                       </span>
                     </label>
                   </div>

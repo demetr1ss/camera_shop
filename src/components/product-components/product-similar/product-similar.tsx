@@ -1,13 +1,13 @@
-import { useState } from 'react';
-import { generatePath, Link } from 'react-router-dom';
-import { AppRoute, MAX_RATING, MAX_SIMILAR_CAMERAS, SLIDE_STEP } from '../../../const/const';
-import { CameraType } from '../../../types/types';
+import {useState} from 'react';
+import {generatePath, Link} from 'react-router-dom';
+import {AppRoute, MAX_RATING, MAX_SIMILAR_CAMERAS, SLIDE_STEP} from '../../../const/const';
+import {CameraType} from '../../../types/types';
 
 type ProductSimilarPropsType = {
   similarCameras: CameraType[];
 }
 
-export default function ProductSimilar({ similarCameras }: ProductSimilarPropsType) {
+export default function ProductSimilar({similarCameras}: ProductSimilarPropsType) {
   const [currentSlide, setCurrentSlide] = useState(0);
 
   const slidesCount = similarCameras.length - 2;
@@ -34,9 +34,10 @@ export default function ProductSimilar({ similarCameras }: ProductSimilarPropsTy
                   rating,
                   reviewCount,
                   price,
+                  category
                 } = camera;
 
-                return(
+                return (
                   <div className="product-card is-active" key={id}>
                     <div className="product-card__img">
                       <picture>
@@ -46,7 +47,7 @@ export default function ProductSimilar({ similarCameras }: ProductSimilarPropsTy
                     </div>
                     <div className="product-card__info">
                       <div className="rate product-card__rate">
-                        {Array.from({ length: MAX_RATING }, (_, index) => (
+                        {Array.from({length: MAX_RATING}, (_, index) => (
                           <svg width="17" height="16" aria-hidden="true" key={index}>
                             <use xlinkHref={`#icon${index < rating ? '-full' : ''}-star`} />
                           </svg>
@@ -54,8 +55,8 @@ export default function ProductSimilar({ similarCameras }: ProductSimilarPropsTy
                         <p className="visually-hidden">Рейтинг: {rating}</p>
                         <p className="rate__count"><span className="visually-hidden">Всего оценок:</span>{reviewCount}</p>
                       </div>
-                      <p className="product-card__title">{name}</p>
-                      <p className="product-card__price"><span className="visually-hidden">Цена:</span>{price} ₽
+                      <p className="product-card__title">{category} {name}</p>
+                      <p className="product-card__price"><span className="visually-hidden">Цена:</span>{price.toLocaleString('ru-RU')} ₽
                       </p>
                     </div>
                     <div className="product-card__buttons">

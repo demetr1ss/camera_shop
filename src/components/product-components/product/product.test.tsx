@@ -1,12 +1,13 @@
-import { render, screen } from '@testing-library/react';
-import { createMemoryHistory } from 'history';
-import { Provider } from 'react-redux';
+import {render, screen} from '@testing-library/react';
+import {createMemoryHistory} from 'history';
+import {Provider} from 'react-redux';
 import HistoryRouter from '../../../components/history-route/history-route';
-import { mockStore } from '../../../tests/mocks/mock-store';
-import { createRandomCamera } from '../../../tests/mocks/mocks';
+import {mockStore} from '../../../tests/mocks/mock-store';
+import {createRandomCamera} from '../../../tests/mocks/mocks';
 import Product from './product';
 
 const mockCamera = createRandomCamera();
+const setIsAddItemModalOpened = jest.fn();
 
 describe('Component: Product', () => {
   it('should render correctly', () => {
@@ -15,7 +16,7 @@ describe('Component: Product', () => {
     render(
       <HistoryRouter history={history}>
         <Provider store={mockStore}>
-          <Product camera={mockCamera} />
+          <Product camera={mockCamera} setIsAddItemModalOpened={setIsAddItemModalOpened} />
         </Provider>
       </HistoryRouter>,
     );

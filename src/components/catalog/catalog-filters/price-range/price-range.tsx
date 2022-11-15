@@ -1,14 +1,14 @@
-import { ChangeEvent, useEffect, useRef, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
-import { QueryParameter } from '../../../../const/const';
-import { useAppSelector } from '../../../../hooks';
+import {ChangeEvent, useEffect, useRef, useState} from 'react';
+import {useSearchParams} from 'react-router-dom';
+import {QueryParameter} from '../../../../const/const';
+import {useAppSelector} from '../../../../hooks';
 import useKeydown from '../../../../hooks/use-keydown';
 import useOutsideClick from '../../../../hooks/use-outside-click';
 import useResetPage from '../../../../hooks/use-reset-page';
-import { getCamerasPriceRange } from '../../../../store/cameras-data/selectors';
+import {getCamerasPriceRange} from '../../../../store/cameras-data/selectors';
 
 export default function PriceRange() {
-  const { minPriceInRange = 0, maxPriceInRange = 0 } = useAppSelector(getCamerasPriceRange);
+  const {minPriceInRange = 0, maxPriceInRange = 0} = useAppSelector(getCamerasPriceRange);
   const inputMinPriceRef = useRef<HTMLInputElement>(null);
   const inputMaxPriceRef = useRef<HTMLInputElement>(null);
   const [isFormActivated, setIsFormActivated] = useState(false);
@@ -134,7 +134,7 @@ export default function PriceRange() {
             ref={inputMinPriceRef}
             type="number"
             name="price_gte"
-            placeholder={String(minPriceInRange)}
+            placeholder={minPriceInRange.toLocaleString('ru-RU')}
             onChange={handleInputPriceChange}
             defaultValue={minPriceSearch ? minPriceSearch : ''}
           />
@@ -147,7 +147,7 @@ export default function PriceRange() {
             ref={inputMaxPriceRef}
             type="number"
             name="price_lte"
-            placeholder={String(maxPriceInRange)}
+            placeholder={maxPriceInRange.toLocaleString('ru-RU')}
             onChange={handleInputPriceChange}
             defaultValue={maxPriceSearch ? maxPriceSearch : ''}
           />
