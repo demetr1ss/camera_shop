@@ -60,12 +60,12 @@ export default function Header() {
           </ul>
         </nav>
         <SearchForm />
-        <a className="header__basket-link" href="/#">
+        <Link className="header__basket-link" to={AppRoute.Cartpage}>
           <svg width="16" height="16" aria-hidden="true">
             <use xlinkHref="#icon-basket" />
           </svg>
           {camerasInCartCount > 0 && <span className="header__basket-count">{camerasInCartCount}</span>}
-        </a>
+        </Link>
       </div>
     </header>
   );

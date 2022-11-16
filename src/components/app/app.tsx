@@ -3,6 +3,7 @@ import ProductScreen from '../../pages/product-screen/product-screen';
 import NotFoundScreen from '../../pages/not-found-screen/not-found-screen';
 import {generatePath, Navigate, Route, Routes} from 'react-router-dom';
 import {AppRoute, DEFAULT_PAGE} from '../../const/const';
+import CartScreen from '../../pages/cart-screen/cart-screen';
 
 export default function App(): JSX.Element {
   return (
@@ -22,6 +23,10 @@ export default function App(): JSX.Element {
       <Route
         path={AppRoute.ProductPage}
         element={<ProductScreen />}
+      />
+      <Route
+        path={AppRoute.Cartpage}
+        element={<CartScreen />}
       />
       <Route
         path="*"

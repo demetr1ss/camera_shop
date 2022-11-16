@@ -1,8 +1,8 @@
 import cn from 'classnames';
-import useKeydown from '../../../../hooks/use-keydown';
-import {useAppDispatch} from '../../../../hooks';
-import {addCameraToCart} from '../../../../store/cameras-data/cameras-data';
-import {CameraType} from '../../../../types/types';
+import useKeydown from '../../../hooks/use-keydown';
+import {useAppDispatch} from '../../../hooks';
+import {addCameraToCart} from '../../../store/cameras-data/cameras-data';
+import {CameraType} from '../../../types/types';
 
 type AddItemModalPropsType = {
   camera: CameraType;

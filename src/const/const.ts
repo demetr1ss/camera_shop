@@ -12,6 +12,7 @@ export const enum AppRoute {
   Main = '/',
   CatalogPage = '/catalog/page_:page',
   ProductPage = '/product/:id',
+  Cartpage = '/cart',
   NotFound = '/*',
 }
 
@@ -40,7 +41,7 @@ export const Filter: FilterType = {
 } as const;
 
 type FilterTitleType = {
-    [key: string]: string
+  [key: string]: string
 }
 
 export const FilterTitle: FilterTitleType = {

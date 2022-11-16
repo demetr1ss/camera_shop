@@ -1,8 +1,8 @@
 import FocusLock from 'react-focus-lock';
 import Banner from '../../components/banner/banner';
 import Breadcrumbs from '../../components/breadcrumbs/breadcrumbs';
-import AddItemModal from '../../components/cart/modals/add-item-modal/add-item-modal';
-import AddItemSuccesModal from '../../components/cart/modals/add-item-success-modal/add-item-succes-modal';
+import AddItemModal from '../../components/cart/add-item-modal/add-item-modal';
+import AddItemSuccesModal from '../../components/cart/add-item-success-modal/add-item-succes-modal';
 import CatalogCards from '../../components/catalog/catalog-cards/catalog-cards';
 import CatalogFilters from '../../components/catalog/catalog-filters/catalog-filters';
 import CatalogSort from '../../components/catalog/catalog-sort/catalog-sort';
@@ -128,7 +128,11 @@ export default function CatalogScreen(): JSX.Element {
                   {isCamerasLoadingStatusPending ? <InnerLoader /> : ''}
                   {cameras.length && !isCamerasLoadingStatusPending ?
                     <>
-                      <CatalogCards cameras={cameras} setCurrentCamera={setCurrentCamera} setIsAddItemModalOpened={setIsAddItemModalOpened} />
+                      <CatalogCards
+                        cameras={cameras}
+                        setCurrentCamera={setCurrentCamera}
+                        setIsAddItemModalOpened={setIsAddItemModalOpened}
+                      />
                       <Pagination pagesCount={pagesCount} />
                     </>
                     : ''}

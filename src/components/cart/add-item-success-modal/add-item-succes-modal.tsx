@@ -1,8 +1,8 @@
-import useKeydown from '../../../../hooks/use-keydown';
+import useKeydown from '../../../hooks/use-keydown';
 import {generatePath, Link} from 'react-router-dom';
-import {AppRoute, DEFAULT_PAGE} from '../../../../const/const';
-import {useAppSelector} from '../../../../hooks';
-import {getCurrentCatalogPath} from '../../../../store/app-process/selectors';
+import {AppRoute, DEFAULT_PAGE} from '../../../const/const';
+import {useAppSelector} from '../../../hooks';
+import {getCurrentCatalogPath} from '../../../store/app-process/selectors';
 
 type AddItemSuccesModalPropsType = {
   setIsAddItemSuccessModalOpened: (status: boolean) => void;
@@ -35,9 +35,9 @@ export default function AddItemSuccesModal({setIsAddItemSuccessModalOpened}: Add
             >
               Продолжить покупки
             </Link>
-            <button className="btn btn--purple modal__btn modal__btn--fit-width">
+            <Link className="btn btn--purple modal__btn modal__btn--fit-width" to={AppRoute.Cartpage}>
               Перейти в корзину
-            </button>
+            </Link>
           </div>
           <button
             className="cross-btn"

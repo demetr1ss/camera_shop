@@ -1,6 +1,8 @@
 import {useState} from 'react';
 import {generatePath, Link} from 'react-router-dom';
 import {AppRoute, MAX_RATING, MAX_SIMILAR_CAMERAS, SLIDE_STEP} from '../../../const/const';
+import {useAppSelector} from '../../../hooks';
+import {getCamerasInCart} from '../../../store/cameras-data/selectors';
 import {CameraType} from '../../../types/types';
 
 type ProductSimilarPropsType = {
@@ -10,6 +12,7 @@ type ProductSimilarPropsType = {
 }
 
 export default function ProductSimilar({similarCameras, setIsAddItemModalOpened, setCurrentCamera}: ProductSimilarPropsType) {
+  const camerasInCart = useAppSelector(getCamerasInCart);
   const [currentSlide, setCurrentSlide] = useState(0);
 
   const slidesCount = similarCameras.length - 2;
@@ -43,6 +46,8 @@ export default function ProductSimilar({similarCameras, setIsAddItemModalOpened,
                   setIsAddItemModalOpened(true);
                 };
 
+                const cameraInCart = camerasInCart.filter((item) => item.id === camera.id);
+
                 return (
                   <div className="product-card is-active" key={id}>
                     <div className="product-card__img">
@@ -73,13 +78,16 @@ export default function ProductSimilar({similarCameras, setIsAddItemModalOpened,
                       </p>
                     </div>
                     <div className="product-card__buttons">
-                      <button
-                        className="btn btn--purple product-card__btn"
-                        type="button"
-                        onClick={onBuyButtonClick}
-                      >
-                        Купить
-                      </button>
+                      {cameraInCart.length > 0 ?
+                        <Link className="btn btn--purple-border product-card__btn product-card__btn--in-cart" to={AppRoute.Cartpage}>
+                          <svg width="16" height="16" aria-hidden="true">
+                            <use xlinkHref="#icon-basket"></use>
+                          </svg>В корзине
+                        </Link>
+                        :
+                        <button className="btn btn--purple product-card__btn" type="button" onClick={onBuyButtonClick}>
+                          Купить
+                        </button>}
                       <Link
                         className="btn btn--transparent"
                         to={generatePath(AppRoute.ProductPage, {id: String(id)})}

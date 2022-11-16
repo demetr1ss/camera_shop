@@ -1,5 +1,7 @@
 import {Link, generatePath} from 'react-router-dom';
 import {MAX_RATING, AppRoute} from '../../../const/const';
+import {useAppSelector} from '../../../hooks';
+import {getCamerasInCart} from '../../../store/cameras-data/selectors';
 import {CameraType} from '../../../types/types';
 
 type CatalogCardsPropsType = {
@@ -9,6 +11,8 @@ type CatalogCardsPropsType = {
 }
 
 export default function CatalogCards({cameras, setCurrentCamera, setIsAddItemModalOpened}: CatalogCardsPropsType) {
+  const camerasInCart = useAppSelector(getCamerasInCart);
+
   return (
     <div className="cards catalog__cards" data-testid="catalog cards">
       {cameras.map((camera) => {
@@ -29,6 +33,8 @@ export default function CatalogCards({cameras, setCurrentCamera, setIsAddItemMod
           setCurrentCamera(camera);
           setIsAddItemModalOpened(true);
         };
+
+        const cameraInCart = camerasInCart.filter((item) => item.id === camera.id);
 
         return (
           <div className="product-card" key={id}>
@@ -62,9 +68,16 @@ export default function CatalogCards({cameras, setCurrentCamera, setIsAddItemMod
               </p>
             </div>
             <div className="product-card__buttons">
-              <button className="btn btn--purple product-card__btn" type="button" onClick={onBuyButtonClick}>
-                Купить
-              </button>
+              {cameraInCart.length > 0 ?
+                <Link className="btn btn--purple-border product-card__btn product-card__btn--in-cart" to={AppRoute.Cartpage}>
+                  <svg width="16" height="16" aria-hidden="true">
+                    <use xlinkHref="#icon-basket"></use>
+                  </svg>В корзине
+                </Link>
+                :
+                <button className="btn btn--purple product-card__btn" type="button" onClick={onBuyButtonClick}>
+                  Купить
+                </button>}
               <Link className="btn btn--transparent" to={generatePath(AppRoute.ProductPage, {id: String(id)})}>
                 Подробнее
               </Link>
