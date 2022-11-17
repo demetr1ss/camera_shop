@@ -4,11 +4,10 @@ import {useAppSelector} from '../../hooks';
 import {getCurrentCatalogPath} from '../../store/app-process/selectors';
 
 type BreadcrumbsPropsType = {
-  productName?: string;
-  category?: string;
+  pageName?: string;
 }
 
-export default function Breadcrumbs({productName, category}: BreadcrumbsPropsType): JSX.Element {
+export default function Breadcrumbs({pageName}: BreadcrumbsPropsType): JSX.Element {
   const {currentPage, search} = useAppSelector(getCurrentCatalogPath);
 
   return (
@@ -32,7 +31,7 @@ export default function Breadcrumbs({productName, category}: BreadcrumbsPropsTyp
             </Link>
           </li>
           <li className="breadcrumbs__item">
-            {productName ?
+            {pageName ?
               <Link
                 className="breadcrumbs__link"
                 to={{
@@ -52,10 +51,10 @@ export default function Breadcrumbs({productName, category}: BreadcrumbsPropsTyp
                 Каталог
               </span>}
           </li>
-          {productName &&
+          {pageName &&
             <li className="breadcrumbs__item">
               <span className="breadcrumbs__link breadcrumbs__link--active">
-                {productName.includes('Ретрокамера') ? productName : `${category} ${productName}`}
+                {pageName}
               </span>
             </li>}
         </ul>

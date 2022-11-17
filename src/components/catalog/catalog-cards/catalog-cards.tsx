@@ -69,7 +69,11 @@ export default function CatalogCards({cameras, setCurrentCamera, setIsAddItemMod
             </div>
             <div className="product-card__buttons">
               {cameraInCart.length > 0 ?
-                <Link className="btn btn--purple-border product-card__btn product-card__btn--in-cart" to={AppRoute.Cartpage}>
+                <Link
+                  className="btn btn--purple-border product-card__btn product-card__btn--in-cart"
+                  to={AppRoute.Cartpage}
+                  onClick={() => window.scrollTo({top: 0})}
+                >
                   <svg width="16" height="16" aria-hidden="true">
                     <use xlinkHref="#icon-basket"></use>
                   </svg>В корзине

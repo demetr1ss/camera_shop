@@ -30,7 +30,7 @@ describe('Component: Breadcrumbs', () => {
     render(
       <HistoryRouter history={history}>
         <Provider store={mockStore}>
-          <Breadcrumbs productName={mockCamera.name} />
+          <Breadcrumbs pageName={mockCamera.name} />
         </Provider>
       </HistoryRouter>,
     );

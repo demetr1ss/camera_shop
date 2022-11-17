@@ -35,7 +35,11 @@ export default function AddItemSuccesModal({setIsAddItemSuccessModalOpened}: Add
             >
               Продолжить покупки
             </Link>
-            <Link className="btn btn--purple modal__btn modal__btn--fit-width" to={AppRoute.Cartpage}>
+            <Link
+              className="btn btn--purple modal__btn modal__btn--fit-width"
+              to={AppRoute.Cartpage}
+              onClick={() => window.scrollTo({top: 0})}
+            >
               Перейти в корзину
             </Link>
           </div>

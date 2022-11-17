@@ -22,7 +22,7 @@ export default function CartScreen() {
       <Header />
       <main>
         <div className="page-content">
-          <Breadcrumbs />
+          <Breadcrumbs pageName='Корзина' />
           <section className="basket">
             <div className="container">
               <h1 className="title title--h2">
