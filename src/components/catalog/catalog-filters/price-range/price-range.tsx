@@ -1,5 +1,5 @@
 import useKeydown from '../../../../hooks/use-keydown';
-import useOutsideClick from '../../../../hooks/use-outside-click';
+import useOutsideTwoFieldsClick from '../../../../hooks/use-outside-two-fields-click';
 import useResetPage from '../../../../hooks/use-reset-page';
 import {ChangeEvent, useEffect, useRef, useState} from 'react';
 import {useSearchParams} from 'react-router-dom';
@@ -104,7 +104,7 @@ export default function PriceRange() {
   };
 
   useKeydown('Enter', changePrice);
-  useOutsideClick(inputMinPriceRef, inputMaxPriceRef, changePrice);
+  useOutsideTwoFieldsClick(inputMinPriceRef, inputMaxPriceRef, changePrice);
 
   useEffect(() => {
     if (inputMinPriceRef.current?.value) {

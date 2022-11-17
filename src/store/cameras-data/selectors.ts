@@ -2,6 +2,10 @@ import {NameSpace} from '../../const/const';
 import {StateType} from '../../types/state-type';
 import {CamerasPriceRangeType, CameraType, SearchCameraType} from '../../types/types';
 
+type GroupedCamerasInCartType = {
+  [key: string]: CameraType[]
+};
+
 export const getCameras = (state: StateType): CameraType[] =>
   state[NameSpace.Cameras].cameras;
 
@@ -28,3 +32,15 @@ export const getCamerasPriceRange = (state: StateType): CamerasPriceRangeType =>
 
 export const getCamerasInCart = (state: StateType): CameraType[] =>
   state[NameSpace.Cameras].camerasInCart;
+
+export const getGroupedCamerasInCart = (state: StateType) => (
+  getCamerasInCart(state).reduce<GroupedCamerasInCartType>((prev, curr) => {
+    if (!prev[curr.id]) {
+      prev[curr.id] = [];
+    }
+
+    prev[curr.id].push(curr);
+
+    return prev;
+  }, {})
+);

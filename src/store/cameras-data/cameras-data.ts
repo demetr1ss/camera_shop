@@ -1,4 +1,4 @@
-import {createSlice} from '@reduxjs/toolkit';
+import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {LoadingStatus, NameSpace} from '../../const/const';
 import {CamerasPriceRangeType, CameraType, SearchCameraType} from '../../types/types';
 import {
@@ -8,6 +8,11 @@ import {
   fetchCamerasPriceRangeAction,
   fetchSimilarCamerasAction
 } from '../api-actions';
+
+export type UniqueCamerasCountType = {
+  camera: CameraType,
+  camerasCount: number
+}
 
 export type CamerasDataType = {
   camera: CameraType;
@@ -37,13 +42,24 @@ export const camerasData = createSlice({
   name: NameSpace.Cameras,
   initialState,
   reducers: {
-    addCameraToCart: (state, action) => {
-      state.camerasInCart.push(action.payload);
+    addCameraToCart: (state, {payload}: PayloadAction<CameraType>) => {
+      state.camerasInCart.push(payload);
     },
-    removeCameraFromCart: (state, action) => {
+    removeCamerasFromCart: (state, {payload}: PayloadAction<CameraType>) => {
       state.camerasInCart = state.camerasInCart.filter((camera) =>
-        camera.id !== action.payload.id
+        camera.id !== payload.id
       );
+    },
+    reduceCameraInCart: (state, {payload}: PayloadAction<CameraType>) => {
+      const deletedCameraIndex = state.camerasInCart.findIndex((item) => item.id === payload.id);
+      state.camerasInCart.splice(deletedCameraIndex, 1);
+    },
+    changeCamerasCountInCart: (state, {payload}: PayloadAction<UniqueCamerasCountType>) => {
+      state.camerasInCart = state.camerasInCart.filter((camera) =>
+        camera.id !== payload.camera.id
+      );
+      const camerasList = Array.from({length: payload.camerasCount}, () => payload.camera);
+      state.camerasInCart.push(...camerasList);
     }
   },
   extraReducers(builder) {
@@ -82,5 +98,9 @@ export const camerasData = createSlice({
   }
 });
 
-
-export const {addCameraToCart, removeCameraFromCart} = camerasData.actions;
+export const {
+  addCameraToCart,
+  removeCamerasFromCart,
+  reduceCameraInCart,
+  changeCamerasCountInCart
+} = camerasData.actions;

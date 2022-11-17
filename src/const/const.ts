@@ -7,6 +7,8 @@ export const MAX_SIMILAR_CAMERAS = 3;
 export const SLIDE_STEP = 1;
 export const REVIEWS_PER_PAGE = 3;
 export const BREADCRUMBS_POX_X = 380;
+export const MIN_CAMERAS_COUNT = 1;
+export const MAX_CAMERAS_COUNT = 99;
 
 export const enum AppRoute {
   Main = '/',
