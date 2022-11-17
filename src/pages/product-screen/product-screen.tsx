@@ -37,7 +37,6 @@ export default function ProductScreen(): JSX.Element {
   const [isAddItemSuccessModalOpened, setIsAddItemSuccessModalOpened] = useState(false);
 
   const cameraLoadingStatus = useAppSelector(getCameraLoadingStatus);
-  const pageName = camera.name.includes('Ретрокамера') ? camera.name : `${camera.category} ${camera.name}`;
 
   if (
     cameraLoadingStatus === LoadingStatus.Idle ||
@@ -48,6 +47,8 @@ export default function ProductScreen(): JSX.Element {
       <LoadingScreen />
     );
   }
+
+  const pageName = camera.name.includes('Ретрокамера') ? camera.name : `${camera.category} ${camera.name}`;
 
   return (
     <div className="wrapper">
