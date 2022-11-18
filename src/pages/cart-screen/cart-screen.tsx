@@ -41,7 +41,6 @@ export default function CartScreen() {
       coupon: currentCoupon
     }));
     dispatch(changeCouponSendingStatus(LoadingStatus.Idle));
-    setIsOrderSuccessModalOpened(true);
   };
 
   useEffect(() => {
@@ -50,6 +49,7 @@ export default function CartScreen() {
         setFormDisabled(false);
         dispatch(clearCart());
         dispatch(changeOrderSendingStatus(LoadingStatus.Idle));
+        setIsOrderSuccessModalOpened(true);
         break;
       case LoadingStatus.Pending:
         setFormDisabled(true);
