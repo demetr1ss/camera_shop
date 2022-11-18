@@ -945,7 +945,6 @@ button,
 
 .modal__content {
   position: relative;
-  min-width: 480px;
   padding: 32px 40px 36px;
   color: #333333;
   background-color: #ffffff;
@@ -3338,6 +3337,7 @@ button,
 .basket-item--short .basket-item__description {
   margin-right: 34px;
   margin-left: 34px;
+  min-width: 200px;
 }
 
 .basket-item--short .basket-item__title {

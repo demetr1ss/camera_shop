@@ -1,8 +1,6 @@
 import FocusLock from 'react-focus-lock';
 import Banner from '../../components/banner/banner';
 import Breadcrumbs from '../../components/breadcrumbs/breadcrumbs';
-import AddItemModal from '../../components/cart/add-item-modal/add-item-modal';
-import AddItemSuccesModal from '../../components/cart/add-item-success-modal/add-item-succes-modal';
 import CatalogCards from '../../components/catalog/catalog-cards/catalog-cards';
 import CatalogFilters from '../../components/catalog/catalog-filters/catalog-filters';
 import CatalogSort from '../../components/catalog/catalog-sort/catalog-sort';
@@ -23,6 +21,8 @@ import {fetchCamerasAction, fetchCamerasPriceRangeAction, fetchPromoAction} from
 import {setCurrentCatalogPath} from '../../store/app-process/app-process';
 import {getCameras, getCamerasLoadingStatus, getCamerasTotalCount} from '../../store/cameras-data/selectors';
 import {CameraType} from '../../types/types';
+import AddItemModal from '../../components/cart/modals/add-item-modal/add-item-modal';
+import AddItemSuccesModal from '../../components/cart/modals/add-item-success-modal/add-item-succes-modal';
 
 export default function CatalogScreen(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -147,7 +147,6 @@ export default function CatalogScreen(): JSX.Element {
             <RemoveScroll enabled={isAddItemModalOpened}>
               <AddItemModal
                 camera={currentCamera}
-                isAddItemModalOpened={isAddItemModalOpened}
                 setIsAddItemModalOpened={setIsAddItemModalOpened}
                 setIsAddItemSuccessModalOpened={setIsAddItemSuccessModalOpened}
               />

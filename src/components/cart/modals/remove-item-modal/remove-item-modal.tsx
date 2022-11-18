@@ -1,22 +1,18 @@
-import cn from 'classnames';
-import useKeydown from '../../../hooks/use-keydown';
-import {useAppDispatch} from '../../../hooks';
-import {addCameraToCart} from '../../../store/cameras-data/cameras-data';
-import {CameraType} from '../../../types/types';
+import {useAppDispatch} from '../../../../hooks';
+import useKeydown from '../../../../hooks/use-keydown';
+import {removeCamerasFromCart} from '../../../../store/cameras-data/cameras-data';
+import {CameraType} from '../../../../types/types';
 
-type AddItemModalPropsType = {
+type RemoveItemModalPropsType = {
   camera: CameraType;
-  isAddItemModalOpened: boolean;
-  setIsAddItemModalOpened: (status: boolean) => void;
-  setIsAddItemSuccessModalOpened: (status: boolean) => void;
+  setIsRemoveItemModalOpened: (status: boolean) => void;
 }
 
-export default function AddItemModal({
+export default function RemoveItemModal({
   camera,
-  isAddItemModalOpened,
-  setIsAddItemModalOpened,
-  setIsAddItemSuccessModalOpened
-}: AddItemModalPropsType) {
+  setIsRemoveItemModalOpened
+}: RemoveItemModalPropsType) {
+  const dispatch = useAppDispatch();
   const {
     previewImgWebp,
     previewImgWebp2x,
@@ -27,30 +23,22 @@ export default function AddItemModal({
     type,
     category,
     level,
-    price,
   } = camera;
 
-  const dispatch = useAppDispatch();
+  useKeydown('Escape', () => setIsRemoveItemModalOpened(false));
 
-  useKeydown('Escape', () => setIsAddItemModalOpened(false));
-
-  const modalClassName = cn('modal', {
-    'is-active': isAddItemModalOpened
-  });
-
-  const onAddItemButtonClick = () => {
-    dispatch(addCameraToCart(camera));
-    setIsAddItemModalOpened(false);
-    setIsAddItemSuccessModalOpened(true);
+  const onDeleteButtonClick = () => {
+    dispatch(removeCamerasFromCart(camera));
+    setIsRemoveItemModalOpened(false);
   };
 
   return (
-    <div className={modalClassName}>
+    <div className='modal is-active'>
       <div className="modal__wrapper">
-        <div className="modal__overlay" onClick={() => setIsAddItemModalOpened(false)}>
+        <div className="modal__overlay" onClick={() => setIsRemoveItemModalOpened(false)}>
         </div>
         <div className="modal__content">
-          <p className="title title--h4">Добавить товар в корзину</p>
+          <p className="title title--h4">Удалить этот товар?</p>
           <div className="basket-item basket-item--short">
             <div className="basket-item__img">
               <picture>
@@ -79,24 +67,28 @@ export default function AddItemModal({
                   {`${level} уровень`}
                 </li>
               </ul>
-              <p className="basket-item__price">
-                <span className="visually-hidden">Цена:</span>
-                {price.toLocaleString('ru-RU')} ₽
-              </p>
             </div>
           </div>
           <div className="modal__buttons">
-            <button className="btn btn--purple modal__btn modal__btn--fit-width" type="button" onClick={onAddItemButtonClick}>
-              <svg width="24" height="16" aria-hidden="true">
-                <use xlinkHref="#icon-add-basket"></use>
-              </svg>Добавить в корзину
+            <button
+              className="btn btn--purple modal__btn modal__btn--half-width"
+              type="button"
+              onClick={onDeleteButtonClick}
+            >
+              Удалить
+            </button>
+            <button
+              className="btn btn--transparent modal__btn modal__btn--half-width"
+              onClick={() => setIsRemoveItemModalOpened(false)}
+            >
+              Продолжить покупки
             </button>
           </div>
           <button
             className="cross-btn"
             type="button"
             aria-label="Закрыть попап"
-            onClick={() => setIsAddItemModalOpened(false)}
+            onClick={() => setIsRemoveItemModalOpened(false)}
           >
             <svg width="10" height="10" aria-hidden="true">
               <use xlinkHref="#icon-close"></use>

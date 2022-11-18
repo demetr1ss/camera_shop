@@ -1,7 +1,5 @@
 import FocusLock from 'react-focus-lock';
 import Breadcrumbs from '../../components/breadcrumbs/breadcrumbs';
-import AddItemModal from '../../components/cart/add-item-modal/add-item-modal';
-import AddItemSuccesModal from '../../components/cart/add-item-success-modal/add-item-succes-modal';
 import Footer from '../../components/footer/footer';
 import Header from '../../components/header/header';
 import ProductSimilar from '../../components/product-components/product-similar/product-similar';
@@ -19,6 +17,8 @@ import {fetchCameraAction} from '../../store/api-actions';
 import {getCamera, getCameraLoadingStatus, getSimilarCameras} from '../../store/cameras-data/selectors';
 import {CameraType} from '../../types/types';
 import {scrollToTop} from '../../utils/utils';
+import AddItemModal from '../../components/cart/modals/add-item-modal/add-item-modal';
+import AddItemSuccesModal from '../../components/cart/modals/add-item-success-modal/add-item-succes-modal';
 
 export default function ProductScreen(): JSX.Element {
   const {id} = useParams();
@@ -75,7 +75,6 @@ export default function ProductScreen(): JSX.Element {
             <RemoveScroll enabled={isAddItemModalOpened}>
               <AddItemModal
                 camera={currentCamera}
-                isAddItemModalOpened={isAddItemModalOpened}
                 setIsAddItemModalOpened={setIsAddItemModalOpened}
                 setIsAddItemSuccessModalOpened={setIsAddItemSuccessModalOpened}
               />

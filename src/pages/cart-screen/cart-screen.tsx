@@ -1,7 +1,6 @@
 import cn from 'classnames';
 import FocusLock from 'react-focus-lock';
 import Breadcrumbs from '../../components/breadcrumbs/breadcrumbs';
-import RemoveItemModal from '../../components/cart/remove-item-modal/remove-item-modal';
 import Footer from '../../components/footer/footer';
 import Header from '../../components/header/header';
 import Quantity from '../../components/cart/quantity/quantity';
@@ -14,12 +13,15 @@ import CartPromo from '../../components/cart/cart-promo/cart-promo';
 import {availibleCouponsList, LoadingStatus} from '../../const/const';
 import {sendOrderAction} from '../../store/api-actions';
 import {changeCouponSendingStatus, changeOrderSendingStatus, clearCart} from '../../store/cameras-data/cameras-data';
+import OrderSuccessModal from '../../components/cart/modals/order-success-modal/order-success-modal';
+import RemoveItemModal from '../../components/cart/modals/remove-item-modal/remove-item-modal';
 
 export default function CartScreen() {
   const dispatch = useAppDispatch();
   const discount = useAppSelector(getDiscount);
   const orderSendingStatus = useAppSelector(getOrderSendingStatus);
   const [isRemoveItemModalOpened, setIsRemoveItemModalOpened] = useState(false);
+  const [isOrderSuccessModalOpened, setIsOrderSuccessModalOpened] = useState(false);
   const [currentCamera, setCurrentCamera] = useState({} as CameraType);
   const [currentCoupon, setCurrentCoupon] = useState('' as typeof availibleCouponsList[number] || null);
   const [isFormDisabled, setFormDisabled] = useState(false);
@@ -39,6 +41,7 @@ export default function CartScreen() {
       coupon: currentCoupon
     }));
     dispatch(changeCouponSendingStatus(LoadingStatus.Idle));
+    setIsOrderSuccessModalOpened(true);
   };
 
   useEffect(() => {
@@ -190,9 +193,14 @@ export default function CartScreen() {
             <RemoveScroll enabled={isRemoveItemModalOpened}>
               <RemoveItemModal
                 camera={currentCamera}
-                isRemoveItemModalOpened={isRemoveItemModalOpened}
                 setIsRemoveItemModalOpened={setIsRemoveItemModalOpened}
               />
+            </RemoveScroll>
+          </FocusLock>}
+        {isOrderSuccessModalOpened &&
+          <FocusLock>
+            <RemoveScroll enabled={isOrderSuccessModalOpened}>
+              <OrderSuccessModal setIsOrderSuccessModalOpened={setIsOrderSuccessModalOpened} />
             </RemoveScroll>
           </FocusLock>}
       </main>
