@@ -35,7 +35,8 @@ describe('Reducer: cameras-data', () => {
       camerasLoadingStatus: LoadingStatus.Idle,
       cameraLoadingStatus: LoadingStatus.Idle,
       discount: 0,
-      discountLoadingStatus: LoadingStatus.Idle
+      discountSendingStatus: LoadingStatus.Idle,
+      orderSendingStatus: LoadingStatus.Idle
     };
   });
 

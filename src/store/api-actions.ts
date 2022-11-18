@@ -12,7 +12,8 @@ import {
   PromoType,
   ReviewPostType,
   ReviewType,
-  SearchCameraType
+  SearchCameraType,
+  SendOrderType
 } from '../types/types';
 import {showNotify} from '../utils/utils';
 import {redirectToRoute} from './action';
@@ -266,3 +267,23 @@ export const sendCouponAction = createAsyncThunk<number, {coupon: string}, {
       throw e;
     }
   });
+
+export const sendOrderAction = createAsyncThunk<void, SendOrderType, {
+  dispatch: AppDispatchType,
+  state: StateType,
+  extra: AxiosInstance
+}>(
+  'data/sendOrder',
+  async (order, {extra: api}) => {
+    try {
+      await api.post(APIRoute.Orders, order);
+    }
+    catch (e) {
+      showNotify({
+        type: 'warn',
+        message: 'Failed to send a order'
+      });
+      throw e;
+    }
+  }
+);

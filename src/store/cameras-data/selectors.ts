@@ -49,4 +49,7 @@ export const getDiscount = (state: StateType): number =>
   state[NameSpace.Cameras].discount;
 
 export const getCouponSendingStatus = (state: StateType): string =>
-  state[NameSpace.Cameras].discountLoadingStatus;
+  state[NameSpace.Cameras].discountSendingStatus;
+
+export const getOrderSendingStatus = (state: StateType): string =>
+  state[NameSpace.Cameras].orderSendingStatus;

@@ -1,3 +1,5 @@
+import {availibleCouponsList} from '../const/const';
+
 export type CameraType = {
   id: number,
   name: string,
@@ -86,8 +88,13 @@ export type ReviewPostType = {
 }
 
 export type FetchReviewType = {
-  id: number;
-  count: number;
+  id: number,
+  count: number,
 }
 
 export type ReviewPostKeysType = keyof ReviewPostType;
+
+export type SendOrderType = {
+  camerasIds: number[],
+  coupon: typeof availibleCouponsList[number] | null,
+}

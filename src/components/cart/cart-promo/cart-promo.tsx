@@ -1,13 +1,13 @@
 import cn from 'classnames';
 import {ChangeEvent, FormEvent, useEffect, useState} from 'react';
-import {AvailibleCoupons, LoadingStatus} from '../../../const/const';
+import {availibleCouponsList, LoadingStatus} from '../../../const/const';
 import {useAppDispatch, useAppSelector} from '../../../hooks';
 import {sendCouponAction} from '../../../store/api-actions';
 import {changeCouponSendingStatus} from '../../../store/cameras-data/cameras-data';
 import {getCouponSendingStatus} from '../../../store/cameras-data/selectors';
 
 type CartPromoPropsType = {
-  setCurrentCoupon: (coupon: keyof typeof AvailibleCoupons) => void
+  setCurrentCoupon: (coupon: typeof availibleCouponsList[number]) => void
 }
 
 export default function CartPromo({setCurrentCoupon}: CartPromoPropsType) {
@@ -16,7 +16,6 @@ export default function CartPromo({setCurrentCoupon}: CartPromoPropsType) {
   const [isFormInvalid, setIsFormInvalid] = useState(false);
   const [inputValue, setInputValue] = useState('');
   const couponSendingStatus = useAppSelector(getCouponSendingStatus);
-  const coupons = Object.keys(AvailibleCoupons);
 
   useEffect(() => {
     switch (couponSendingStatus) {
@@ -50,9 +49,9 @@ export default function CartPromo({setCurrentCoupon}: CartPromoPropsType) {
   const handleFormSubmit = (evt: FormEvent) => {
     evt.preventDefault();
 
-    if (coupons.includes(inputValue)) {
+    if (availibleCouponsList.includes(inputValue as typeof availibleCouponsList[number])) {
       dispatch(sendCouponAction({coupon: inputValue}));
-      setCurrentCoupon(inputValue as keyof typeof AvailibleCoupons);
+      setCurrentCoupon(inputValue as typeof availibleCouponsList[number]);
       setInputValue('');
       setIsFormInvalid(false);
     } else {

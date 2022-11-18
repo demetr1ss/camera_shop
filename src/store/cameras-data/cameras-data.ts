@@ -7,7 +7,8 @@ import {
   fetchCamerasBySearchAction,
   fetchCamerasPriceRangeAction,
   fetchSimilarCamerasAction,
-  sendCouponAction
+  sendCouponAction,
+  sendOrderAction
 } from '../api-actions';
 
 export type UniqueCamerasCountType = {
@@ -26,7 +27,8 @@ export type CamerasDataType = {
   cameraLoadingStatus: LoadingStatus;
   camerasInCart: CameraType[];
   discount: number;
-  discountLoadingStatus: LoadingStatus;
+  discountSendingStatus: LoadingStatus;
+  orderSendingStatus: LoadingStatus;
 };
 
 const initialState: CamerasDataType = {
@@ -40,7 +42,8 @@ const initialState: CamerasDataType = {
   cameraLoadingStatus: LoadingStatus.Idle,
   camerasInCart: [],
   discount: 0,
-  discountLoadingStatus: LoadingStatus.Idle
+  discountSendingStatus: LoadingStatus.Idle,
+  orderSendingStatus: LoadingStatus.Idle,
 };
 
 export const camerasData = createSlice({
@@ -55,6 +58,9 @@ export const camerasData = createSlice({
         camera.id !== payload.id
       );
     },
+    clearCart: (state) => {
+      state.camerasInCart = [];
+    },
     reduceCameraInCart: (state, {payload}: PayloadAction<CameraType>) => {
       const deletedCameraIndex = state.camerasInCart.findIndex((item) => item.id === payload.id);
       state.camerasInCart.splice(deletedCameraIndex, 1);
@@ -67,7 +73,10 @@ export const camerasData = createSlice({
       state.camerasInCart.push(...camerasList);
     },
     changeCouponSendingStatus: (state, action) => {
-      state.discountLoadingStatus = action.payload;
+      state.discountSendingStatus = action.payload;
+    },
+    changeOrderSendingStatus: (state, action) => {
+      state.orderSendingStatus = action.payload;
     },
   },
   extraReducers(builder) {
@@ -104,14 +113,24 @@ export const camerasData = createSlice({
         state.camerasPriceRange = action.payload;
       })
       .addCase(sendCouponAction.fulfilled, (state, action) => {
-        state.discountLoadingStatus = LoadingStatus.Fulfilled;
+        state.discountSendingStatus = LoadingStatus.Fulfilled;
         state.discount = action.payload;
       })
       .addCase(sendCouponAction.pending, (state) => {
-        state.discountLoadingStatus = LoadingStatus.Pending;
+        state.discountSendingStatus = LoadingStatus.Pending;
       })
       .addCase(sendCouponAction.rejected, (state) => {
-        state.discountLoadingStatus = LoadingStatus.Rejected;
+        state.discountSendingStatus = LoadingStatus.Rejected;
+      })
+      .addCase(sendOrderAction.fulfilled, (state) => {
+        state.orderSendingStatus = LoadingStatus.Fulfilled;
+        state.discount = 0;
+      })
+      .addCase(sendOrderAction.rejected, (state) => {
+        state.orderSendingStatus = LoadingStatus.Rejected;
+      })
+      .addCase(sendOrderAction.pending, (state) => {
+        state.orderSendingStatus = LoadingStatus.Pending;
       });
   }
 });
@@ -121,5 +140,7 @@ export const {
   removeCamerasFromCart,
   reduceCameraInCart,
   changeCamerasCountInCart,
-  changeCouponSendingStatus
+  changeCouponSendingStatus,
+  clearCart,
+  changeOrderSendingStatus
 } = camerasData.actions;

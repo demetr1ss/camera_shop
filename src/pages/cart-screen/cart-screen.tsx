@@ -6,18 +6,24 @@ import Footer from '../../components/footer/footer';
 import Header from '../../components/header/header';
 import Quantity from '../../components/cart/quantity/quantity';
 import {RemoveScroll} from 'react-remove-scroll';
-import {useState} from 'react';
-import {useAppSelector} from '../../hooks';
-import {getDiscount, getGroupedCamerasInCart} from '../../store/cameras-data/selectors';
+import {FormEvent, useEffect, useState} from 'react';
+import {useAppDispatch, useAppSelector} from '../../hooks';
+import {getCamerasInCart, getDiscount, getGroupedCamerasInCart, getOrderSendingStatus} from '../../store/cameras-data/selectors';
 import {CameraType} from '../../types/types';
 import CartPromo from '../../components/cart/cart-promo/cart-promo';
-import {AvailibleCoupons} from '../../const/const';
+import {availibleCouponsList, LoadingStatus} from '../../const/const';
+import {sendOrderAction} from '../../store/api-actions';
+import {changeCouponSendingStatus, changeOrderSendingStatus, clearCart} from '../../store/cameras-data/cameras-data';
 
 export default function CartScreen() {
+  const dispatch = useAppDispatch();
   const discount = useAppSelector(getDiscount);
+  const orderSendingStatus = useAppSelector(getOrderSendingStatus);
   const [isRemoveItemModalOpened, setIsRemoveItemModalOpened] = useState(false);
   const [currentCamera, setCurrentCamera] = useState({} as CameraType);
-  const [currentCoupon, setCurrentCoupon] = useState('' as keyof typeof AvailibleCoupons);
+  const [currentCoupon, setCurrentCoupon] = useState('' as typeof availibleCouponsList[number] || null);
+  const [isFormDisabled, setFormDisabled] = useState(false);
+  const allCamerasInCart = useAppSelector(getCamerasInCart);
   const groupedCamerasInCart = useAppSelector(getGroupedCamerasInCart);
   const uniqueCameras = Object.values(groupedCamerasInCart);
   let totalPrice = 0;
@@ -25,6 +31,36 @@ export default function CartScreen() {
   const summaryClassName = cn('basket__summary-value', {
     'basket__summary-value--bonus': discount > 0
   });
+
+  const handleSubmitButtonClick = (evt: FormEvent<HTMLButtonElement>) => {
+    evt.preventDefault();
+    dispatch(sendOrderAction({
+      camerasIds: allCamerasInCart.map((camera) => camera.id),
+      coupon: currentCoupon
+    }));
+    dispatch(changeCouponSendingStatus(LoadingStatus.Idle));
+  };
+
+  useEffect(() => {
+    switch (orderSendingStatus) {
+      case LoadingStatus.Fulfilled:
+        setFormDisabled(false);
+        dispatch(clearCart());
+        dispatch(changeOrderSendingStatus(LoadingStatus.Idle));
+        break;
+      case LoadingStatus.Pending:
+        setFormDisabled(true);
+        break;
+      case LoadingStatus.Rejected:
+        setFormDisabled(false);
+        break;
+      case LoadingStatus.Idle:
+        setFormDisabled(false);
+        break;
+      default:
+        throw new Error(`sendingStatus-${orderSendingStatus} doesn't exist`);
+    }
+  }, [dispatch, orderSendingStatus]);
 
   return (
     <div className="wrapper">
@@ -136,7 +172,13 @@ export default function CartScreen() {
                       {(totalPrice - (totalPrice / 100 * discount)).toLocaleString('ru-RU')} ₽
                     </span>
                   </p>
-                  <button className="btn btn--purple" type="submit">Оформить заказ
+                  <button
+                    className="btn btn--purple"
+                    type="submit"
+                    onClick={handleSubmitButtonClick}
+                    disabled={isFormDisabled}
+                  >
+                    Оформить заказ
                   </button>
                 </div>
               </div>
@@ -158,3 +200,4 @@ export default function CartScreen() {
     </div>
   );
 }
+
