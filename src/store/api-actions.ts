@@ -245,3 +245,24 @@ export const sendReviewAction = createAsyncThunk<void, ReviewPostType, {
       throw e;
     }
   });
+
+export const sendCouponAction = createAsyncThunk<number, {coupon: string}, {
+  dispatch: AppDispatchType,
+  state: StateType,
+  extra: AxiosInstance
+}>(
+  'data/sendCoupon',
+  async (coupon, {extra: api}) => {
+    try {
+      const {data} = await api.post(APIRoute.Coupon, coupon);
+
+      return data;
+    }
+    catch (e) {
+      showNotify({
+        type: 'warn',
+        message: 'Failed to send a coupon'
+      });
+      throw e;
+    }
+  });

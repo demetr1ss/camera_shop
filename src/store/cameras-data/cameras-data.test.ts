@@ -34,6 +34,8 @@ describe('Reducer: cameras-data', () => {
       camerasTotalCount: 0,
       camerasLoadingStatus: LoadingStatus.Idle,
       cameraLoadingStatus: LoadingStatus.Idle,
+      discount: 0,
+      discountLoadingStatus: LoadingStatus.Idle
     };
   });
 

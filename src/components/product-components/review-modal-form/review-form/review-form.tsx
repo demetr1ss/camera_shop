@@ -55,12 +55,13 @@ export default function ReviewForm({isReviewModalOpened, setIsReviewModalOpened,
   const {
     register,
     handleSubmit,
-    formState: {errors}} = useForm<ReviewPostType>({
-      mode: 'all',
-      defaultValues: {
-        cameraId: Number(id),
-      }
-    });
+    formState: {errors}
+  } = useForm<ReviewPostType>({
+    mode: 'all',
+    defaultValues: {
+      cameraId: Number(id),
+    }
+  });
 
   const onSubmit = (post: ReviewPostType) => {
     const formData = {

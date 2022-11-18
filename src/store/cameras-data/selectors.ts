@@ -44,3 +44,9 @@ export const getGroupedCamerasInCart = (state: StateType) => (
     return prev;
   }, {})
 );
+
+export const getDiscount = (state: StateType): number =>
+  state[NameSpace.Cameras].discount;
+
+export const getCouponSendingStatus = (state: StateType): string =>
+  state[NameSpace.Cameras].discountLoadingStatus;

@@ -6,7 +6,8 @@ import {
   fetchCamerasAction,
   fetchCamerasBySearchAction,
   fetchCamerasPriceRangeAction,
-  fetchSimilarCamerasAction
+  fetchSimilarCamerasAction,
+  sendCouponAction
 } from '../api-actions';
 
 export type UniqueCamerasCountType = {
@@ -24,6 +25,8 @@ export type CamerasDataType = {
   camerasLoadingStatus: LoadingStatus;
   cameraLoadingStatus: LoadingStatus;
   camerasInCart: CameraType[];
+  discount: number;
+  discountLoadingStatus: LoadingStatus;
 };
 
 const initialState: CamerasDataType = {
@@ -36,6 +39,8 @@ const initialState: CamerasDataType = {
   camerasLoadingStatus: LoadingStatus.Idle,
   cameraLoadingStatus: LoadingStatus.Idle,
   camerasInCart: [],
+  discount: 0,
+  discountLoadingStatus: LoadingStatus.Idle
 };
 
 export const camerasData = createSlice({
@@ -60,7 +65,10 @@ export const camerasData = createSlice({
       );
       const camerasList = Array.from({length: payload.camerasCount}, () => payload.camera);
       state.camerasInCart.push(...camerasList);
-    }
+    },
+    changeCouponSendingStatus: (state, action) => {
+      state.discountLoadingStatus = action.payload;
+    },
   },
   extraReducers(builder) {
     builder
@@ -94,6 +102,16 @@ export const camerasData = createSlice({
       })
       .addCase(fetchCamerasPriceRangeAction.fulfilled, (state, action) => {
         state.camerasPriceRange = action.payload;
+      })
+      .addCase(sendCouponAction.fulfilled, (state, action) => {
+        state.discountLoadingStatus = LoadingStatus.Fulfilled;
+        state.discount = action.payload;
+      })
+      .addCase(sendCouponAction.pending, (state) => {
+        state.discountLoadingStatus = LoadingStatus.Pending;
+      })
+      .addCase(sendCouponAction.rejected, (state) => {
+        state.discountLoadingStatus = LoadingStatus.Rejected;
       });
   }
 });
@@ -102,5 +120,6 @@ export const {
   addCameraToCart,
   removeCamerasFromCart,
   reduceCameraInCart,
-  changeCamerasCountInCart
+  changeCamerasCountInCart,
+  changeCouponSendingStatus
 } = camerasData.actions;

@@ -59,6 +59,7 @@ export const APIRoute = {
   PostReview: '/reviews',
   SimilarCameras: '/cameras/:id/similar',
   Promo: '/promo',
+  Coupon: '/coupons'
 } as const;
 
 export const QueryParameter = {
@@ -125,3 +126,9 @@ export const RatingTitle: RatingTitleType = {
 } as const;
 
 export const rating = Object.keys(RatingTitle).reverse().map(Number);
+
+export const AvailibleCoupons = {
+  'camera-333': 'camera-333',
+  'camera-444': 'camera-444',
+  'camera-555': 'camera-555',
+} as const;

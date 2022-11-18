@@ -1,3 +1,4 @@
+import cn from 'classnames';
 import FocusLock from 'react-focus-lock';
 import Breadcrumbs from '../../components/breadcrumbs/breadcrumbs';
 import RemoveItemModal from '../../components/cart/remove-item-modal/remove-item-modal';
@@ -7,15 +8,23 @@ import Quantity from '../../components/cart/quantity/quantity';
 import {RemoveScroll} from 'react-remove-scroll';
 import {useState} from 'react';
 import {useAppSelector} from '../../hooks';
-import {getGroupedCamerasInCart} from '../../store/cameras-data/selectors';
+import {getDiscount, getGroupedCamerasInCart} from '../../store/cameras-data/selectors';
 import {CameraType} from '../../types/types';
+import CartPromo from '../../components/cart/cart-promo/cart-promo';
+import {AvailibleCoupons} from '../../const/const';
 
 export default function CartScreen() {
+  const discount = useAppSelector(getDiscount);
   const [isRemoveItemModalOpened, setIsRemoveItemModalOpened] = useState(false);
   const [currentCamera, setCurrentCamera] = useState({} as CameraType);
+  const [currentCoupon, setCurrentCoupon] = useState('' as keyof typeof AvailibleCoupons);
   const groupedCamerasInCart = useAppSelector(getGroupedCamerasInCart);
   const uniqueCameras = Object.values(groupedCamerasInCart);
   let totalPrice = 0;
+
+  const summaryClassName = cn('basket__summary-value', {
+    'basket__summary-value--bonus': discount > 0
+  });
 
   return (
     <div className="wrapper">
@@ -107,22 +116,7 @@ export default function CartScreen() {
                 })}
               </ul>
               <div className="basket__summary">
-                <div className="basket__promo">
-                  <p className="title title--h4">Если у вас есть промокод на скидку, примените его в этом поле</p>
-                  <div className="basket-form">
-                    <form action="#">
-                      <div className="custom-input">
-                        <label><span className="custom-input__label">Промокод</span>
-                          <input type="text" name="promo" placeholder="Введите промокод" />
-                        </label>
-                        <p className="custom-input__error">Промокод неверный</p>
-                        <p className="custom-input__success">Промокод принят!</p>
-                      </div>
-                      <button className="btn" type="submit">Применить
-                      </button>
-                    </form>
-                  </div>
-                </div>
+                <CartPromo setCurrentCoupon={setCurrentCoupon} />
                 <div className="basket__summary-order">
                   <p className="basket__summary-item">
                     <span className="basket__summary-text">Всего:</span>
@@ -132,14 +126,14 @@ export default function CartScreen() {
                   </p>
                   <p className="basket__summary-item">
                     <span className="basket__summary-text">Скидка:</span>
-                    <span className="basket__summary-value"> {/* basket__summary-value--bonus */}
-                      0 ₽
+                    <span className={summaryClassName}>
+                      {discount > 0 ? (totalPrice / 100 * discount).toLocaleString('ru-RU') : 0} ₽
                     </span>
                   </p>
                   <p className="basket__summary-item">
                     <span className="basket__summary-text basket__summary-text--total">К оплате:</span>
                     <span className="basket__summary-value basket__summary-value--total">
-                      {totalPrice.toLocaleString('ru-RU')} ₽
+                      {(totalPrice - (totalPrice / 100 * discount)).toLocaleString('ru-RU')} ₽
                     </span>
                   </p>
                   <button className="btn btn--purple" type="submit">Оформить заказ
