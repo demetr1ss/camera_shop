@@ -3,7 +3,7 @@ import thunk, {ThunkDispatch} from 'redux-thunk';
 import {configureMockStore} from '@jedmao/redux-mock-store';
 import {generatePath} from 'react-router-dom';
 import {Action} from 'redux';
-import {APIRoute, DEFAULT_PAGE, REVIEWS_PER_PAGE} from '../const/const';
+import {APIRoute, availibleCouponsList, DEFAULT_PAGE, REVIEWS_PER_PAGE} from '../const/const';
 import {createAPI} from '../services/api';
 import {
   createRandomCamera,
@@ -23,6 +23,8 @@ import {
   fetchPromoAction,
   fetchReviewsAction,
   fetchSimilarCamerasAction,
+  sendCouponAction,
+  sendOrderAction,
   sendReviewAction
 } from './api-actions';
 
@@ -194,6 +196,45 @@ describe('Async actions', () => {
     expect(actions).toEqual([
       fetchPromoAction.pending.type,
       fetchPromoAction.fulfilled.type
+    ]);
+  });
+
+  it('should dispatch sendCouponAction when POST /coupons', async () => {
+    mockAPI
+      .onPost(APIRoute.Coupon)
+      .reply(200, Number);
+
+    const store = mockStore();
+
+    await store.dispatch(sendCouponAction({
+      coupon: '' as typeof availibleCouponsList[number],
+    }));
+
+    const actions = store.getActions().map(({type}) => type);
+
+    expect(actions).toEqual([
+      sendCouponAction.pending.type,
+      sendCouponAction.fulfilled.type
+    ]);
+  });
+
+  it('should dispatch sendOrderAction when POST /orders', async () => {
+    mockAPI
+      .onPost(APIRoute.Orders)
+      .reply(200);
+
+    const store = mockStore();
+
+    await store.dispatch(sendOrderAction({
+      camerasIds: [1, 2, 3],
+      coupon: '' as typeof availibleCouponsList[number],
+    }));
+
+    const actions = store.getActions().map(({type}) => type);
+
+    expect(actions).toEqual([
+      sendOrderAction.pending.type,
+      sendOrderAction.fulfilled.type
     ]);
   });
 });

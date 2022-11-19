@@ -11,9 +11,21 @@ import {
   fetchCamerasAction,
   fetchCamerasBySearchAction,
   fetchCamerasPriceRangeAction,
-  fetchSimilarCamerasAction
+  fetchSimilarCamerasAction,
+  sendCouponAction,
+  sendOrderAction
 } from '../api-actions';
-import {camerasData, CamerasDataType} from './cameras-data';
+import {
+  addCameraToCart,
+  camerasData,
+  CamerasDataType,
+  changeCamerasCountInCart,
+  changeCouponSendingStatus,
+  changeOrderSendingStatus,
+  clearCart,
+  reduceCameraInCart,
+  removeCamerasFromCart
+} from './cameras-data';
 
 const mockCamera = createRandomCamera();
 const mockCameras = [createRandomCamera(), mockCamera];
@@ -47,47 +59,31 @@ describe('Reducer: cameras-data', () => {
 
   describe('fetchCamerasAction test', () => {
     it('should update cameras, camerasTotalCount and camerasLoadingStatus by load cameras', () => {
-      expect(camerasData.reducer(state, {type: fetchCamerasAction.fulfilled.type, payload: {data: mockCameras, camerasTotalCount: MOCK_CAMERAS_TOTAL_COUNT}}))
-        .toEqual({
-          cameras: mockCameras,
-          camerasLoadingStatus: LoadingStatus.Fulfilled,
-          camerasTotalCount: MOCK_CAMERAS_TOTAL_COUNT,
-          camerasPriceRange: {} as CamerasPriceRangeType,
-          searchCameras: [],
-          camera: {} as CameraType,
-          cameraLoadingStatus: LoadingStatus.Idle,
-          similarCameras: [],
-          camerasInCart: [],
-        });
+      expect(camerasData.reducer(state, {
+        type: fetchCamerasAction.fulfilled.type, payload: {
+          data: mockCameras, camerasTotalCount: MOCK_CAMERAS_TOTAL_COUNT
+        }
+      })).toEqual({
+        ...state,
+        cameras: mockCameras,
+        camerasLoadingStatus: LoadingStatus.Fulfilled,
+        camerasTotalCount: MOCK_CAMERAS_TOTAL_COUNT,
+      });
     });
 
     it('should update camerasLoadingStatus to pending if fetchCamerasAction pending', () => {
       expect(camerasData.reducer(state, {type: fetchCamerasAction.pending.type}))
         .toEqual({
-          cameras: [],
+          ...state,
           camerasLoadingStatus: LoadingStatus.Pending,
-          camerasTotalCount: 0,
-          camerasPriceRange: {} as CamerasPriceRangeType,
-          searchCameras: [],
-          camera: {} as CameraType,
-          cameraLoadingStatus: LoadingStatus.Idle,
-          similarCameras: [],
-          camerasInCart: [],
         });
     });
 
     it('should update camerasLoadingStatus to rejected if fetchCamerasAction rejected', () => {
       expect(camerasData.reducer(state, {type: fetchCamerasAction.rejected.type}))
         .toEqual({
-          cameras: [],
+          ...state,
           camerasLoadingStatus: LoadingStatus.Rejected,
-          camerasTotalCount: 0,
-          camerasPriceRange: {} as CamerasPriceRangeType,
-          searchCameras: [],
-          camera: {} as CameraType,
-          cameraLoadingStatus: LoadingStatus.Idle,
-          similarCameras: [],
-          camerasInCart: [],
         });
     });
   });
@@ -96,45 +92,25 @@ describe('Reducer: cameras-data', () => {
     it('should update camera and cameraLoadingStatus by load camera', () => {
       expect(camerasData.reducer(state, {type: fetchCameraAction.fulfilled.type, payload: mockCamera}))
         .toEqual({
+          ...state,
           camera: mockCamera,
           cameraLoadingStatus: LoadingStatus.Fulfilled,
-          cameras: [] as CameraType[],
-          camerasPriceRange: {} as CamerasPriceRangeType,
-          searchCameras: [],
-          camerasLoadingStatus: LoadingStatus.Idle,
-          camerasTotalCount: 0,
-          similarCameras: [] as CameraType[],
-          camerasInCart: [],
         });
     });
 
     it('should update cameraLoadingStatus to pending if fetchCameraAction pending', () => {
       expect(camerasData.reducer(state, {type: fetchCameraAction.pending.type}))
         .toEqual({
-          camera: {} as CameraType,
+          ...state,
           cameraLoadingStatus: LoadingStatus.Pending,
-          cameras: [] as CameraType[],
-          camerasPriceRange: {} as CamerasPriceRangeType,
-          searchCameras: [],
-          camerasLoadingStatus: LoadingStatus.Idle,
-          camerasTotalCount: 0,
-          similarCameras: [] as CameraType[],
-          camerasInCart: [],
         });
     });
 
     it('should update cameraLoadingStatus to rejected if fetchCameraAction rejected', () => {
       expect(camerasData.reducer(state, {type: fetchCameraAction.rejected.type}))
         .toEqual({
-          camera: {} as CameraType,
+          ...state,
           cameraLoadingStatus: LoadingStatus.Rejected,
-          cameras: [] as CameraType[],
-          camerasPriceRange: {} as CamerasPriceRangeType,
-          searchCameras: [],
-          camerasLoadingStatus: LoadingStatus.Idle,
-          camerasTotalCount: 0,
-          similarCameras: [] as CameraType[],
-          camerasInCart: [],
         });
     });
   });
@@ -143,15 +119,8 @@ describe('Reducer: cameras-data', () => {
     it('should update similarCameras by load similarCameras', () => {
       expect(camerasData.reducer(state, {type: fetchSimilarCamerasAction.fulfilled.type, payload: mockCameras}))
         .toEqual({
+          ...state,
           similarCameras: mockCameras,
-          camera: {} as CameraType,
-          camerasPriceRange: {} as CamerasPriceRangeType,
-          searchCameras: [],
-          cameraLoadingStatus: LoadingStatus.Idle,
-          cameras: [] as CameraType[],
-          camerasLoadingStatus: LoadingStatus.Idle,
-          camerasTotalCount: 0,
-          camerasInCart: [],
         });
     });
   });
@@ -160,15 +129,8 @@ describe('Reducer: cameras-data', () => {
     it('should update searchCameras by load searchCameras', () => {
       expect(camerasData.reducer(state, {type: fetchCamerasBySearchAction.fulfilled.type, payload: mockSearchCameras}))
         .toEqual({
+          ...state,
           searchCameras: mockSearchCameras,
-          similarCameras: [] as CameraType[],
-          camera: {} as CameraType,
-          camerasPriceRange: {} as CamerasPriceRangeType,
-          cameraLoadingStatus: LoadingStatus.Idle,
-          cameras: [] as CameraType[],
-          camerasLoadingStatus: LoadingStatus.Idle,
-          camerasTotalCount: 0,
-          camerasInCart: [],
         });
     });
   });
@@ -177,16 +139,141 @@ describe('Reducer: cameras-data', () => {
     it('should update camerasPriceRange by load camerasPriceRange', () => {
       expect(camerasData.reducer(state, {type: fetchCamerasPriceRangeAction.fulfilled.type, payload: mockCamerasPriceRange}))
         .toEqual({
+          ...state,
           camerasPriceRange: mockCamerasPriceRange,
-          searchCameras: [],
-          similarCameras: [] as CameraType[],
-          camera: {} as CameraType,
-          cameraLoadingStatus: LoadingStatus.Idle,
-          cameras: [] as CameraType[],
-          camerasLoadingStatus: LoadingStatus.Idle,
-          camerasTotalCount: 0,
+        });
+    });
+  });
+
+  describe('sendCouponAction test', () => {
+    it('should update discount and discountSendingStatus by send coupon', () => {
+      expect(camerasData.reducer(state, {
+        type: sendCouponAction.fulfilled.type, payload: 35
+      })).toEqual({
+        ...state,
+        discount: 35,
+        discountSendingStatus: LoadingStatus.Fulfilled,
+      });
+    });
+
+    it('should update discountSendingStatus to pending if sendCouponAction pending', () => {
+      expect(camerasData.reducer(state, {
+        type: sendCouponAction.pending.type
+      }))
+        .toEqual({
+          ...state,
+          discountSendingStatus: LoadingStatus.Pending,
+        });
+    });
+
+    it('should update discountSendingStatus to rejected if sendCouponAction rejected', () => {
+      expect(camerasData.reducer(state, {
+        type: sendCouponAction.rejected.type
+      }))
+        .toEqual({
+          ...state,
+          discountSendingStatus: LoadingStatus.Rejected,
+        });
+    });
+  });
+
+  describe('sendOrderAction test', () => {
+    it('should update discount and orderSendingStatus if sendOrderAction fulfilled', () => {
+      expect(camerasData.reducer(state, {
+        type: sendOrderAction.fulfilled.type
+      })).toEqual({
+        ...state,
+        discount: 0,
+        orderSendingStatus: LoadingStatus.Fulfilled
+      });
+    });
+
+    it('should update orderSendingStatus if sendOrderAction pending', () => {
+      expect(camerasData.reducer(state, {
+        type: sendOrderAction.pending.type
+      })).toEqual({
+        ...state,
+        orderSendingStatus: LoadingStatus.Pending
+      });
+    });
+
+    it('should update orderSendingStatus if sendOrderAction rejected', () => {
+      expect(camerasData.reducer(state, {
+        type: sendOrderAction.rejected.type
+      })).toEqual({
+        ...state,
+        orderSendingStatus: LoadingStatus.Rejected
+      });
+    });
+  });
+
+  describe('reducers test', () => {
+    it('should update camerasInCart when addCameraToCart', () => {
+      expect(camerasData.reducer(state, addCameraToCart(mockCamera))).toEqual({
+        ...state,
+        camerasInCart: [mockCamera],
+      });
+    });
+
+    it('should update camerasInCart when removeCamerasFromCart', () => {
+      expect(camerasData.reducer({
+        ...state,
+        camerasInCart: [mockCamera, mockCamera]
+      }, removeCamerasFromCart(mockCamera)))
+        .toEqual({
+          ...state,
           camerasInCart: [],
         });
+    });
+
+    it('should update camerasInCart when clearCart', () => {
+      expect(camerasData.reducer({
+        ...state,
+        camerasInCart: [mockCamera, mockCamera]
+      }, clearCart))
+        .toEqual({
+          ...state,
+          camerasInCart: [],
+        });
+    });
+
+    it('should update camerasInCart when reduceCameraInCart', () => {
+      expect(camerasData.reducer({
+        ...state,
+        camerasInCart: [mockCamera, mockCamera]
+      }, reduceCameraInCart(mockCamera)))
+        .toEqual({
+          ...state,
+          camerasInCart: [mockCamera],
+        });
+    });
+
+    it('should update camerasInCart when changeCamerasCountInCart', () => {
+      expect(camerasData.reducer({
+        ...state,
+        camerasInCart: [mockCamera, mockCamera]
+      }, changeCamerasCountInCart({
+        camera: mockCamera,
+        camerasCount: 3,
+      })))
+        .toEqual({
+          ...state,
+          camerasInCart: [mockCamera, mockCamera, mockCamera],
+        });
+    });
+
+    it('should update discountSendingStatus when changeCouponSendingStatus', () => {
+      expect(camerasData.reducer(state, changeCouponSendingStatus(LoadingStatus.Pending))).toEqual({
+        ...state,
+        discountSendingStatus: LoadingStatus.Pending,
+      });
+    });
+
+    it('should update orderSendingStatus when changeOrderSendingStatus', () => {
+      expect(camerasData.reducer(state, changeOrderSendingStatus(LoadingStatus.Pending))).toEqual({
+        ...state,
+        orderSendingStatus: LoadingStatus.Pending,
+      });
     });
   });
 });

@@ -29,6 +29,10 @@ export const mockStore = store({
     camerasTotalCount: MOCK_CAMERAS_TOTAL_COUNT,
     camerasLoadingStatus: LoadingStatus.Fulfilled,
     cameraLoadingStatus: LoadingStatus.Fulfilled,
+    camerasInCart: [],
+    discount: 0,
+    discountSendingStatus: LoadingStatus.Idle,
+    orderSendingStatus: LoadingStatus.Idle,
   },
   PROMO: {
     promo: createRandomPromo(),

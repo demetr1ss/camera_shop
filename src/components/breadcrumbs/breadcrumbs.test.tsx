@@ -38,4 +38,19 @@ describe('Component: Breadcrumbs', () => {
     expect(screen.getByTestId('breadcrumbs')).toBeInTheDocument();
     expect(screen.getByText(mockCamera.name)).toBeInTheDocument();
   });
+
+  it('should render correctly if cartPage', () => {
+    const history = createMemoryHistory();
+
+    render(
+      <HistoryRouter history={history}>
+        <Provider store={mockStore}>
+          <Breadcrumbs pageName={'Корзина'} />
+        </Provider>
+      </HistoryRouter>,
+    );
+
+    expect(screen.getByTestId('breadcrumbs')).toBeInTheDocument();
+    expect(screen.getByText('Корзина')).toBeInTheDocument();
+  });
 });

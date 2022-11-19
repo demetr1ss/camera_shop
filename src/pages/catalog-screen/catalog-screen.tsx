@@ -22,7 +22,7 @@ import {setCurrentCatalogPath} from '../../store/app-process/app-process';
 import {getCameras, getCamerasLoadingStatus, getCamerasTotalCount} from '../../store/cameras-data/selectors';
 import {CameraType} from '../../types/types';
 import AddItemModal from '../../components/cart/modals/add-item-modal/add-item-modal';
-import AddItemSuccesModal from '../../components/cart/modals/add-item-success-modal/add-item-succes-modal';
+import AddItemSuccessModal from '../../components/cart/modals/add-item-success-modal/add-item-success-modal';
 
 export default function CatalogScreen(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -156,7 +156,7 @@ export default function CatalogScreen(): JSX.Element {
         {isAddItemSuccessModalOpened &&
           <FocusLock>
             <RemoveScroll enabled={isAddItemSuccessModalOpened}>
-              <AddItemSuccesModal
+              <AddItemSuccessModal
                 setIsAddItemSuccessModalOpened={setIsAddItemSuccessModalOpened}
               />
             </RemoveScroll>

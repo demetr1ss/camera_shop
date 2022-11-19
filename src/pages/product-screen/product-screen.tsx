@@ -18,7 +18,7 @@ import {getCamera, getCameraLoadingStatus, getSimilarCameras} from '../../store/
 import {CameraType} from '../../types/types';
 import {scrollToTop} from '../../utils/utils';
 import AddItemModal from '../../components/cart/modals/add-item-modal/add-item-modal';
-import AddItemSuccesModal from '../../components/cart/modals/add-item-success-modal/add-item-succes-modal';
+import AddItemSuccessModal from '../../components/cart/modals/add-item-success-modal/add-item-success-modal';
 
 export default function ProductScreen(): JSX.Element {
   const {id} = useParams();
@@ -84,7 +84,7 @@ export default function ProductScreen(): JSX.Element {
         {isAddItemSuccessModalOpened &&
           <FocusLock>
             <RemoveScroll enabled={isAddItemSuccessModalOpened}>
-              <AddItemSuccesModal
+              <AddItemSuccessModal
                 setIsAddItemSuccessModalOpened={setIsAddItemSuccessModalOpened}
               />
             </RemoveScroll>

@@ -8,7 +8,7 @@ type AddItemSuccesModalPropsType = {
   setIsAddItemSuccessModalOpened: (status: boolean) => void;
 }
 
-export default function AddItemSuccesModal({setIsAddItemSuccessModalOpened}: AddItemSuccesModalPropsType) {
+export default function AddItemSuccessModal({setIsAddItemSuccessModalOpened}: AddItemSuccesModalPropsType) {
   const {currentPage, search} = useAppSelector(getCurrentCatalogPath);
   useKeydown('Escape', () => setIsAddItemSuccessModalOpened(false));
 

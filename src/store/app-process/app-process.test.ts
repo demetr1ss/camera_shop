@@ -23,7 +23,6 @@ describe('Reducer: appProcess', () => {
       search: '?_order=asc'
     })))
       .toEqual({
-        ...state,
         currentCatalogPath: {
           currentPage: 3,
           search: '?_order=asc'

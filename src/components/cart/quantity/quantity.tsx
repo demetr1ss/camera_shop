@@ -57,6 +57,7 @@ export default function Quantity({camerasCount, uniqueCamera}: QuantityPropsType
         className="btn-icon btn-icon--prev"
         aria-label="уменьшить количество товара"
         disabled={camerasCount === MIN_CAMERAS_COUNT}
+        data-testid={'btn-minus'}
         onClick={() => dispatch(reduceCameraInCart(uniqueCamera))}
       >
         <svg width="7" height="12" aria-hidden="true">
@@ -72,6 +73,7 @@ export default function Quantity({camerasCount, uniqueCamera}: QuantityPropsType
           min="1"
           max="99"
           aria-label="количество товара"
+          data-testid={'counter'}
           onChange={handleInputChange}
         />
       </ClickAwayListener>
@@ -79,6 +81,7 @@ export default function Quantity({camerasCount, uniqueCamera}: QuantityPropsType
         className="btn-icon btn-icon--next"
         aria-label="увеличить количество товара"
         disabled={camerasCount === MAX_CAMERAS_COUNT}
+        data-testid={'btn-plus'}
         onClick={() => dispatch(addCameraToCart(uniqueCamera))}
       >
         <svg width="7" height="12" aria-hidden="true">

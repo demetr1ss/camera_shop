@@ -26,6 +26,8 @@ describe('Component: ProductSimilar', () => {
       </HistoryRouter>,
     );
 
-    expect(screen.getByText(mockSimilarCameras[0].name)).toBeInTheDocument();
+    const name = `${mockSimilarCameras[0].category} ${mockSimilarCameras[0].name}`;
+
+    expect(screen.getByText(name)).toBeInTheDocument();
   });
 });
