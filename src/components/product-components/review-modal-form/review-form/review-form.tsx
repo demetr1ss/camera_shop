@@ -103,7 +103,7 @@ export default function ReviewForm({isReviewModalOpened, setIsReviewModalOpened,
                 <RatingForm
                   getInputClassName={getInputClassName}
                   isFormDisabled={isFormDisabled}
-                  ratingRegester={{
+                  ratingRegister={{
                     ...register('rating', {
                       required: true,
                     })

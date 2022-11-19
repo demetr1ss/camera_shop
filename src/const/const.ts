@@ -14,7 +14,7 @@ export const enum AppRoute {
   Main = '/',
   CatalogPage = '/catalog/page_:page',
   ProductPage = '/product/:id',
-  Cartpage = '/cart',
+  CartPage = '/cart',
   NotFound = '/*',
 }
 

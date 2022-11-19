@@ -5,11 +5,11 @@ import {ReviewPostKeysType} from '../../../../types/types';
 
 type RatingFormPropsType = {
   getInputClassName: (inputName: ReviewPostKeysType, additionalClassName?: string) => string;
-  ratingRegester: UseFormRegisterReturn;
+  ratingRegister: UseFormRegisterReturn;
   isFormDisabled: boolean;
 }
 
-export default function RatingForm({getInputClassName, ratingRegester, isFormDisabled}: RatingFormPropsType) {
+export default function RatingForm({getInputClassName, ratingRegister, isFormDisabled}: RatingFormPropsType) {
   const [currentRating, setCurrentRating] = useState(0);
 
   return (
@@ -29,7 +29,7 @@ export default function RatingForm({getInputClassName, ratingRegester, isFormDis
                 type="radio"
                 defaultValue={item}
                 disabled={isFormDisabled}
-                {...ratingRegester}
+                {...ratingRegister}
                 onChange={() => setCurrentRating(item)}
               />
               <label className="rate__label" htmlFor={`star-${item}`} title={RatingTitle[item]} />

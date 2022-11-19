@@ -1,12 +1,12 @@
 import useKeydown from '../../../hooks/use-keydown';
 
-type ReviewSucceessModalPropsType = {
+type ReviewSuccessModalPropsType = {
   setIsReviewSuccessModalOpened: (status: boolean) => void;
 }
 
 export default function ReviewSuccessModal({
   setIsReviewSuccessModalOpened
-}: ReviewSucceessModalPropsType) {
+}: ReviewSuccessModalPropsType) {
   useKeydown('Escape', () => setIsReviewSuccessModalOpened(false));
 
   return (

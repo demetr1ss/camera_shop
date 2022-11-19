@@ -18,7 +18,7 @@ describe('Component: RatingForm', () => {
           <RatingForm
             getInputClassName={getInputClassName}
             isFormDisabled={false}
-            ratingRegester={{
+            ratingRegister={{
               ...register('rating', {
                 required: true,
               })

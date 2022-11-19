@@ -4,11 +4,11 @@ import {useAppSelector} from '../../../../hooks';
 import useKeydown from '../../../../hooks/use-keydown';
 import {getCurrentCatalogPath} from '../../../../store/app-process/selectors';
 
-type AddItemSuccesModalPropsType = {
+type AddItemSuccessModalPropsType = {
   setIsAddItemSuccessModalOpened: (status: boolean) => void;
 }
 
-export default function AddItemSuccessModal({setIsAddItemSuccessModalOpened}: AddItemSuccesModalPropsType) {
+export default function AddItemSuccessModal({setIsAddItemSuccessModalOpened}: AddItemSuccessModalPropsType) {
   const {currentPage, search} = useAppSelector(getCurrentCatalogPath);
   useKeydown('Escape', () => setIsAddItemSuccessModalOpened(false));
 
@@ -37,7 +37,7 @@ export default function AddItemSuccessModal({setIsAddItemSuccessModalOpened}: Ad
             </Link>
             <Link
               className="btn btn--purple modal__btn modal__btn--fit-width"
-              to={AppRoute.Cartpage}
+              to={AppRoute.CartPage}
               onClick={() => window.scrollTo({top: 0})}
             >
               Перейти в корзину

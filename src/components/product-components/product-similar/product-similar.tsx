@@ -81,7 +81,7 @@ export default function ProductSimilar({similarCameras, setIsAddItemModalOpened,
                       {cameraInCart.length > 0 ?
                         <Link
                           className="btn btn--purple-border product-card__btn product-card__btn--in-cart"
-                          to={AppRoute.Cartpage}
+                          to={AppRoute.CartPage}
                           onClick={() => window.scrollTo({top: 0})}
                         >
                           <svg width="16" height="16" aria-hidden="true">

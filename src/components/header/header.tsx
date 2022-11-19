@@ -60,7 +60,7 @@ export default function Header() {
           </ul>
         </nav>
         <SearchForm />
-        <Link className="header__basket-link" to={AppRoute.Cartpage}>
+        <Link className="header__basket-link" to={AppRoute.CartPage}>
           <svg width="16" height="16" aria-hidden="true">
             <use xlinkHref="#icon-basket" />
           </svg>

@@ -25,7 +25,7 @@ export default function App(): JSX.Element {
         element={<ProductScreen />}
       />
       <Route
-        path={AppRoute.Cartpage}
+        path={AppRoute.CartPage}
         element={<CartScreen />}
       />
       <Route
