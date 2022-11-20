@@ -31,7 +31,7 @@ export default function AddItemModal({
 
   useKeydown('Escape', () => setIsAddItemModalOpened(false));
 
-  const onAddItemButtonClick = () => {
+  const handleAddItemButtonClick = () => {
     dispatch(addCameraToCart(camera));
     setIsAddItemModalOpened(false);
     setIsAddItemSuccessModalOpened(true);
@@ -79,7 +79,7 @@ export default function AddItemModal({
             </div>
           </div>
           <div className="modal__buttons">
-            <button className="btn btn--purple modal__btn modal__btn--fit-width" type="button" onClick={onAddItemButtonClick}>
+            <button className="btn btn--purple modal__btn modal__btn--fit-width" type="button" onClick={handleAddItemButtonClick}>
               <svg width="24" height="16" aria-hidden="true">
                 <use xlinkHref="#icon-add-basket"></use>
               </svg>Добавить в корзину

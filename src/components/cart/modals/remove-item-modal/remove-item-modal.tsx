@@ -27,7 +27,7 @@ export default function RemoveItemModal({
 
   useKeydown('Escape', () => setIsRemoveItemModalOpened(false));
 
-  const onDeleteButtonClick = () => {
+  const handleDeleteButtonClick = () => {
     dispatch(removeCamerasFromCart(camera));
     setIsRemoveItemModalOpened(false);
   };
@@ -73,7 +73,7 @@ export default function RemoveItemModal({
             <button
               className="btn btn--purple modal__btn modal__btn--half-width"
               type="button"
-              onClick={onDeleteButtonClick}
+              onClick={handleDeleteButtonClick}
             >
               Удалить
             </button>

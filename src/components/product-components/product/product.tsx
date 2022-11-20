@@ -23,7 +23,7 @@ export default function Product({camera, setIsAddItemModalOpened, setCurrentCame
     category
   } = camera;
 
-  const onBuyButtonClick = () => {
+  const handleBuyButtonClick = () => {
     setIsAddItemModalOpened(true);
     setCurrentCamera(camera);
   };
@@ -56,7 +56,7 @@ export default function Product({camera, setIsAddItemModalOpened, setCurrentCame
             <p className="product__price">
               <span className="visually-hidden">Цена:</span>{price.toLocaleString('ru-RU')} ₽
             </p>
-            <button className="btn btn--purple" type="button" onClick={onBuyButtonClick}>
+            <button className="btn btn--purple" type="button" onClick={handleBuyButtonClick}>
               <svg width="24" height="16" aria-hidden="true">
                 <use xlinkHref="#icon-add-basket" />
               </svg>Добавить в корзину

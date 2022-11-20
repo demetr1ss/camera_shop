@@ -41,7 +41,7 @@ export default function ProductSimilar({similarCameras, setIsAddItemModalOpened,
                   category
                 } = camera;
 
-                const onBuyButtonClick = () => {
+                const handleBuyButtonClick = () => {
                   setCurrentCamera(camera);
                   setIsAddItemModalOpened(true);
                 };
@@ -89,7 +89,7 @@ export default function ProductSimilar({similarCameras, setIsAddItemModalOpened,
                           </svg>В корзине
                         </Link>
                         :
-                        <button className="btn btn--purple product-card__btn" type="button" onClick={onBuyButtonClick}>
+                        <button className="btn btn--purple product-card__btn" type="button" onClick={handleBuyButtonClick}>
                           Купить
                         </button>}
                       <Link
