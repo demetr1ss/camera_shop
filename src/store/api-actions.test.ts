@@ -3,7 +3,7 @@ import thunk, {ThunkDispatch} from 'redux-thunk';
 import {configureMockStore} from '@jedmao/redux-mock-store';
 import {generatePath} from 'react-router-dom';
 import {Action} from 'redux';
-import {APIRoute, availibleCouponsList, DEFAULT_PAGE, REVIEWS_PER_PAGE} from '../const/const';
+import {APIRoute, DEFAULT_PAGE, REVIEWS_PER_PAGE} from '../const/const';
 import {createAPI} from '../services/api';
 import {
   createRandomCamera,
@@ -207,7 +207,7 @@ describe('Async actions', () => {
     const store = mockStore();
 
     await store.dispatch(sendCouponAction({
-      coupon: '' as typeof availibleCouponsList[number],
+      coupon: 'test'
     }));
 
     const actions = store.getActions().map(({type}) => type);
@@ -227,7 +227,7 @@ describe('Async actions', () => {
 
     await store.dispatch(sendOrderAction({
       camerasIds: [1, 2, 3],
-      coupon: '' as typeof availibleCouponsList[number],
+      coupon: 'test'
     }));
 
     const actions = store.getActions().map(({type}) => type);

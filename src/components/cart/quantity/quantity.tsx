@@ -41,6 +41,10 @@ export default function Quantity({camerasCount, uniqueCamera}: QuantityPropsType
       inputCamerasCountRef.current.value = String(MIN_CAMERAS_COUNT);
     }
 
+    if (Number(inputCamerasCountRef.current.value) > 99) {
+      inputCamerasCountRef.current.value = String(MAX_CAMERAS_COUNT);
+    }
+
     const camerasCountInputValue = inputCamerasCountRef.current?.value;
 
     dispatch(changeCamerasCountInCart({
@@ -70,8 +74,8 @@ export default function Quantity({camerasCount, uniqueCamera}: QuantityPropsType
           ref={inputCamerasCountRef}
           type="number"
           id="counter1"
-          min="1"
-          max="99"
+          min={MIN_CAMERAS_COUNT}
+          max={MAX_CAMERAS_COUNT}
           aria-label="количество товара"
           data-testid={'counter'}
           onChange={handleInputChange}

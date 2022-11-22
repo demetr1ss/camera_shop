@@ -127,5 +127,3 @@ export const RatingTitle: RatingTitleType = {
 } as const;
 
 export const rating = Object.keys(RatingTitle).reverse().map(Number);
-
-export const availibleCouponsList = ['camera-333', 'camera-444', 'camera-555'] as const;

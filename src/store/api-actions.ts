@@ -254,18 +254,9 @@ export const sendCouponAction = createAsyncThunk<number, {coupon: string}, {
 }>(
   'data/sendCoupon',
   async (coupon, {extra: api}) => {
-    try {
-      const {data} = await api.post(APIRoute.Coupon, coupon);
+    const {data} = await api.post(APIRoute.Coupon, coupon);
 
-      return data;
-    }
-    catch (e) {
-      showNotify({
-        type: 'warn',
-        message: 'Failed to send a coupon'
-      });
-      throw e;
-    }
+    return data;
   });
 
 export const sendOrderAction = createAsyncThunk<void, SendOrderType, {

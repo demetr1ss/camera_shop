@@ -10,7 +10,7 @@ import {useAppDispatch, useAppSelector} from '../../hooks';
 import {getCamerasInCart, getDiscount, getGroupedCamerasInCart, getOrderSendingStatus} from '../../store/cameras-data/selectors';
 import {CameraType} from '../../types/types';
 import CartPromo from '../../components/cart/cart-promo/cart-promo';
-import {availibleCouponsList, LoadingStatus} from '../../const/const';
+import {LoadingStatus} from '../../const/const';
 import {sendOrderAction} from '../../store/api-actions';
 import {changeCouponSendingStatus, changeOrderSendingStatus, clearCart} from '../../store/cameras-data/cameras-data';
 import OrderSuccessModal from '../../components/cart/modals/order-success-modal/order-success-modal';
@@ -23,7 +23,7 @@ export default function CartScreen() {
   const [isRemoveItemModalOpened, setIsRemoveItemModalOpened] = useState(false);
   const [isOrderSuccessModalOpened, setIsOrderSuccessModalOpened] = useState(false);
   const [currentCamera, setCurrentCamera] = useState({} as CameraType);
-  const [currentCoupon, setCurrentCoupon] = useState('' as typeof availibleCouponsList[number] || null);
+  const [currentCoupon, setCurrentCoupon] = useState<string | null>('');
   const [isFormDisabled, setFormDisabled] = useState(false);
   const allCamerasInCart = useAppSelector(getCamerasInCart);
   const groupedCamerasInCart = useAppSelector(getGroupedCamerasInCart);

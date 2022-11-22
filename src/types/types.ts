@@ -1,4 +1,3 @@
-import {availibleCouponsList} from '../const/const';
 
 export type CameraType = {
   id: number,
@@ -96,5 +95,5 @@ export type ReviewPostKeysType = keyof ReviewPostType;
 
 export type SendOrderType = {
   camerasIds: number[],
-  coupon: typeof availibleCouponsList[number] | null,
+  coupon: string | null,
 }

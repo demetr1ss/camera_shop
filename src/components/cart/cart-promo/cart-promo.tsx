@@ -1,19 +1,17 @@
 import cn from 'classnames';
 import {ChangeEvent, FormEvent, useEffect, useState} from 'react';
-import {availibleCouponsList, LoadingStatus} from '../../../const/const';
+import {LoadingStatus} from '../../../const/const';
 import {useAppDispatch, useAppSelector} from '../../../hooks';
 import {sendCouponAction} from '../../../store/api-actions';
-import {changeCouponSendingStatus} from '../../../store/cameras-data/cameras-data';
 import {getCouponSendingStatus} from '../../../store/cameras-data/selectors';
 
 type CartPromoPropsType = {
-  setCurrentCoupon: (coupon: typeof availibleCouponsList[number]) => void
+  setCurrentCoupon: (coupon: string) => void
 }
 
 export default function CartPromo({setCurrentCoupon}: CartPromoPropsType) {
   const dispatch = useAppDispatch();
   const [isFormDisabled, setFormDisabled] = useState(false);
-  const [isFormInvalid, setIsFormInvalid] = useState(false);
   const [inputValue, setInputValue] = useState('');
   const couponSendingStatus = useAppSelector(getCouponSendingStatus);
 
@@ -21,6 +19,7 @@ export default function CartPromo({setCurrentCoupon}: CartPromoPropsType) {
     switch (couponSendingStatus) {
       case LoadingStatus.Fulfilled:
         setFormDisabled(false);
+        setInputValue('');
         break;
       case LoadingStatus.Pending:
         setFormDisabled(true);
@@ -49,20 +48,12 @@ export default function CartPromo({setCurrentCoupon}: CartPromoPropsType) {
   const handleFormSubmit = (evt: FormEvent) => {
     evt.preventDefault();
 
-    if (availibleCouponsList.includes(inputValue as typeof availibleCouponsList[number])) {
-      dispatch(sendCouponAction({coupon: inputValue}));
-      setCurrentCoupon(inputValue as typeof availibleCouponsList[number]);
-      setInputValue('');
-      setIsFormInvalid(false);
-    } else {
-      setIsFormInvalid(true);
-    }
-
-    dispatch(changeCouponSendingStatus(LoadingStatus.Idle));
+    dispatch(sendCouponAction({coupon: inputValue}));
+    setCurrentCoupon(inputValue);
   };
 
   const customInputClassName = cn('custom-input', {
-    'is-invalid': isFormInvalid,
+    'is-invalid': couponSendingStatus === LoadingStatus.Rejected,
     'is-valid': couponSendingStatus === LoadingStatus.Fulfilled,
   });
 
