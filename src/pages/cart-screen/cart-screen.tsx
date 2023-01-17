@@ -23,7 +23,7 @@ export default function CartScreen() {
   const [isRemoveItemModalOpened, setIsRemoveItemModalOpened] = useState(false);
   const [isOrderSuccessModalOpened, setIsOrderSuccessModalOpened] = useState(false);
   const [currentCamera, setCurrentCamera] = useState({} as CameraType);
-  const [currentCoupon, setCurrentCoupon] = useState<string | null>('');
+  const [currentCoupon, setCurrentCoupon] = useState<string | null>(null);
   const [isFormDisabled, setFormDisabled] = useState(false);
   const allCamerasInCart = useAppSelector(getCamerasInCart);
   const groupedCamerasInCart = useAppSelector(getGroupedCamerasInCart);

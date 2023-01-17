@@ -6,7 +6,7 @@ import {sendCouponAction} from '../../../store/api-actions';
 import {getCouponSendingStatus} from '../../../store/cameras-data/selectors';
 
 type CartPromoPropsType = {
-  setCurrentCoupon: (coupon: string) => void
+  setCurrentCoupon: (coupon: string | null) => void
 }
 
 export default function CartPromo({setCurrentCoupon}: CartPromoPropsType) {
@@ -26,6 +26,8 @@ export default function CartPromo({setCurrentCoupon}: CartPromoPropsType) {
         break;
       case LoadingStatus.Rejected:
         setFormDisabled(false);
+        setCurrentCoupon(null);
+        setInputValue('');
         break;
       case LoadingStatus.Idle:
         setFormDisabled(false);
@@ -33,7 +35,7 @@ export default function CartPromo({setCurrentCoupon}: CartPromoPropsType) {
       default:
         throw new Error(`sendingStatus-${couponSendingStatus} doesn't exist`);
     }
-  }, [couponSendingStatus]);
+  }, [couponSendingStatus, setCurrentCoupon]);
 
   const handleInputChange = (evt: ChangeEvent<HTMLInputElement>) => {
     const value = evt.target.value;
